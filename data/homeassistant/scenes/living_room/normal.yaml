@@ -1,0 +1,11 @@
+name: "Living Normal"
+entities:
+  light.hue_bulb:
+    state: off
+  light.hue_light_3:
+    state: off
+  light.hue_light_4:
+    state: off
+  light.living_ceiling:
+    state: on
+    brightness: 255

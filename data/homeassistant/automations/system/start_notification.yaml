@@ -1,0 +1,14 @@
+---
+alias: System Start Notification
+description: Send notification on Home Assistant start
+trigger:
+  - platform: homeassistant
+    event: start
+
+action:
+  - service: notify.mobile_app_g8141
+    data:
+      message: Home Assistant is starting up again 🎉
+      data:
+        tag: System
+        channel: System

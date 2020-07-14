@@ -1,0 +1,35 @@
+---
+alias: Upgrade Available Notification
+description: Send notification on Home Assistant update available
+trigger:
+  - platform: state
+    entity_id: sensor.version_available
+
+condition:
+  - condition: template
+    value_template: >
+      {{ states('sensor.version_available') != states('sensor.current_version') }}
+
+action:
+  - service: persistent_notification.create
+    data_template:
+      title: Upgrade time!
+      message: >
+        There is a Home Assistant upgrade for docker pending!
+        Version {{ states('sensor.version_available') }} just got released!
+      notification_id: hassio_upgrade
+
+  # Sander Android
+  - service: notify.mobile_app_g8141
+    data_template:
+      title: Upgrade time!
+      message: >
+        There is a Home Assistant upgrade for docker pending!
+        Version {{ states('sensor.version_available') }} just got released!
+      data:
+        tag: System
+        channel: System
+        actions:
+          - action: "URI"
+            title: "Open Changelog"
+            uri: "https://github.com/home-assistant/core/releases/tag/{{states('sensor.version_available')}}"

@@ -1,0 +1,10 @@
+history:
+  include:
+    domains:
+      - sensor
+      - binary_sensor
+      - switch
+      - light
+      - media_player
+      - device_tracker
+      - people

@@ -1,0 +1,4 @@
+platform: tod
+name: 'sleep_time'
+after: '23:00'
+before: '07:00'

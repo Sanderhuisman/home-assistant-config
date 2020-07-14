@@ -1,0 +1,10 @@
+.env
+
+# Global ignore data folders
+data/appdaemon
+data/database
+data/deconz
+data/ozw
+
+# Ignore files created by IDE's
+.vscode

@@ -1,0 +1,7 @@
+platform: group
+name: group_living_room
+entities:
+  - light.hue_bulb
+  - light.hue_light_3 # Big lamp
+  - light.hue_light_4
+  - light.living_ceiling

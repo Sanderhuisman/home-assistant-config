@@ -1,0 +1,8 @@
+# hallway_light_dimmed:
+name: Slider
+initial: 30
+min: 0
+max: 100
+step: 5
+unit_of_measurement: '%'
+icon: mdi:brightness-percent

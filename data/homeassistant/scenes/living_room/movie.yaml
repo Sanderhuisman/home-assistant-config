@@ -1,0 +1,13 @@
+name: "Living Movie"
+entities:
+  light.hue_bulb:
+    state: on
+    brightness: 200
+  light.hue_light_3:
+    state: on
+    brightness: 200
+  light.hue_light_4:
+    state: on
+    brightness: 200
+  light.living_ceiling:
+    state: off

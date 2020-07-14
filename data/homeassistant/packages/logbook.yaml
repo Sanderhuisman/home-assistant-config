@@ -1,0 +1,12 @@
+logbook:
+  # include:
+  #   domains:
+  #     - sensor
+  #     - switch
+  #     - media_player
+  # exclude:
+  #   entities:
+  #     - sensor.last_boot
+  #     - sensor.date
+  #   entity_globs:
+  #     - sensor.weather_*

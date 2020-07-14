@@ -1,0 +1,4 @@
+- binary_sensor.philips_sml001_e2abf706_occupancy
+- sensor.philips_sml001_e2abf706_power
+- sensor.philips_sml001_e2abf706_temperature
+- sensor.philips_sml001_e2abf706_illuminance

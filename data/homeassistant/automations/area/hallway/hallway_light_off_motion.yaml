@@ -1,0 +1,20 @@
+alias: Hallway Lights Off Motion
+description: ''
+trigger:
+  - platform: state
+    entity_id: binary_sensor.philips_sml001_0955f606_occupancy
+    from: 'on'
+    to: 'off'
+    for:
+      minutes: 1
+
+condition:
+  # Automation must be enabled
+  - condition: state
+    entity_id: input_boolean.hallway_automatic_light
+    state: 'on'
+
+action:
+  - service: light.turn_off
+    # entity_id: light.fgd212_dimmer_2_instance_1_level
+    entity_id: light.fibaro_system_fgd212_dimmer_2_level

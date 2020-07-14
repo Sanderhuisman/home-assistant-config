@@ -1,0 +1,169 @@
+path: hallway
+title: Hallway
+tab_icon: mdi:home-assistant
+cards:
+  - type: vertical-stack
+    cards:
+      - type: light
+        name: Hallway Ceiling Lights
+        # entity: light.fgd212_dimmer_2_instance_1_level
+        entity: light.fibaro_system_fgd212_dimmer_2_level
+
+      - type: entities
+        title: Automation
+        show_header_toggle: false
+        entities:
+          - name: Automation Enabled
+            entity: input_boolean.hallway_automatic_light
+            style: |
+              :host {
+                --state-icon-color:
+                  {% if is_state('input_boolean.hallway_automatic_light', 'on') %}
+                    var(--accent-color)
+                  {% endif %}
+                  ;
+              }
+
+          - type: custom:fold-entity-row
+            head:
+              name: Motion Sensor
+              entity: binary_sensor.philips_sml001_0955f606_occupancy
+              style: |
+                :host {
+                  --state-icon-color:
+                    {% if is_state('binary_sensor.philips_sml001_0955f606_occupancy', 'on') %}
+                      var(--accent-color)
+                    {% endif %}
+                    ;
+                }
+            entities:
+              - entity: sensor.philips_sml001_0955f606_power
+                name: Battery
+
+          - type: custom:fold-entity-row
+            head:
+              name: Door Sensor
+              entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off
+              icon: mdi:door
+              style: |
+                :host {
+                  --state-icon-color:
+                    {% if is_state('binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off', 'on') %}
+                      var(--accent-color)
+                    {% endif %}
+                    ;
+                }
+            entities:
+              - entity: sensor.lumi_lumi_sensor_magnet_aq2_40132a04_power
+                name: Battery
+                icon: mdi:battery
+
+          - type: custom:fold-entity-row
+            head:
+              name: Light Sensor
+              entity: sensor.lumi_lumi_sen_ill_mgl01_ba6e783c_illuminance
+            entities:
+              - entity: sensor.lumi_lumi_sen_ill_mgl01_ba6e783c_power
+                name: Battery
+                icon: mdi:battery
+
+          - name: Brightness Dimmed
+            entity: input_number.hallway_light_dimmed
+          - name: Brightness Bright
+            entity: input_number.hallway_light_bright
+            type: custom:slider-entity-row
+
+  - type: vertical-stack
+    cards:
+
+      - type: custom:mini-graph-card
+        entities:
+          - entity: binary_sensor.philips_sml001_0955f606_occupancy
+            name: Hallway Motion
+        name: Motion last hour
+        hours_to_show: 1
+        points_per_hour: 60
+        update_interval: 30
+        aggregate_func: max
+        line_width: 2
+        smoothing: false
+        state_map:
+          - value: "off"
+            label: Clear
+          - value: "on"
+            label: Detected
+
+      - type: custom:mini-graph-card
+        entities:
+          - entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off
+            name: Door Sensor
+        name: Door Open
+        hours_to_show: 1
+        points_per_hour: 60
+        update_interval: 30
+        aggregate_func: max
+        line_width: 2
+        smoothing: false
+        state_map:
+          - value: "off"
+            label: Closed
+          - value: "on"
+            label: Open
+
+  - type: vertical-stack
+    cards:
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.philips_sml001_0955f606_temperature
+            name: Motion Sensor
+        name: Temperature
+        hours_to_show: 6
+        points_per_hour: 60
+        update_interval: 30
+
+      # - type: custom:mini-graph-card
+      #   entities:
+      #     - entity: sensor.philips_sml001_0955f606_illuminance
+      #       name: Motion Sensor
+      #   name: Light Intensity
+      #   hours_to_show: 1
+      #   points_per_hour: 60
+      #   update_interval: 30
+
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.lumi_lumi_sen_ill_mgl01_ba6e783c_illuminance
+            name: Light Sensor
+        name: Light Intensity
+        hours_to_show: 6
+        points_per_hour: 60
+        update_interval: 30
+
+  # - type: entities
+  #   title: Sensors
+  #   entities:
+  #     - type: custom:fold-entity-row
+  #       head:
+  #         name: Light Sensor
+  #         entity: sensor.lumi_lumi_sen_ill_mgl01_ba6e783c_power
+  #       entities:
+  #         - entity: sensor.lumi_lumi_sen_ill_mgl01_ba6e783c_illuminance
+  #           name: Illuminance
+  #     - type: custom:fold-entity-row
+  #       head:
+  #         name: Motion Sensor
+  #         entity: sensor.philips_sml001_0955f606_power
+  #       entities:
+  #         - entity: binary_sensor.philips_sml001_0955f606_occupancy
+  #           name: Occupancy
+  #         - entity: sensor.philips_sml001_0955f606_temperature
+  #           name: Temperature
+  #         - entity: sensor.philips_sml001_0955f606_illuminance
+  #           name: Illuminance
+  #     - type: custom:fold-entity-row
+  #       head:
+  #         name: Door Sensor
+  #         entity: sensor.lumi_lumi_sensor_magnet_aq2_40132a04_power
+  #       entities:
+  #         - entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off
+  #           name: Door open

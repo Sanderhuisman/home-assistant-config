@@ -1,0 +1,31 @@
+alias: Hallway Lights On Motion
+description: ''
+trigger:
+  - platform: state
+    entity_id: binary_sensor.philips_sml001_0955f606_occupancy
+    from: 'off'
+    to: 'on'
+
+condition:
+  - condition: state
+    state: 'on'
+    entity_id:
+      - input_boolean.hallway_automatic_light
+      - binary_sensor.threshold_dark
+
+  - condition: state
+    entity_id: light.fibaro_system_fgd212_dimmer_2_level
+    # entity_id: light.fgd212_dimmer_2_instance_1_level
+    state: 'off'
+
+action:
+  - service: light.turn_on
+    # entity_id: light.fgd212_dimmer_2_instance_1_level
+    entity_id: light.fibaro_system_fgd212_dimmer_2_level
+    data_template:
+      brightness_pct: >
+        {% if is_state('binary_sensor.sleep_time', 'on') %}
+          {{ states('input_number.hallway_light_dimmed') | int }}
+        {% else %}
+          100
+        {% endif %}

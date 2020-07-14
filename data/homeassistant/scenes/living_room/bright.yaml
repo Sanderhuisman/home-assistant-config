@@ -1,0 +1,14 @@
+name: "Living Bright"
+entities:
+  light.hue_bulb:
+    state: on
+    brightness: 255
+  light.hue_light_3:
+    state: on
+    brightness: 255
+  light.hue_light_4:
+    state: on
+    brightness: 255
+  light.living_ceiling:
+    state: on
+    brightness: 255

@@ -1,0 +1,16 @@
+name: "Bedroom Nightlight"
+entities:
+  light.bedroom_ceiling:
+    state: off
+  light.tv_l:
+    state: on
+    brightness: 1
+    hs_color: [36.568, 66.275]
+  light.tv_r:
+    state: on
+    brightness: 1
+    hs_color: [36.568, 66.275]
+  light.bed:
+    state: on
+    brightness: 1
+    color_temp: 443

@@ -1,0 +1,21 @@
+platform: bayesian
+name: Bayesian Sleeping
+prior: 0.25
+probability_threshold: 0.7
+observations:
+  - entity_id: 'binary_sensor.sleep_time'
+    prob_given_true: 0.7
+    platform: 'state'
+    to_state: 'on'
+
+  # Living room light off
+  - entity_id: 'light.hue_light_3'
+    prob_given_true: 0.6
+    platform: 'state'
+    to_state: 'off'
+
+  # Bedroom ceiling off
+  - entity_id: 'light.hue_bedroom_ceiling'
+    prob_given_true: 0.8
+    platform: 'state'
+    to_state: 'off'

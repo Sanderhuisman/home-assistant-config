@@ -1,0 +1,14 @@
+---
+alias: System Shutdown Notification
+description: Send notification on Home Assistant stop
+trigger:
+  - platform: homeassistant
+    event: shutdown
+
+action:
+  - service: notify.mobile_app_g8141
+    data:
+      message: Home Assistant is shutting down... Bye!
+      data:
+        tag: System
+        channel: System

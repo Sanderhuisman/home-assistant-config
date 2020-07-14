@@ -1,0 +1,6 @@
+platform: tod
+name: 'lights_allowed'
+after: sunset
+after_offset: '00:30'
+before: sunrise
+before_offset: '-00:30'

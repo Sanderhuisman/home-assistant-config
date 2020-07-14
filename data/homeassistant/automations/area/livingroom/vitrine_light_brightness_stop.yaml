@@ -1,0 +1,15 @@
+alias: Vitrine Light Bright stop
+trigger:
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_ieee: 84:2e:14:ff:fe:1b:cd:f6
+      command: 'stop'
+
+condition: []
+
+action:
+  - service: timer.cancel
+    entity_id: timer.vitrine_increase_brightness
+  - service: timer.cancel
+    entity_id: timer.vitrine_decrease_brightness

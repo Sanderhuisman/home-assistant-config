@@ -1,0 +1,37 @@
+alias: Bedroom Lights Double Tap
+description: ''
+trigger:
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_ieee: 00:15:8d:00:03:55:8d:23
+      command: double
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_ieee: 00:15:8d:00:03:55:8e:31
+      command: double
+
+condition:
+  - condition: state
+    entity_id: light.group_bedroom
+    state: 'on'
+
+  # - condition: state
+  #   state: 'active'
+  #   entity_id:
+  #     - timer.bedroom_scene_switch
+
+action:
+  - service: input_select.select_next
+    data:
+      entity_id: input_select.bedroom_scene
+
+  - service: scene.turn_on
+    data_template:
+      entity_id: scene.{{states.input_select.bedroom_scene.state}}
+
+  # - service: timer.restart
+  #   entity_id: timer.bedroom_scene_switch
+  #   data:
+  #     duration: '00:00:10'

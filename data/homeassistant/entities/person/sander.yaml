@@ -1,0 +1,4 @@
+name: Sander
+id: sander
+device_trackers:
+  - device_tracker.g8141

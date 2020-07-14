@@ -1,0 +1,13 @@
+sensor:
+  - platform: launch_library
+    name: spacelaunch
+  - platform: template
+    sensors:
+      iss_next_rise:
+        friendly_name: "ISS Next Rise"
+        unit_of_measurement: ''
+        icon_template: 'mdi:clock'
+        value_template: "{{ state_attr('binary_sensor.iss', 'next_rise') }}"
+
+binary_sensor:
+  - platform: iss

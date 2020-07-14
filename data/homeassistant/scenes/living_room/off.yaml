@@ -1,0 +1,6 @@
+name: "Living Off"
+entities:
+  light.hue_bulb: off
+  light.hue_light_3: off # Big lamp
+  light.hue_light_4: off
+  light.living_ceiling: off

@@ -1,0 +1,20 @@
+path: server
+title: Server
+cards:
+  - type: entities
+    title: Adguard Home
+    entities:
+      - sensor.adguard_average_processing_speed
+      - sensor.adguard_dns_queries
+      - sensor.adguard_dns_queries_blocked_ratio
+      - switch.adguard_filtering
+      - switch.adguard_parental_control
+      - sensor.adguard_parental_control_blocked
+      - switch.adguard_protection
+      - switch.adguard_safe_browsing
+      - sensor.adguard_safe_browsing_blocked
+      - switch.adguard_safe_search
+      - sensor.adguard_safe_searches_enforced
+      # - sensor.adguard_dns_queries_blocked
+      # - sensor.adguard_rules_count
+      # - switch.adguard_query_log

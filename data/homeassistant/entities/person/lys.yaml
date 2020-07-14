@@ -1,0 +1,4 @@
+name: Lys
+id: lys
+device_trackers:
+  - device_tracker.iphone

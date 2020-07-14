@@ -1,0 +1,14 @@
+description: Send notification when scenes are reloaded
+alias: system_scene_reloaded_notification
+
+trigger:
+  platform: event
+  event_type: scene_reloaded
+
+action:
+  - service: notify.mobile_app_g8141
+    data:
+      message: Home Assistant reloaded all scenes 🌈
+      data:
+        tag: System
+        channel: System

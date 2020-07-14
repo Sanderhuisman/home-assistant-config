@@ -1,0 +1,93 @@
+version: '3.7'
+
+services:
+  homeassistant:
+    image: homeassistant/home-assistant:0.113.0.dev20200714
+    restart: unless-stopped
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - ./data/homeassistant:/config
+    networks:
+      - influxdb
+      - web
+      - homeassistant
+    depends_on:
+      - database
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "10"
+    devices:
+      # Aeotec
+      - /dev/ttyUSB-ZStick-5G:/dev/ttyUSB0
+
+      # Conbee
+      - /dev/ttyUSB-ConbeeII:/dev/tty-conbee
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=web
+      - traefik.http.routers.home.rule=Host(`home.${DOMAIN}`)
+      - traefik.http.routers.home.entrypoints=http
+      - traefik.http.routers.home.middlewares=redirect@file
+      - traefik.http.services.home.loadbalancer.server.port=8123
+
+      - traefik.http.routers.home-secured.rule=Host(`home.${DOMAIN}`)
+      - traefik.http.routers.home-secured.entrypoints=https
+      - traefik.http.routers.home-secured.tls=true
+      - traefik.http.routers.home-secured.tls.certresolver=letsencrypt
+      - traefik.http.routers.home-secured.middlewares=hsts@file
+
+  database:
+    image: postgres:12.3-alpine
+    restart: unless-stopped
+    volumes:
+      - ./data/database:/var/lib/postgresql/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "10"
+    networks:
+      - homeassistant
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+#  database-adminer:
+#    image: adminer
+#    restart: unless-stopped
+#    ports:
+#      - 8085:8080
+#    networks:
+#      - homeassistant
+
+  esphome:
+    image: esphome/esphome:1.14.4
+    restart: unless-stopped
+    networks:
+      - web
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - ./data/esphome:/config
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=web
+      - traefik.http.routers.esphome.rule=Host(`esphome.homeserver.lan`)
+      - traefik.http.routers.esphome.entrypoints=http
+      - traefik.http.services.esphome.loadbalancer.server.port=6052
+
+networks:
+  homeassistant:
+    external: false
+  web:
+    external: true
+  influxdb:
+    external: true
+
+# https://www.domoticz.com/wiki/PersistentUSBDevices
+#sudo nano /etc/udev/rules.d/99-usb-serial.rules
+#SUBSYSTEM=="tty", ATTRS{idVendor}=="0658", ATTRS{idProduct}=="0200", SYMLINK+="ttyUSB-ZStick-5G"
+#SUBSYSTEM=="tty", ATTRS{idVendor}=="1c1f", ATTRS{idProduct}=="0030", SYMLINK+="ttyUSB-ConbeeII"

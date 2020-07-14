@@ -1,0 +1,9 @@
+platform: threshold
+name: threshold_dark
+entity_id: sensor.lumi_lumi_sen_ill_mgl01_ba6e783c_illuminance
+lower: 60
+hysteresis: 20
+
+# entity_id: input_number.hallway_light_dimmed
+# lower: 80
+# upper: 40

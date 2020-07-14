@@ -1,0 +1,29 @@
+path: bathroom
+title: Bathroom
+cards:
+  - type: custom:mini-graph-card
+    entities:
+      - entity: sensor.lumi_lumi_weather_0c0b6004_humidity
+        name: Multi Sensor
+    name: Humidity
+    hours_to_show: 6
+    points_per_hour: 60
+    update_interval: 30
+
+  - type: custom:mini-graph-card
+    entities:
+      - entity: sensor.lumi_lumi_weather_0c0b6004_pressure
+        name: Multi Sensor
+    name: Pressure
+    hours_to_show: 1
+    points_per_hour: 60
+    update_interval: 30
+
+  - type: custom:mini-graph-card
+    entities:
+      - entity: sensor.lumi_lumi_weather_0c0b6004_temperature
+        name: Multi Sensor
+    name: Temperature
+    hours_to_show: 1
+    points_per_hour: 60
+    update_interval: 30

@@ -1,0 +1,7 @@
+platform: group
+name: group_bedroom
+entities:
+  - light.bedroom_ceiling
+  - light.bed
+  - light.tv_l
+  - light.tv_r

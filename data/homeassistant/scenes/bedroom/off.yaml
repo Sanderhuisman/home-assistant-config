@@ -1,0 +1,10 @@
+name: "Bedroom Off"
+entities:
+  light.bedroom_ceiling:
+    state: off
+  light.tv_l:
+    state: off
+  light.tv_r:
+    state: off
+  light.bed:
+    state: off

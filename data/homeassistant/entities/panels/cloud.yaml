@@ -1,0 +1,4 @@
+cloud:
+  title: Cloud
+  icon: mdi:cloud-outline
+  url: !secret panel_cloud_url
