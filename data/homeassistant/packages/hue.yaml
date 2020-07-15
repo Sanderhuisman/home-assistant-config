@@ -1,3 +1,0 @@
-hue:
-  bridges:
-    - host: !secret hue_ip
