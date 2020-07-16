@@ -20,6 +20,7 @@ This is my personal Home Assistant configuration, running my home automations.
 * [klaasnicolaas](https://github.com/klaasnicolaas/Student-homeassistant-config)
 * [Sholofly](https://github.com/Sholofly/home-assistant-config)
 * [niro1987](https://github.com/niro1987/homeassistant-config)
+* [hmmbob](https://github.com/hmmbob/HomeAssistantConfig)
 
 <!-- Links -->
 [commits-shield]: https://img.shields.io/github/commit-activity/y/Sanderhuisman/home-assistant-config.svg
