@@ -1,4 +1,7 @@
+---
 logbook:
+# Following is `disabled` by comments
+# yamllint disable
   # include:
   #   domains:
   #     - sensor

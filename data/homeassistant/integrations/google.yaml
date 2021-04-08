@@ -1,8 +1,8 @@
+---
 google:
-  client_id     : !secret google_client_id
-  client_secret : !secret google_client_secret
+  client_id: !secret google_client_id
+  client_secret: !secret google_client_secret
   track_new_calendar: false
-
 
 google_assistant:
   project_id: !secret google_assistant_project
@@ -10,7 +10,7 @@ google_assistant:
     private_key: !secret google_assistant_private_key
     client_email: !secret google_assistant_email
   report_state: true
-  expose_by_default: false # We will do it ourselves
+  expose_by_default: false  # We will do it ourselves
   entity_config:
     light.kitchen_ceiling_lights_current_value_5:
       name: Kitchen Ceiling Light

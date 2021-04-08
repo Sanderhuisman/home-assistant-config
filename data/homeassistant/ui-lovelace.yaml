@@ -1,3 +1,4 @@
+---
 title: HomeNet
 views:
   - !include lovelace/views/home.yaml

@@ -1,3 +1,4 @@
+---
 platform: template
 sensors:
   washing_machine:

@@ -1,3 +1,4 @@
+---
 name: Bedroom Nightlight Active
-initial: off
+initial: false
 icon: mdi:motion-sensor

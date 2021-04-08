@@ -1,3 +1,4 @@
+---
 - binary_sensor.philips_sml001_0955f606_occupancy
 - sensor.philips_sml001_0955f606_temperature
 - sensor.philips_sml001_0955f606_illuminance

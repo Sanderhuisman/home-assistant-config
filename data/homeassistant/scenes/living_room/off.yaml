@@ -1,6 +1,7 @@
+---
 name: "Living Off"
 entities:
-  light.hue_bulb: off
-  light.hue_light_3: off # Big lamp
-  light.hue_light_4: off
-  light.living_room_ceiling_level_light_color_on_off: off
+  light.hue_bulb: false
+  light.hue_light_3: false  # Big lamp
+  light.hue_light_4: false
+  light.living_room_ceiling_level_light_color_on_off: false

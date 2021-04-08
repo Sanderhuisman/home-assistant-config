@@ -1,3 +1,4 @@
+---
 path: hallway
 title: Hallway
 tab_icon: mdi:home-assistant
@@ -88,7 +89,6 @@ cards:
 
   - type: vertical-stack
     cards:
-
       - type: custom:mini-graph-card
         entities:
           - entity: binary_sensor.philips_sml001_0955f606_occupancy
@@ -134,15 +134,6 @@ cards:
         points_per_hour: 60
         update_interval: 30
 
-      # - type: custom:mini-graph-card
-      #   entities:
-      #     - entity: sensor.philips_sml001_0955f606_illuminance
-      #       name: Motion Sensor
-      #   name: Light Intensity
-      #   hours_to_show: 1
-      #   points_per_hour: 60
-      #   update_interval: 30
-
       - type: custom:mini-graph-card
         entities:
           - entity: sensor.lumi_lumi_sen_ill_mgl01_ba6e783c_illuminance
@@ -151,32 +142,3 @@ cards:
         hours_to_show: 6
         points_per_hour: 60
         update_interval: 30
-
-  # - type: entities
-  #   title: Sensors
-  #   entities:
-  #     - type: custom:fold-entity-row
-  #       head:
-  #         name: Light Sensor
-  #         entity: sensor.lumi_lumi_sen_ill_mgl01_ba6e783c_power
-  #       entities:
-  #         - entity: sensor.lumi_lumi_sen_ill_mgl01_ba6e783c_illuminance
-  #           name: Illuminance
-  #     - type: custom:fold-entity-row
-  #       head:
-  #         name: Motion Sensor
-  #         entity: sensor.philips_sml001_0955f606_power
-  #       entities:
-  #         - entity: binary_sensor.philips_sml001_0955f606_occupancy
-  #           name: Occupancy
-  #         - entity: sensor.philips_sml001_0955f606_temperature
-  #           name: Temperature
-  #         - entity: sensor.philips_sml001_0955f606_illuminance
-  #           name: Illuminance
-  #     - type: custom:fold-entity-row
-  #       head:
-  #         name: Door Sensor
-  #         entity: sensor.lumi_lumi_sensor_magnet_aq2_40132a04_power
-  #       entities:
-  #         - entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off
-  #           name: Door open

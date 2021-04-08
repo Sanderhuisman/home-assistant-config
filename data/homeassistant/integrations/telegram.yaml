@@ -1,5 +1,6 @@
+---
 telegram_bot:
   - platform: webhooks
-    api_key : !secret telegram_token
+    api_key: !secret telegram_token
     allowed_chat_ids:
       - !secret telegram_chat_id_sander

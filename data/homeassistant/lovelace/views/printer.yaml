@@ -1,20 +1,10 @@
+---
 path: printer
 title: Printer
 icon: mdi:printer-3d
 cards:
   - type: markdown
     content: Ender 3V2
-
-
-    # - type: custom:restriction-card
-    #   row: true
-    #   card:
-      #     type: entities
-      #     entities:
-        #       - switch.printer_power
-        # entities:
-
-          # hui-entities-card
 
   - type: 'custom:hui-entities-card'
     entities:
@@ -67,14 +57,10 @@ cards:
         secondary_info: last-changed
         type: custom:multiple-entity-row
         entities:
-
           - name: 'Remaining'
             entity: sensor.octoprint_time_remaining_hr
-            # entity: sensor.octoprint_time_remaining
           - name: 'Elapsed'
             entity: sensor.octoprint_time_elapsed_hr
-            # entity: sensor.octoprint_time_elapsed
-
 
   - type: horizontal-stack
     cards:
@@ -116,7 +102,6 @@ cards:
           state: true
         lower_bound: 0
 
-
   - type: picture-entity
     style:
       .: |
@@ -140,4 +125,3 @@ cards:
     camera_view: live
     show_state: false
     show_name: false
-

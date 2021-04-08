@@ -8,3 +8,6 @@
 **/src/
 **/platformio.ini
 /secrets.yaml
+
+# All subfolders (generated folders for each device)
+**/

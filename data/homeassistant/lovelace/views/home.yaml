@@ -1,3 +1,4 @@
+---
 path: home
 title: Home
 icon: mdi:home
@@ -28,12 +29,6 @@ cards:
                   {% endif %}
                   ;
               }
-
-      # - type: entities
-      #   show_header_toggle: false
-      #   entities:
-      #     - entity: input_boolean.vacation_mode
-      #     - entity: input_boolean.guest_mode
 
       - type: vertical-stack
         cards:
@@ -82,7 +77,6 @@ cards:
                       action: call-service
                       service: scene.living_normal
 
-
               - type: custom:fold-entity-row
                 head:
                   type: custom:slider-entity-row
@@ -130,7 +124,6 @@ cards:
                       action: call-service
                       service: scene.bedroom_reading
 
-
               - type: custom:slider-entity-row
                 name: Hallway
                 color_picker: true
@@ -142,35 +135,23 @@ cards:
                 color_picker: true
                 toggle: true
                 entity: light.utility_room_lights_current_value_3
-          # - type: glance
-          #   title: Scenes
-          #   show_state: False
-          #   entities:
 
   - type: vertical-stack
     cards:
-  # - type: custom:simple-weather-card
       - type: custom:weather-card
         name: Weather
         entity: weather.home_2
 
       # - type: thermostat
-      - type: custom:simple-thermostat # https://github.com/nervetattoo/simple-thermostat
+      - type: custom:simple-thermostat  # https://github.com/nervetattoo/simple-thermostat
         name: false
         entity: climate.heating
         step_layout: row
         icon: true
         control: false
-        # sensors:
-        #   - entity: sensor.heating_temperature
-        #     name: Temperature
-        #   - entity: sensor.heating_humidity
-        #     name: Humididy
 
       - type: custom:mini-media-player
         entity: media_player.samsung_tv
-        # artwork: cover
-        # background: /local/tv.jpg
         hide:
           controls: true
           mute: false
@@ -184,7 +165,7 @@ cards:
           - type: custom:mini-graph-card
             color_thresholds_transition: smooth
             entities:
-              - entity: sensor.heating_temperature    # sensor.heating_humidity
+              - entity: sensor.heating_temperature  # sensor.heating_humidity
                 name: Living room
             font_size: 100
             line_color: var(--primary-color)
@@ -193,7 +174,6 @@ cards:
             line_width: 6
             hours_to_show: 72
             points_per_hour: 0.3
-            # lower_bound: 0
             show:
               # extrema: true
               fill: fade
@@ -212,9 +192,7 @@ cards:
             line_width: 6
             hours_to_show: 72
             points_per_hour: 0.3
-            # lower_bound: 0
             show:
-              # extrema: true
               fill: fade
               labels: false
               name: true
@@ -234,9 +212,7 @@ cards:
             line_width: 6
             hours_to_show: 72
             points_per_hour: 0.3
-            # lower_bound: 0
             show:
-              # extrema: true
               fill: fade
               labels: false
               name: true
@@ -254,9 +230,7 @@ cards:
             line_width: 6
             hours_to_show: 72
             points_per_hour: 0.3
-            # lower_bound: 0
             show:
-              # extrema: true
               fill: fade
               labels: false
               name: true
@@ -274,15 +248,11 @@ cards:
         line_width: 6
         hours_to_show: 72
         points_per_hour: 0.3
-        # lower_bound: 0
         show:
-          # extrema: true
           fill: fade
           labels: false
           name: true
           state: true
-
-
 
       - type: horizontal-stack
         cards:
@@ -297,7 +267,6 @@ cards:
             hours_to_show: 72
             points_per_hour: 1
             show:
-              # extrema: true
               fill: fade
               labels: false
               name: true
@@ -323,58 +292,11 @@ cards:
               state: true
             lower_bound: 0
 
-
   # https://github.com/benct/lovelace-xiaomi-vacuum-card
-
   - type: custom:xiaomi-vacuum-card
     entity: vacuum.deebot_950
-    # vendor: deebot
-
-    # state:
-    #   status:
-    #     key: state
-    #   mode:
-    #     icon: mdi:robot-vacuum
-    #     label: 'Fan speed: '
-    #     unit: 'percent'
     attributes:
       main_brush: false
       side_brush: false
       filter: false
       clean_area: false
-    #   main_brush:
-    #     key: component_brush
-    #   side_brush:
-    #     key: component_sideBrush
-    # buttons:
-    #   pause:
-    #     icon: mdi:stop
-    #     label: Hold
-    #     service: vacuum.stop
-
-  # - type: picture
-  #   image: /local/deebot_ozmo_950_map.png
-
-
-
-
-
-
-
-      # - type: custom:calendar-card
-      #   title: "Calendar"
-      #   progressBar: true
-      #   showEventOrigin: true
-      #   showLocation: true
-      #   numberOfDays: 14
-      #   entities:
-      #     - calendar.sander_lys
-      #     - calendar.kottendijk_gmail_com
-
-
-  #     - type: custom:google-keep-card
-  #       entity: sensor.google_keep_f7f46746f5
-  #       theme: dark
-  #       alpha: 0
-  #       show:
-  #         - unchecked

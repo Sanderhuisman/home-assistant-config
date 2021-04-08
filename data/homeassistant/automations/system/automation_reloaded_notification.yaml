@@ -1,3 +1,4 @@
+---
 alias: "[System] Automation Reloaded Notification"
 id: system_automation_reloaded_notification
 description: Send notification when automations are reloaded

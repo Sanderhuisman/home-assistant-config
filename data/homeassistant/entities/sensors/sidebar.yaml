@@ -1,3 +1,4 @@
+---
 platform: template
 sensors:
   sidebar_greeting:
@@ -17,13 +18,13 @@ sensors:
       {% elif time <= 23 %} Good evening {{'\U0001F974'}}
       {% else %} Good evening {{'\U0001F974'}}
       {% endif %}
-
   ha_version:
     icon_template: mdi:home-assistant
     friendly_name_template: >
       Installed {{ states('sensor.current_version') }}
     value_template: >
-      {{ 'Latest' if states('sensor.current_version') == states('sensor.version_available') else states('sensor.version_available') }}
+      {{ 'Latest' if states('sensor.current_version') == states('sensor.version_available')
+                  else states('sensor.version_available') }}
 
   sidebar_day:
     icon_template: mdi:calendar
@@ -34,7 +35,18 @@ sensors:
   sidebar_date:
     icon_template: mdi:calendar
     value_template: >
-      {% set months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] %}
+      {% set months = ['January',
+                       'February',
+                       'March',
+                       'April',
+                       'May',
+                       'June',
+                       'July',
+                       'August',
+                       'September',
+                       'October',
+                       'November',
+                       'December'] %}
       {{ strptime(states('sensor.date'), '%Y-%m-%d').day }} {{ months[now().month-1] }}
 
   sidebar_vacuum:

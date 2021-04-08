@@ -3,6 +3,7 @@
 # Global ignore data folders
 data/database
 data/zigbee2mqtt
+data/zwavejs
 
 # Ignore files created by IDE's
 .vscode

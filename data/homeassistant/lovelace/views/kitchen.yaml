@@ -1,3 +1,4 @@
+---
 path: kitchen
 title: Kitchen
 cards:
@@ -9,21 +10,12 @@ cards:
       - name: Ceiling
         entity: light.kitchen_ceiling_lights_current_value_5
 
-
   - type: entities
     title: Automation
     show_header_toggle: false
     entities:
       - name: Automation Enabled
         entity: input_boolean.kitchen_automation
-        # style: |
-        #   :host {
-        #     --state-icon-color:
-        #       {% if is_state('input_boolean.kitchen_automation', 'on') %}
-        #         var(--accent-color)
-        #       {% endif %}
-        #       ;
-        #   }
 
   - type: entities
     title: Sensors
@@ -43,9 +35,7 @@ cards:
     line_width: 6
     hours_to_show: 72
     points_per_hour: 0.3
-    # lower_bound: 0
     show:
-      # extrema: true
       fill: fade
       labels: false
       name: true

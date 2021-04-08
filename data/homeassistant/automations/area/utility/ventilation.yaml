@@ -1,3 +1,4 @@
+---
 alias: "[Utility] Ventilation On"
 id: utility_ventilation_on
 description: 'Turn WTW on in the morning'

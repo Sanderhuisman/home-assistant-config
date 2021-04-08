@@ -1,13 +1,12 @@
+---
 proxmoxve:
-  - host:     !secret proxmox_host
+  - host: !secret proxmox_host
     username: !secret proxmox_username
     password: !secret proxmox_password
-    realm:    !secret proxmox_realm
+    realm: !secret proxmox_realm
     verify_ssl: false
     nodes:
       - node: proxmox
         vms:
           - 100
           - 105
-        # containers:
-        #   - CONTAINER_ID

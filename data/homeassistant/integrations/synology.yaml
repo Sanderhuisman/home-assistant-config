@@ -1,3 +1,4 @@
+---
 synology_dsm:
   host: !secret synology_ip
   port: !secret synology_port

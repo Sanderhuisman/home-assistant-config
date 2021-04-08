@@ -1,6 +1,6 @@
+---
 path: bedroom
 title: Bedroom
-# icon: mdi:bed
 cards:
   - type: vertical-stack
     cards:
@@ -18,7 +18,7 @@ cards:
 
       - type: glance
         title: Scenes
-        show_state: False
+        show_state: false
         entities:
           - entity: scene.bedroom_off
             icon: mdi:lightbulb-off
@@ -131,4 +131,3 @@ cards:
         hours_to_show: 1
         points_per_hour: 60
         update_interval: 30
-

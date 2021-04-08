@@ -1,21 +1,21 @@
+---
 name: "Bedroom Bright"
 entities:
   light.bedroom_ceiling:
-    state: on
+    state: true
     brightness: 255
     color_temp: 346
   light.tv_l:
-    state: on
+    state: true
     brightness: 255
     hs_color: [45.773, 38.039]
   light.tv_r:
-    state: on
+    state: true
     brightness: 255
     hs_color: [45.773, 38.039]
   light.bed:
-    state: on
+    state: true
     brightness: 255
     color_temp: 346
-
   input_boolean.bedroom_nightlight_active:
-    state: off
+    state: false

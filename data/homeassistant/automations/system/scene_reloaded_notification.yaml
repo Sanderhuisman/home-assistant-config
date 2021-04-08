@@ -1,3 +1,4 @@
+---
 alias: "[System] Scene Reloaded Notification"
 id: system_scene_reloaded_notification
 description: Send notification when scenes are reloaded

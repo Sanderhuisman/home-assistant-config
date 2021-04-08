@@ -1,13 +1,14 @@
+---
 name: "Bedroom Off"
 entities:
   light.bedroom_ceiling:
-    state: off
+    state: false
   light.tv_l:
-    state: off
+    state: false
   light.tv_r:
-    state: off
+    state: false
   light.bed:
-    state: off
+    state: false
 
   input_boolean.bedroom_nightlight_active:
-    state: off
+    state: false

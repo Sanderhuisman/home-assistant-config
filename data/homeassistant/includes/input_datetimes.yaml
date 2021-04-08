@@ -1,3 +1,4 @@
+---
 washing_machine_started:
   name: Washing machine last started
   has_date: true

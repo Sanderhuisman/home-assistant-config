@@ -1,3 +1,4 @@
+---
 octoprint:
   host: !secret octoprint_host
   api_key: !secret octoprint_api_key
@@ -12,6 +13,7 @@ camera:
 
   - platform: generic
     name: OctoPrint Preview
+    # yamllint disable-line rule:line-length
     still_image_url: "http://192.168.1.9/plugin/UltimakerFormatPackage/thumbnail/{{states('sensor.octoprint_current_filename') | regex_replace(find='gcode', replace='png', ignorecase=True)}}"
     scan_interval: 5
     content_type: image/png
@@ -86,14 +88,12 @@ sensor:
             {%- endif -%}
           {%- endif -%}
 
-
       octoprint_time_ready:
-        value_template: "{{ (now().strftime('%s') | int + states('sensor.octoprint_time_remaining') | int) | timestamp_custom('%H:%M', false) }}"
+        value_template: >
+          {{ (now().strftime('%s') | int + states('sensor.octoprint_time_remaining') | int) |
+             timestamp_custom('%H:%M', false) }}
 
 light:
   - platform: switch
     name: 3D Printer Lights
-    # icon: 'mdi:string-lights'
     entity_id: switch.printer_light
-
-

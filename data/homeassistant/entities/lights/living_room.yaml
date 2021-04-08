@@ -1,8 +1,9 @@
+---
 platform: group
 name: Living Room Lights
 entities:
   - light.hue_bulb
-  - light.hue_light_3 # Big lamp
+  - light.hue_light_3  # Big lamp
   - light.hue_light_4
   - light.living_room_ceiling_level_light_color_on_off
   - light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off

@@ -1,1 +1,2 @@
+---
 input_number: !include_dir_named ../entities/input_number

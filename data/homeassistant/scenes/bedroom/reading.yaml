@@ -1,17 +1,18 @@
+---
 name: "Bedroom Reading"
 entities:
   light.bedroom_ceiling:
-    state: off
+    state: false
   light.tv_l:
-    state: on
+    state: true
     brightness: 222
     hs_color: [35.426, 73.725]
   light.tv_r:
-    state: on
+    state: true
     brightness: 222
     hs_color: [35.426, 73.725]
   light.bed:
-    state: off
+    state: false
 
   input_boolean.bedroom_nightlight_active:
-    state: off
+    state: false

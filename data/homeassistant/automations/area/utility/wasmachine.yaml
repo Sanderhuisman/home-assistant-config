@@ -1,3 +1,4 @@
+---
 alias: "[Utility] Wasmachine"
 id: utility_wasmachine
 
@@ -27,7 +28,7 @@ action:
                 tag: Wasmachine
                 channel: Wasmachine
 
-      # Off
+    # Off
     default:
       - service: input_datetime.set_datetime
         entity_id: input_datetime.washing_machine_done

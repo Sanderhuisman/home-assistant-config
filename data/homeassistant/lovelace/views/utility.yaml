@@ -1,3 +1,4 @@
+---
 path: utilityroom
 title: Utility Room
 cards:
@@ -36,7 +37,6 @@ cards:
 
       - name: Wasmachine
         entity: binary_sensor.washing_machine
-
 
   - type: custom:mini-graph-card
     entities:

@@ -1,3 +1,4 @@
+---
 name: Bedroom Automatic Lights
-initial: on
+initial: true
 icon: mdi:motion-sensor

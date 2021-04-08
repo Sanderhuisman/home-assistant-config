@@ -1,3 +1,4 @@
+---
 name: On Vacation
 icon: mdi:airplane
-initial: off
+initial: false

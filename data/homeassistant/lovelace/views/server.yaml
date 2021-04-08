@@ -1,3 +1,4 @@
+---
 path: server
 title: Server
 cards:
@@ -15,6 +16,3 @@ cards:
       - sensor.adguard_safe_browsing_blocked
       - switch.adguard_safe_search
       - sensor.adguard_safe_searches_enforced
-      # - sensor.adguard_dns_queries_blocked
-      # - sensor.adguard_rules_count
-      # - switch.adguard_query_log

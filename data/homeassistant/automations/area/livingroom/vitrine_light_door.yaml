@@ -1,4 +1,6 @@
+---
 alias: Vitrine Lights Door
+
 trigger:
   - platform: state
     entity_id:

@@ -1,3 +1,4 @@
+---
 path: office
 title: Office
 cards:
@@ -34,12 +35,8 @@ cards:
     line_width: 6
     hours_to_show: 72
     points_per_hour: 0.3
-    # lower_bound: 0
     show:
-      # extrema: true
       fill: fade
       labels: false
       name: true
       state: true
-# sensor.office_temperature
-# sensor.office_humidity

@@ -1,3 +1,4 @@
+---
 alias: "[Hallway] Automatic Lights"
 id: hallway_lights_automatic
 description: ''
@@ -77,48 +78,3 @@ action:
         sequence:
           - service: light.turn_off
             entity_id: light.hallway_lights_current_value
-
-
-
-
-# alias: Hallway Lights On
-# description: ''
-# trigger:
-#   - platform: state
-#     entity_id: binary_sensor.philips_sml001_0955f606_occupancy
-#     # from: 'off'
-#     # to: 'on'
-
-#   - platform: state
-#     entity_id: binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off
-#     # from: 'off'
-#     # to: 'on'
-
-#   - platform: event
-#     event_type: timer.finished
-#     event_data:
-#       entity_id: timer.hallway_lights_off_motion
-
-# condition:
-#   # Automation must be enabled
-#   - condition: state
-#     entity_id: input_boolean.hallway_automatic_light
-#     state: 'on'
-
-# action:
-#   - service: notify.mobile_app_sander_sony_xperia_1_ii
-#     data_template:
-#       # channel: System
-#       message: >
-#         Hallway trigger {{ trigger.platform }}
-#         {% if trigger.platform == 'event' %}
-#         {{ trigger.event }} {{ trigger.event.data }}
-#         {% elif trigger.platform == 'state' %}
-#         {{ trigger.entity_id }} {{ trigger.from_state.state }} -> {{ trigger.to_state.state }}
-#         {% else %}
-#         Unknown platform
-#         {% endif %}
-#   # - service_template: >
-#   #     # notify.{{ trigger.topic.split('/')[-1] }}
-#   #   data_template:
-#   #     message: '{{ trigger.payload }}'

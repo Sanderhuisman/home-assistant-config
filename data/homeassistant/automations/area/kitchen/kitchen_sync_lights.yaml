@@ -1,3 +1,4 @@
+---
 alias: "[Kitchen] Lights Sync"
 id: kitchen_lights_sync
 mode: single
@@ -20,21 +21,22 @@ condition:
 
 action:
   - choose:
-    - conditions:
-        - condition: template
-          value_template: "{{ trigger.entity_id == 'light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off' }}"
+      - conditions:
+          - condition: template
+            value_template: >
+              {{ trigger.entity_id == 'light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off' }}
 
-      sequence:
-        - service: light.turn_on
-          data:
-            entity_id: light.kitchen_ceiling_lights_current_value_5
-            brightness_pct: 100
+        sequence:
+          - service: light.turn_on
+            data:
+              entity_id: light.kitchen_ceiling_lights_current_value_5
+              brightness_pct: 100
 
-    - conditions:
-        - condition: template
-          value_template: "{{ trigger.entity_id == 'light.kitchen_ceiling_lights_current_value_5' }}"
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.entity_id == 'light.kitchen_ceiling_lights_current_value_5' }}"
 
-      sequence:
-        - service: light.turn_off
-          data:
-            entity_id: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off
+        sequence:
+          - service: light.turn_off
+            data:
+              entity_id: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off

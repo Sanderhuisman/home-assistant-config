@@ -1,4 +1,6 @@
+---
 alias: Vitrine Light Decrease brightness
+
 trigger:
   - platform: event
     event_type: zha_event

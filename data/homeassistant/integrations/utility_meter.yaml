@@ -1,1 +1,2 @@
+---
 utility_meter: !include ../includes/utility_meter.yaml

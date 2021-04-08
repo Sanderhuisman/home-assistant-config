@@ -1,3 +1,4 @@
+---
 # - sensor.dsmr_reading_phase_voltage_l1
 # - sensor.dsmr_reading_phase_currently_delivered_l1
 # - sensor.dsmr_day_consumption_electricity_merged
