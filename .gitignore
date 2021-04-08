@@ -1,10 +1,8 @@
 .env
 
 # Global ignore data folders
-data/appdaemon
 data/database
-data/deconz
-data/ozw
+data/zigbee2mqtt
 
 # Ignore files created by IDE's
 .vscode
