@@ -1,4 +1,5 @@
-platform: openweathermap
-api_key: !secret openweathermap_key
-name: openweathermap
-mode: hourly
+# Not longer by yaml
+# platform: openweathermap
+# api_key: !secret openweathermap_key
+# name: openweathermap
+# mode: hourly

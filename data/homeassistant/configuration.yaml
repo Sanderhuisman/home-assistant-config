@@ -6,5 +6,7 @@ homeassistant:
   unit_system:  metric
   time_zone:    !secret homeassistant_timezone
   customize:    !include customize.yaml
-  packages:     !include_dir_named packages
+  packages:     !include_dir_named integrations
   external_url: !secret homeassistant_url
+
+pyscript:

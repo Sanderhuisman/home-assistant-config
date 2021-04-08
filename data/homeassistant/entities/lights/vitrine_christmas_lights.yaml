@@ -1,0 +1,4 @@
+platform: switch
+name: Christmas Vitrine Lights
+# icon: 'mdi:string-lights'
+entity_id: switch.christmas_vitrine_lights

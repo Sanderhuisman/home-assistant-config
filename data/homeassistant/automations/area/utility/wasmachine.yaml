@@ -1,0 +1,43 @@
+alias: "[Utility] Wasmachine"
+id: utility_wasmachine
+
+trigger:
+  - platform: state
+    entity_id: binary_sensor.washing_machine
+
+action:
+  - choose:
+      # On
+      - conditions:
+          - condition: state
+            entity_id: binary_sensor.washing_machine
+            state: 'on'
+
+        sequence:
+          - service: input_datetime.set_datetime
+            entity_id: input_datetime.washing_machine_started
+            data:
+              datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+
+          - service: notify.mobile_app_sander_sony_xperia_1_ii
+            data:
+              title: Wasmachine
+              message: "The wasmachine just started"
+              data:
+                tag: Wasmachine
+                channel: Wasmachine
+
+      # Off
+    default:
+      - service: input_datetime.set_datetime
+        entity_id: input_datetime.washing_machine_done
+        data:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+
+      - service: notify.mobile_app_sander_sony_xperia_1_ii
+        data:
+          title: Wasmachine
+          message: "Washing machine is done 👚👕"
+          data:
+            tag: Wasmachine
+            channel: Wasmachine

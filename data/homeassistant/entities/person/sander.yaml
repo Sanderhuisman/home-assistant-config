@@ -1,4 +1,4 @@
 name: Sander
 id: sander
 device_trackers:
-  - device_tracker.g8141
+  - device_tracker.sander_sony_xperia_1_ii

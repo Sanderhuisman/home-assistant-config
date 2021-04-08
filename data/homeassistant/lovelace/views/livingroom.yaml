@@ -1,0 +1,67 @@
+path: living
+title: Living Room
+cards:
+  - type: entities
+    title: Lights
+    entities:
+      - light.hue_bulb
+      - light.hue_light_3
+      - light.hue_light_4
+      - light.living_room_ceiling_level_light_color_on_off
+      - light.kitchen_iris_level_light_color_on_off
+      - name: Vitrine
+        entity: light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
+      - light.christmas_vitrine_lights
+
+  - type: glance
+    title: Scenes
+    show_state: False
+    entities:
+      - entity: scene.living_off
+        icon: mdi:lightbulb-off
+        name: "Off"
+        tap_action:
+          action: call-service
+          service: scene.turn_on
+          service_data:
+            entity_id: scene.living_off
+      - entity: scene.living_bright
+        icon: mdi:car-light-high
+        name: "Bright"
+        tap_action:
+          action: call-service
+          service: scene.turn_on
+          service_data:
+            entity_id: scene.living_bright
+      - entity: scene.living_normal
+        icon: mdi:lightbulb-outline
+        name: "Normal"
+        tap_action:
+          action: call-service
+          service: scene.turn_on
+          service_data:
+            entity_id: scene.living_normal
+      - entity: scene.living_movie
+        icon: mdi:movie-open
+        name: "Movie"
+        tap_action:
+          action: call-service
+          service: scene.turn_on
+          service_data:
+            entity_id: scene.living_movie
+      - entity: scene.living_relax
+        icon: mdi:candle
+        name: "Relax"
+        tap_action:
+          action: call-service
+          service: scene.turn_on
+          service_data:
+            entity_id: scene.living_relax
+
+  - type: entities
+    title: Sensors
+    entities:
+      - entity: sensor.ikea_of_sweden_tradfri_on_off_switch_f6cd1bfe_power
+        name: Vitrine Switch Battery
+      - entity: sensor.lumi_lumi_sensor_magnet_aq2_40ea7205_power
+        name: Vitrine Door Sensor Battery

@@ -1,7 +1,0 @@
-sensor:
-  - platform: google_keep
-    username: !secret google_keep.username
-    password: !secret google_keep.password
-    labels:
-      - 'Home Assistant'
-    pinned: true

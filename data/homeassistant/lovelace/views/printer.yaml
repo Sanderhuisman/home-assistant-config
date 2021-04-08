@@ -1,0 +1,143 @@
+path: printer
+title: Printer
+icon: mdi:printer-3d
+cards:
+  - type: markdown
+    content: Ender 3V2
+
+
+    # - type: custom:restriction-card
+    #   row: true
+    #   card:
+      #     type: entities
+      #     entities:
+        #       - switch.printer_power
+        # entities:
+
+          # hui-entities-card
+
+  - type: 'custom:hui-entities-card'
+    entities:
+      - type: custom:restriction-card
+        row: true
+        restrictions:
+          confirm:
+          pin:
+            code: 1234
+        condition:
+          entity: sensor.octoprint_current_state
+          value: 'Printing'
+        card:
+          entity: switch.printer_power
+          name: Power
+      - entity: light.3d_printer_lights
+        name: Lights
+
+      - entity: sensor.octoprint_current_state
+        name: Status
+        state_header: 'Status'
+        icon: mdi:bullseye-arrow
+        type: custom:multiple-entity-row
+        entities:
+          - entity: sensor.octoprint_job_percentage
+            name: Progress
+
+      - entity: sensor.octoprint_target_tool0_temp
+        name: Nozzle
+        state_header: Target
+        type: custom:multiple-entity-row
+        entities:
+          - entity: sensor.octoprint_actual_tool0_temp
+            unit: '°C'
+            name: 'Actual'
+
+      - entity: sensor.octoprint_target_bed_temp
+        name: Bed
+        state_header: Target
+        type: custom:multiple-entity-row
+        entities:
+          - entity: sensor.octoprint_actual_bed_temp
+            unit: '°C'
+            name: 'Actual'
+
+      - entity: sensor.octoprint_time_ready
+        name: Time
+        icon: 'mdi:clock-outline'
+        state_header: 'Ready'
+        secondary_info: last-changed
+        type: custom:multiple-entity-row
+        entities:
+
+          - name: 'Remaining'
+            entity: sensor.octoprint_time_remaining_hr
+            # entity: sensor.octoprint_time_remaining
+          - name: 'Elapsed'
+            entity: sensor.octoprint_time_elapsed_hr
+            # entity: sensor.octoprint_time_elapsed
+
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:mini-graph-card
+        name: Bed
+        entities:
+          - sensor.octoprint_actual_bed_temp
+        line_color: var(--primary-color)
+        group: false
+        icon: mdi:radiator
+        hour24: true
+        line_width: 6
+        hours_to_show: 8
+        points_per_hour: 60
+        show:
+          # extrema: true
+          fill: fade
+          labels: false
+          name: true
+          state: true
+        lower_bound: 0
+
+      - type: custom:mini-graph-card
+        name: Nozzle
+        icon: mdi:printer-3d-nozzle
+        entities:
+          - sensor.octoprint_actual_tool0_temp
+        line_color: var(--primary-color)
+        group: false
+        hour24: true
+        line_width: 6
+        hours_to_show: 8
+        points_per_hour: 60
+        show:
+          # extrema: true
+          fill: fade
+          labels: false
+          name: true
+          state: true
+        lower_bound: 0
+
+
+  - type: picture-entity
+    style:
+      .: |
+        ha-card {
+          height: 330px;
+        }
+    entity: camera.octoprint
+    camera_view: live
+    show_state: false
+    show_name: false
+
+  - type: markdown
+    content: Preview
+  - type: picture-entity
+    style:
+      .: |
+        ha-card {
+          height: 330px;
+        }
+    entity: camera.octoprint_preview
+    camera_view: live
+    show_state: false
+    show_name: false
+

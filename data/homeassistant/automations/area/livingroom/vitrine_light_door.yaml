@@ -1,0 +1,48 @@
+alias: Vitrine Lights Door
+trigger:
+  - platform: state
+    entity_id:
+      - binary_sensor.lumi_lumi_sensor_magnet_aq2_40ea7205_on_off
+
+action:
+  - choose:
+      - conditions:
+          - condition: state
+            state: 'on'
+            entity_id:
+              - binary_sensor.lumi_lumi_sensor_magnet_aq2_40ea7205_on_off
+
+          - condition: state
+            state: 'off'
+            entity_id:
+              - light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
+
+        sequence:
+          - service: input_boolean.turn_on
+            entity_id: input_boolean.vitrine_on_door
+
+          - service: light.turn_on
+            entity_id: light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
+            data:
+              transition: 0.5
+
+      - conditions:
+          - condition: state
+            state: 'off'
+            entity_id:
+              - binary_sensor.lumi_lumi_sensor_magnet_aq2_40ea7205_on_off
+
+          - condition: state
+            state: 'on'
+            entity_id:
+              - light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
+              - input_boolean.vitrine_on_door
+
+        sequence:
+          - service: input_boolean.turn_off
+            entity_id: input_boolean.vitrine_on_door
+
+          - service: light.turn_off
+            entity_id: light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
+            data:
+              transition: 0.5

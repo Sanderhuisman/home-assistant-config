@@ -12,3 +12,6 @@ entities:
     hs_color: [35.426, 73.725]
   light.bed:
     state: off
+
+  input_boolean.bedroom_nightlight_active:
+    state: off

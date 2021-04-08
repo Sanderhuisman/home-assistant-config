@@ -1,0 +1,56 @@
+path: utilityroom
+title: Utility Room
+cards:
+  - type: light
+    name: Utility Lights
+    entity: light.utility_room_lights_current_value_3
+
+  - type: entities
+    name: Ventilation
+    entities:
+      - name: Ventilation
+        entity: switch.ventilation_on_off
+
+  - type: entities
+    title: Automation
+    show_header_toggle: false
+    entities:
+      - type: custom:fold-entity-row
+        head:
+          name: Fridge Door Sensor
+          entity: binary_sensor.utility_frige_door_status
+        entities:
+          - entity: sensor.utility_frige_door_power
+            name: Battery
+
+      - type: custom:fold-entity-row
+        head:
+          name: Door Sensor
+          entity: binary_sensor.utility_door_status
+        entities:
+          - entity: sensor.utility_door_power
+            name: Battery
+
+      - name: Automatic light
+        entity: automation.utility_lights_motion
+
+      - name: Wasmachine
+        entity: binary_sensor.washing_machine
+
+
+  - type: custom:mini-graph-card
+    entities:
+      - entity: binary_sensor.utility_door_status
+        name: Door Sensor
+    name: Openings last hour
+    hours_to_show: 1
+    points_per_hour: 60
+    update_interval: 30
+    aggregate_func: max
+    line_width: 2
+    smoothing: false
+    state_map:
+      - value: "off"
+        label: Closed
+      - value: "on"
+        label: Open

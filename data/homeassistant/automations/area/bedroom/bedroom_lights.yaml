@@ -1,0 +1,63 @@
+alias: "[Bedroom] Automatic Lights"
+id: bedroom_lights_automatic
+mode: queued
+description: ''
+
+trigger:
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_ieee: 00:15:8d:00:03:55:8d:23
+
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_ieee: 00:15:8d:00:03:55:8e:31
+
+action:
+  - choose:
+      # Single press and lights off -> turn on
+      - conditions:
+          - "{{ trigger.event.data.command == 'single' }}"
+
+        sequence:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: light.bedroom_lights
+                    state: 'off'
+
+                sequence:
+                  - service: input_select.select_option
+                    data:
+                      entity_id: input_select.bedroom_scene
+                      option: "{{ states.input_select.bedroom_scene.attributes.options | first }}"
+
+                  - service: scene.turn_on
+                    data:
+                      entity_id: scene.{{states.input_select.bedroom_scene.state}}
+
+            # Single press and lights on -> turn off
+            default:
+              - scene: scene.bedroom_off
+
+              - service: timer.cancel
+                entity_id: timer.bedroom_scene_switch
+
+      # Double press and lights on -> next scene
+      - conditions:
+          - "{{ trigger.event.data.command == 'double' }}"
+
+          # If off; directly go to second
+          # - condition: state
+          #   entity_id: light.bedroom_lights
+          #   state: 'on'
+
+        sequence:
+          - service: input_select.select_next
+            data:
+              entity_id: input_select.bedroom_scene
+
+          - service: scene.turn_on
+            data:
+              entity_id: scene.{{states.input_select.bedroom_scene.state}}

@@ -1,0 +1,5 @@
+platform: group
+name: Kitchen Lights
+entities:
+  - light.kitchen_ceiling_lights_current_value_5
+  - light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off

@@ -1,0 +1,12 @@
+# https://www.home-assistant.io/integrations/ecovacs/
+
+deebot:
+  username: !secret ecovacs_username
+  password: !secret ecovacs_password
+  country: !secret ecovacs_country
+  continent: !secret ecovacs_continent
+  deviceid: !secret ecovacs_device_id
+  # Optional
+  live_map: True                    # Enable Live Map.. may cause issues on low power hardware | Default: True
+  show_color_rooms: False           # Enable draw room colors as in the app | Default: False
+  livemappath: 'www/deebot_ozmo_950_map.png'   # Path where to save live_map

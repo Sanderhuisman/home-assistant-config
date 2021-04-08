@@ -1,3 +1,0 @@
-samsungtv:
-  - host: !secret samsungtv_host
-    # mac : !secret samsungtv_mac

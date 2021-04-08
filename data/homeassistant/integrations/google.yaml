@@ -1,0 +1,55 @@
+google:
+  client_id     : !secret google_client_id
+  client_secret : !secret google_client_secret
+  track_new_calendar: false
+
+
+google_assistant:
+  project_id: !secret google_assistant_project
+  service_account:
+    private_key: !secret google_assistant_private_key
+    client_email: !secret google_assistant_email
+  report_state: true
+  expose_by_default: false # We will do it ourselves
+  entity_config:
+    light.kitchen_ceiling_lights_current_value_5:
+      name: Kitchen Ceiling Light
+
+    light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off:
+      name: Kitchen Workspace Light
+
+    light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off:
+      name: Vitrine Light
+
+    light.utility_room_lights_current_value_3:
+      name: Utility Room Light
+
+    light.hallway_lights_current_value:
+      name: Hallway Light
+
+    scene.bedroom_bright:
+      name: Bedroom Bright
+
+    scene.bedroom_reading:
+      name: Bedroom Reading
+
+    scene.living_movie:
+      name: Living Room Movie
+
+    scene.living_bright:
+      name: Living Room Bright
+
+    media_player.samsung_tv:
+      name: Living Room TV
+
+    sensor.philips_sml001_0955f606_temperature:
+      name: Hallway Temperature
+
+    light.christmas_tree_lights:
+      name: Christmas Tree Lights
+
+    light.christmas_vitrine_lights:
+      name: Christmas Vitrine Lights
+
+    switch.ventilation_on_off:
+      name: Ventilation

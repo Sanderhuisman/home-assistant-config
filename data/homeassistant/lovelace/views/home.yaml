@@ -1,0 +1,380 @@
+path: home
+title: Home
+icon: mdi:home
+cards:
+  - type: vertical-stack
+    cards:
+      - type: glance
+        title: People
+        show_state: false
+        entities:
+          - entity: person.sander
+            icon: mdi:human-male
+            style: |
+              :host {
+                --paper-item-icon-color:
+                  {% if is_state('person.sander', 'home') %}
+                    var(--accent-color)
+                  {% endif %}
+                  ;
+              }
+          - entity: person.lys
+            icon: mdi:human-female
+            style: |
+              :host {
+                --paper-item-icon-color:
+                  {% if is_state('person.lys', 'home') %}
+                    var(--accent-color)
+                  {% endif %}
+                  ;
+              }
+
+      # - type: entities
+      #   show_header_toggle: false
+      #   entities:
+      #     - entity: input_boolean.vacation_mode
+      #     - entity: input_boolean.guest_mode
+
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Lights
+            show_header_toggle: false
+            entities:
+              - type: custom:fold-entity-row
+                head:
+                  type: custom:slider-entity-row
+                  name: Living
+                  color_picker: true
+                  toggle: true
+                  entity: light.living_room_lights
+                entities:
+                  - light.hue_bulb
+                  - light.hue_light_3
+                  - light.hue_light_4
+                  - light.living_room_ceiling_level_light_color_on_off
+                  - light.kitchen_iris_level_light_color_on_off
+                  - name: Vitrine
+                    entity: light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
+
+                  - name: Cozy lights
+                    entity: scene.living_relax
+                    icon_height: 20px
+                    icon: mdi:candle
+                    show_name: true
+                    tap_action:
+                      action: call-service
+                      service: scene.living_relax
+                  - entity: scene.living_bright
+                    icon_height: 20px
+                    name: White lights
+                    icon: mdi:car-light-high
+                    show_name: true
+                    tap_action:
+                      action: call-service
+                      service: scene.living_bright
+                  - entity: scene.living_normal
+                    icon_height: 20px
+                    name: Normal
+                    icon: mdi:lightbulb-cfl-spiral
+                    show_name: true
+                    tap_action:
+                      action: call-service
+                      service: scene.living_normal
+
+
+              - type: custom:fold-entity-row
+                head:
+                  type: custom:slider-entity-row
+                  name: Kitchen
+                  color_picker: true
+                  toggle: true
+                  entity: light.kitchen_lights
+                entities:
+                  - entity: light.kitchen_ceiling_lights_current_value_5
+                    name: Ceiling
+                  - entity: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off
+                    name: Workspace
+
+              - type: custom:fold-entity-row
+                head:
+                  type: custom:slider-entity-row
+                  name: Bedroom
+                  color_picker: true
+                  toggle: true
+                  entity: light.bedroom_lights
+                entities:
+                  - entity: light.bed
+                    name: Nightstand
+                  - entity: light.tv_l
+                    name: Bed Left
+                  - entity: light.tv_r
+                    name: Bed Right
+                  - entity: light.bedroom_ceiling
+                    name: Ceiling
+
+                  - name: Bright
+                    entity: scene.bedroom_bright
+                    icon_height: 20px
+                    icon: mdi:car-light-high
+                    show_name: true
+                    tap_action:
+                      action: call-service
+                      service: scene.bedroom_bright
+                  - name: Cozy
+                    entity: scene.bedroom_reading
+                    icon_height: 20px
+                    icon: mdi:candle
+                    show_name: true
+                    tap_action:
+                      action: call-service
+                      service: scene.bedroom_reading
+
+
+              - type: custom:slider-entity-row
+                name: Hallway
+                color_picker: true
+                toggle: true
+                entity: light.hallway_lights_current_value
+
+              - type: custom:slider-entity-row
+                name: Utility Room
+                color_picker: true
+                toggle: true
+                entity: light.utility_room_lights_current_value_3
+          # - type: glance
+          #   title: Scenes
+          #   show_state: False
+          #   entities:
+
+  - type: vertical-stack
+    cards:
+  # - type: custom:simple-weather-card
+      - type: custom:weather-card
+        name: Weather
+        entity: weather.home_2
+
+      # - type: thermostat
+      - type: custom:simple-thermostat # https://github.com/nervetattoo/simple-thermostat
+        name: false
+        entity: climate.heating
+        step_layout: row
+        icon: true
+        control: false
+        # sensors:
+        #   - entity: sensor.heating_temperature
+        #     name: Temperature
+        #   - entity: sensor.heating_humidity
+        #     name: Humididy
+
+      - type: custom:mini-media-player
+        entity: media_player.samsung_tv
+        # artwork: cover
+        # background: /local/tv.jpg
+        hide:
+          controls: true
+          mute: false
+          play_stop: false
+          volume: false
+
+  - type: vertical-stack
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            color_thresholds_transition: smooth
+            entities:
+              - entity: sensor.heating_temperature    # sensor.heating_humidity
+                name: Living room
+            font_size: 100
+            line_color: var(--primary-color)
+            group: false
+            hour24: true
+            line_width: 6
+            hours_to_show: 72
+            points_per_hour: 0.3
+            # lower_bound: 0
+            show:
+              # extrema: true
+              fill: fade
+              labels: false
+              name: true
+              state: true
+          - type: custom:mini-graph-card
+            color_thresholds_transition: smooth
+            entities:
+              - entity: sensor.lumi_lumi_weather_0c0b6004_temperature
+                name: Bathroom
+            font_size: 100
+            line_color: var(--primary-color)
+            group: false
+            hour24: true
+            line_width: 6
+            hours_to_show: 72
+            points_per_hour: 0.3
+            # lower_bound: 0
+            show:
+              # extrema: true
+              fill: fade
+              labels: false
+              name: true
+              state: true
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            color_thresholds_transition: smooth
+            entities:
+              - entity: sensor.philips_sml001_e2abf706_temperature
+                name: Bedroom
+            font_size: 100
+            line_color: var(--primary-color)
+            group: false
+            hour24: true
+            line_width: 6
+            hours_to_show: 72
+            points_per_hour: 0.3
+            # lower_bound: 0
+            show:
+              # extrema: true
+              fill: fade
+              labels: false
+              name: true
+              state: true
+
+          - type: custom:mini-graph-card
+            color_thresholds_transition: smooth
+            entities:
+              - entity: sensor.philips_sml001_0955f606_temperature
+                name: Hallway
+            font_size: 100
+            line_color: var(--primary-color)
+            group: false
+            hour24: true
+            line_width: 6
+            hours_to_show: 72
+            points_per_hour: 0.3
+            # lower_bound: 0
+            show:
+              # extrema: true
+              fill: fade
+              labels: false
+              name: true
+              state: true
+
+      - type: custom:mini-graph-card
+        color_thresholds_transition: smooth
+        entities:
+          - entity: sensor.home_realfeel_temperature
+            name: Outside
+        font_size: 100
+        line_color: var(--primary-color)
+        group: false
+        hour24: true
+        line_width: 6
+        hours_to_show: 72
+        points_per_hour: 0.3
+        # lower_bound: 0
+        show:
+          # extrema: true
+          fill: fade
+          labels: false
+          name: true
+          state: true
+
+
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            name: Power Consumption
+            entities:
+              - sensor.power_consumption
+            line_color: var(--primary-color)
+            group: false
+            hour24: true
+            line_width: 6
+            hours_to_show: 72
+            points_per_hour: 1
+            show:
+              # extrema: true
+              fill: fade
+              labels: false
+              name: true
+              state: true
+            lower_bound: 0
+
+          - type: custom:mini-graph-card
+            name: Energy consumption
+            entities:
+              - entity: sensor.energy_day
+            hours_to_show: 168
+            font_size: 100
+            aggregate_func: max
+            group_by: date
+            hour24: true
+            line_color: var(--primary-color)
+            show:
+              graph: bar
+              # extrema: true
+              fill: fade
+              labels: false
+              name: true
+              state: true
+            lower_bound: 0
+
+
+  # https://github.com/benct/lovelace-xiaomi-vacuum-card
+
+  - type: custom:xiaomi-vacuum-card
+    entity: vacuum.deebot_950
+    # vendor: deebot
+
+    # state:
+    #   status:
+    #     key: state
+    #   mode:
+    #     icon: mdi:robot-vacuum
+    #     label: 'Fan speed: '
+    #     unit: 'percent'
+    attributes:
+      main_brush: false
+      side_brush: false
+      filter: false
+      clean_area: false
+    #   main_brush:
+    #     key: component_brush
+    #   side_brush:
+    #     key: component_sideBrush
+    # buttons:
+    #   pause:
+    #     icon: mdi:stop
+    #     label: Hold
+    #     service: vacuum.stop
+
+  # - type: picture
+  #   image: /local/deebot_ozmo_950_map.png
+
+
+
+
+
+
+
+      # - type: custom:calendar-card
+      #   title: "Calendar"
+      #   progressBar: true
+      #   showEventOrigin: true
+      #   showLocation: true
+      #   numberOfDays: 14
+      #   entities:
+      #     - calendar.sander_lys
+      #     - calendar.kottendijk_gmail_com
+
+
+  #     - type: custom:google-keep-card
+  #       entity: sensor.google_keep_f7f46746f5
+  #       theme: dark
+  #       alpha: 0
+  #       show:
+  #         - unchecked

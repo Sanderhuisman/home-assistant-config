@@ -1,12 +1,13 @@
+alias: "[System] Automation Reloaded Notification"
+id: system_automation_reloaded_notification
 description: Send notification when automations are reloaded
-alias: system_automation_reloaded_notification
 
 trigger:
   platform: event
   event_type: automation_reloaded
 
 action:
-  - service: notify.mobile_app_g8141
+  - service: notify.mobile_app_sander_sony_xperia_1_ii
     data:
       message: Home Assistant reloaded all automations 🤖
       data:

@@ -1,0 +1,97 @@
+---
+alias: "[Utility] Fridge Open Warning"
+id: utility_fridge_open_warning
+description: ''
+mode: single
+
+trigger:
+  - platform: state
+    entity_id: binary_sensor.utility_frige_door_status
+    from: 'on'
+    to: 'off'
+
+  - platform: state
+    entity_id: binary_sensor.utility_frige_door_status
+    from: 'off'
+    to: 'on'
+    for: 00:05:00
+
+action:
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: binary_sensor.utility_frige_door_status
+            state: 'on'
+
+        sequence:
+          - service: notify.mobile_app_sander_sony_xperia_1_ii
+            data:
+              title: Fridge Alarm
+              message: Fridge gets 🥵
+              data:
+                ledColor: "red"
+                channel: alarm_stream
+                vibrationPattern: "100, 1000, 100, 1000, 100"
+                importance: high
+                ttl: 0
+                priority: high
+
+                persistent: true # Set to true to create a persistent notification
+                tag: persistent_fridge_alarm # Tag is required for the persistent notification
+
+    default:
+      - service: notify.mobile_app_sander_sony_xperia_1_ii
+        data:
+          message: clear_notification
+          data:
+            tag: persistent_fridge_alarm
+
+# - id: '1615843825812'
+#   alias: Fridge open
+#   description: ''
+#   mode: single
+
+#   trigger:
+#     - platform: state
+#       entity_id: binary_sensor.utility_frige_door_status
+#       from: 'off'
+#       to: 'on'
+#       for: 00:05:00
+
+#   condition: []
+
+#   action:
+#     - service: notify.mobile_app_sander_sony_xperia_1_ii
+#       data:
+#         title: Fridge Alarm
+#         message: Fridge gets 🥵
+#         data:
+#           ledColor: "red"
+#           channel: alarm_stream
+#           vibrationPattern: "100, 1000, 100, 1000, 100"
+#           importance: high
+#           ttl: 0
+#           priority: high
+
+#           persistent: true # Set to true to create a persistent notification
+#           tag: persistent_fridge_alarm # Tag is required for the persistent notification
+
+# - id: '1615843825813'
+#   alias: Fridge closed
+#   description: ''
+#   mode: single
+
+#   trigger:
+#     - platform: state
+#       entity_id: binary_sensor.utility_frige_door_status
+#       from: 'on'
+#       to: 'off'
+
+#   condition: []
+
+#   action:
+#     - service: notify.mobile_app_sander_sony_xperia_1_ii
+#       data:
+#         message: clear_notification
+#         data:
+#           tag: persistent_fridge_alarm

@@ -9,6 +9,6 @@ entities:
   light.hue_light_4:
     state: on
     brightness: 255
-  light.living_ceiling:
+  light.living_room_ceiling_level_light_color_on_off:
     state: on
     brightness: 255

@@ -1,6 +1,8 @@
 ---
-alias: Upgrade Available Notification
+alias: "[System] Upgrade Available Notification"
+id: system_update_available_notification
 description: Send notification on Home Assistant update available
+
 trigger:
   - platform: state
     entity_id: sensor.version_available
@@ -17,10 +19,10 @@ action:
       message: >
         There is a Home Assistant upgrade for docker pending!
         Version {{ states('sensor.version_available') }} just got released!
-      notification_id: hassio_upgrade
+      notification_id: ha_upgrade
 
   # Sander Android
-  - service: notify.mobile_app_g8141
+  - service: notify.mobile_app_sander_sony_xperia_1_ii
     data_template:
       title: Upgrade time!
       message: >

@@ -1,0 +1,38 @@
+alias: "[Utility] Lights Motion"
+id: utility_lights_motion
+mode: single
+
+trigger:
+  - platform: state
+    entity_id:
+      - binary_sensor.utility_door_status
+
+action:
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: binary_sensor.utility_door_status
+            state: 'on'
+
+        sequence:
+          - service: light.turn_on
+            entity_id:
+              - light.utility_room_lights_current_value_3
+            data:
+              brightness_pct: 100
+
+      - conditions:
+          - condition: state
+            entity_id: binary_sensor.utility_door_status
+            state: 'on'
+            for: '00:60:00'
+
+        sequence:
+          - service: light.turn_off
+            entity_id:
+              - light.utility_room_lights_current_value_3
+
+    default:
+      - service: light.turn_off
+        entity_id:
+          - light.utility_room_lights_current_value_3

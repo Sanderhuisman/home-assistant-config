@@ -1,12 +1,12 @@
-alias: Kitchen Light Off
+alias: "[Kitchen] Light Off"
+id: kitchen_lights_off
+
 trigger:
   - platform: event
     event_type: zha_event
     event_data:
       device_ieee: 58:8e:81:ff:fe:35:6d:4d
       command: 'off'
-
-condition: []
 
 action:
   - service: light.turn_off

@@ -2,17 +2,12 @@ version: '3.7'
 
 services:
   homeassistant:
-    image: homeassistant/home-assistant:0.113.0.dev20200715
-    # image: homeassistant/home-assistant:0.112.4
+    image: homeassistant/home-assistant:${HOMEASSISTANT_TAG:-latest}
     restart: unless-stopped
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       - ./data/homeassistant:/config
-    networks:
-      - influxdb
-      - web
-      - homeassistant
     depends_on:
       - database
     logging:
@@ -21,11 +16,14 @@ services:
         max-size: "1k"
         max-file: "10"
     devices:
-      # Aeotec
-      - /dev/ttyUSB-ZStick-5G:/dev/ttyUSB0
-
       # Conbee
       - /dev/ttyUSB-ConbeeII:/dev/tty-conbee
+      # P1
+      - /dev/ttyUSB-DSRM:/dev/ttyUSB-P1
+    networks:
+      - default
+      - influxdb
+      - web
     labels:
       - traefik.enable=true
       - traefik.docker.network=web
@@ -41,7 +39,7 @@ services:
       - traefik.http.routers.home-secured.middlewares=hsts@file
 
   database:
-    image: postgres:12.3-alpine
+    image: postgres:${POSTGRES_TAG:-latest}
     restart: unless-stopped
     volumes:
       - ./data/database:/var/lib/postgresql/data
@@ -51,38 +49,72 @@ services:
         max-size: "1k"
         max-file: "10"
     networks:
-      - homeassistant
+      - default
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 
-#  database-adminer:
-#    image: adminer
-#    restart: unless-stopped
-#    ports:
-#      - 8085:8080
-#    networks:
-#      - homeassistant
+  # adminer:
+  #   image: adminer
+  #   restart: unless-stopped
+  #   networks:
+  #     - default
+  #     - web
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.docker.network=web
+  #     - traefik.http.routers.database-home.rule=Host(`database.home.homeserver.lan`)
+  #     - traefik.http.routers.database-home.entrypoints=http
+  #     - traefik.http.services.database-home.loadbalancer.server.port=8080
+
+  zwavejs2mqtt:
+    image: zwavejs/zwavejs2mqtt:${ZWAVEJS_TAG:-dev}
+    restart: unless-stopped
+    devices:
+      # Aeotec
+      - /dev/ttyUSB-ZStick-5G:/dev/ttyAeotec
+    volumes:
+      - ./data/zwavejs:/usr/src/app/store
+    ports:
+      - 3000:3000
+    networks:
+      - default
+      - web
+    expose:
+      - 8091
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=web
+      - traefik.http.routers.zwavejs.rule=Host(`zwavejs.homeserver.lan`)
+      - traefik.http.routers.zwavejs.entrypoints=http
+      - traefik.http.services.zwavejs.loadbalancer.server.port=8091
+      - traefik.http.middlewares.zwavejs.ipwhitelist.sourcerange=${IP_SOURCES}
+
+  avahi:
+    image: flungo/avahi:latest
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - REFLECTOR_ENABLE_REFLECTOR=yes
 
   esphome:
-    image: esphome/esphome:1.14.4
+    image: esphome/esphome:${ESPHOME_TAG:-latest}
     restart: unless-stopped
-    networks:
-      - web
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       - ./data/esphome:/config
+    networks:
+      - web
     labels:
       - traefik.enable=true
       - traefik.docker.network=web
       - traefik.http.routers.esphome.rule=Host(`esphome.homeserver.lan`)
       - traefik.http.routers.esphome.entrypoints=http
       - traefik.http.services.esphome.loadbalancer.server.port=6052
+      - traefik.http.middlewares.esphome.ipwhitelist.sourcerange==${IP_SOURCES}
 
 networks:
-  homeassistant:
-    external: false
   web:
     external: true
   influxdb:

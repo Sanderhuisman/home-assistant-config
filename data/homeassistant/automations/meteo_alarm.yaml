@@ -1,0 +1,14 @@
+alias: "[Meteo] Alert me about weather warnings"
+id: meteo_alarm_weather_warning
+mode: single
+
+trigger:
+  platform: state
+  entity_id: binary_sensor.meteoalarm
+  from: 'off'
+
+action:
+  - service: notify.mobile_app_sander_sony_xperia_1_ii
+    data_template:
+      title: "{{state_attr('binary_sensor.meteoalarm', 'headline')}}"
+      message: "{{state_attr('binary_sensor.meteoalarm', 'description')}} is effective on {{state_attr('binary_sensor.meteoalarm', 'effective')}}"

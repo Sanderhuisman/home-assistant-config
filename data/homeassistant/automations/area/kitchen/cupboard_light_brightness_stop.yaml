@@ -1,4 +1,6 @@
-alias: Kitchen Light Bright stop
+alias: "[Kitchen] Light Bright stop"
+id: kitchen_lights_brightness_stop
+
 trigger:
   - platform: event
     event_type: zha_event
@@ -11,5 +13,6 @@ condition: []
 action:
   - service: timer.cancel
     entity_id: timer.kitchen_cupboard_increase_brightness
+
   - service: timer.cancel
     entity_id: timer.kitchen_cupboard_decrease_brightness

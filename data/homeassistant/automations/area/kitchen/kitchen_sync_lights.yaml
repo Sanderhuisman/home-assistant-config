@@ -1,0 +1,40 @@
+alias: "[Kitchen] Lights Sync"
+id: kitchen_lights_sync
+mode: single
+
+trigger:
+  - platform: state
+    entity_id: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off
+    from: 'off'
+    to: 'on'
+
+  - platform: state
+    entity_id: light.kitchen_ceiling_lights_current_value_5
+    from: 'on'
+    to: 'off'
+
+condition:
+  - condition: state
+    entity_id: input_boolean.kitchen_automation
+    state: 'on'
+
+action:
+  - choose:
+    - conditions:
+        - condition: template
+          value_template: "{{ trigger.entity_id == 'light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off' }}"
+
+      sequence:
+        - service: light.turn_on
+          data:
+            entity_id: light.kitchen_ceiling_lights_current_value_5
+            brightness_pct: 100
+
+    - conditions:
+        - condition: template
+          value_template: "{{ trigger.entity_id == 'light.kitchen_ceiling_lights_current_value_5' }}"
+
+      sequence:
+        - service: light.turn_off
+          data:
+            entity_id: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off

@@ -1,0 +1,5 @@
+---
+# https://github.com/benct/lovelace-xiaomi-vacuum-card
+
+url: /hacsfiles/lovelace-xiaomi-vacuum-card/xiaomi-vacuum-card.js
+type: module

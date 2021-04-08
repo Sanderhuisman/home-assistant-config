@@ -14,3 +14,6 @@ entities:
     state: on
     brightness: 1
     color_temp: 443
+
+  input_boolean.bedroom_nightlight_active:
+    state: on

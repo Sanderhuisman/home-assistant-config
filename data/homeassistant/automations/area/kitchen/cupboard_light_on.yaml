@@ -1,4 +1,6 @@
-alias: Kitchen Light On
+alias: "[Kitchen] Light On"
+id: kitchen_lights_on
+
 trigger:
   - platform: event
     event_type: zha_event

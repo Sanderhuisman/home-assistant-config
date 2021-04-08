@@ -1,0 +1,52 @@
+path: kitchen
+title: Kitchen
+cards:
+  - type: entities
+    title: Lights
+    entities:
+      - name: Workspace
+        entity: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off
+      - name: Ceiling
+        entity: light.kitchen_ceiling_lights_current_value_5
+
+
+  - type: entities
+    title: Automation
+    show_header_toggle: false
+    entities:
+      - name: Automation Enabled
+        entity: input_boolean.kitchen_automation
+        # style: |
+        #   :host {
+        #     --state-icon-color:
+        #       {% if is_state('input_boolean.kitchen_automation', 'on') %}
+        #         var(--accent-color)
+        #       {% endif %}
+        #       ;
+        #   }
+
+  - type: entities
+    title: Sensors
+    entities:
+      - entity: sensor.ikea_of_sweden_tradfri_on_off_switch_4d6d35fe_power
+        name: Cupboard Lights Switch Battery
+
+  - type: custom:mini-graph-card
+    color_thresholds_transition: smooth
+    entities:
+      - entity: sensor.lumi_lumi_weather_temperature
+        name: Fridge Temperature
+    font_size: 100
+    line_color: var(--primary-color)
+    group: false
+    hour24: true
+    line_width: 6
+    hours_to_show: 72
+    points_per_hour: 0.3
+    # lower_bound: 0
+    show:
+      # extrema: true
+      fill: fade
+      labels: false
+      name: true
+      state: true

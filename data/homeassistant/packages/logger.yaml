@@ -1,4 +1,0 @@
-logger:
-  default: warning
-  # logs:
-  #   pydeconz: debug

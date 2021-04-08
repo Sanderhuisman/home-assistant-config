@@ -8,3 +8,6 @@ entities:
     state: off
   light.bed:
     state: off
+
+  input_boolean.bedroom_nightlight_active:
+    state: off

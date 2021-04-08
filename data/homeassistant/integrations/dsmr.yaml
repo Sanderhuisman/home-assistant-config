@@ -1,0 +1,21 @@
+# https://www.home-assistant.io/integrations/dsmr
+sensor:
+  - platform: dsmr
+    port: /dev/ttyUSB-P1
+    dsmr_version: 5
+
+  - platform: template
+    sensors:
+      energy_consumption:
+        friendly_name: Total Energy Consumption
+        unit_of_measurement: kWh
+        value_template: "{{ (states('sensor.energy_consumption_tarif_1')|float + states('sensor.energy_consumption_tarif_2')|float) | round(3) }}"
+
+utility_meter:
+  energy_day:
+    source: sensor.energy_consumption
+    cycle: daily
+
+  energy_month:
+    source: sensor.energy_consumption
+    cycle: monthly

@@ -1,0 +1,17 @@
+---
+lovelace:
+  mode: yaml
+  resources: !include_dir_list ../lovelace/resources
+  dashboards:
+    lovelace-test:
+      mode: yaml
+      title: Test
+      icon: mdi:script
+      show_in_sidebar: false
+      filename: lovelace-test.yaml
+    lovelace-sidebar:
+      mode: yaml
+      title: Test
+      icon: mdi:script
+      show_in_sidebar: true
+      filename: lovelace-sidebar.yaml

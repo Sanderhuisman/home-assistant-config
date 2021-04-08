@@ -1,0 +1,45 @@
+platform: template
+sensors:
+  sidebar_greeting:
+    value_template: >
+      {% set time = now().hour %}
+      {% if time <= 1 %} Good night {{'\U0001F611'}}
+      {% elif time <= 3 %} Good night {{'\U0001F62A'}}
+      {% elif time <= 5 %} Good night {{'\U0001F634'}}
+      {% elif time <= 7 %} Good morning {{'\U0001F4A9'}}
+      {% elif time <= 9 %} Good morning {{'\u2615\uFE0F'}}
+      {% elif time <= 10 %} Good morning {{'\U0001F642'}}
+      {% elif time <= 13 %} Good day {{'\U0001F60A'}}
+      {% elif time <= 15 %} Good day {{'\U0001F60E'}}
+      {% elif time <= 17 %} Good day {{'\U0001F44B\U0001F3FB'}}
+      {% elif time <= 19 %} Good evening {{'\U0001F44B\U0001F3FB'}}
+      {% elif time <= 22 %} Good evening {{'\U0001F60C'}}
+      {% elif time <= 23 %} Good evening {{'\U0001F974'}}
+      {% else %} Good evening {{'\U0001F974'}}
+      {% endif %}
+
+  ha_version:
+    icon_template: mdi:home-assistant
+    friendly_name_template: >
+      Installed {{ states('sensor.current_version') }}
+    value_template: >
+      {{ 'Latest' if states('sensor.current_version') == states('sensor.version_available') else states('sensor.version_available') }}
+
+  sidebar_day:
+    icon_template: mdi:calendar
+    value_template: >
+      {% set days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
+      {{ days[now().weekday()] }}
+
+  sidebar_date:
+    icon_template: mdi:calendar
+    value_template: >
+      {% set months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] %}
+      {{ strptime(states('sensor.date'), '%Y-%m-%d').day }} {{ months[now().month-1] }}
+
+  sidebar_vacuum:
+    value_template: >
+      {% set entity_id = 'vacuum.deebot_950' %}
+      {% if is_state(entity_id, 'cleaning') %} Cleaning
+      {% elif is_state(entity_id, 'returning') %} Cleaning finished
+      {% endif %}

@@ -1,4 +1,6 @@
-alias: Kitchen Light On Maximum Brightness
+alias: "[Kitchen] Light On Maximum Brightness"
+id: kitchen_lights_on_max
+
 trigger:
   - platform: event
     event_type: zha_event

@@ -1,0 +1,24 @@
+influxdb:
+  host:     !secret influxdb_host
+  port:     !secret influxdb_port
+  username: !secret influxdb_username
+  password: !secret influxdb_password
+  database: !secret influxdb_database
+
+  include:
+    entities: !include_dir_merge_list ../influxdb
+
+# sensor:
+#   - platform: influxdb
+#     host: !secret influxdb_host
+#     username: !secret influxdb_username
+#     password: !secret influxdb_password
+#     queries:
+#       - name: last value of foo
+#         unit_of_measurement: °C
+#         value_template: '{{ value | round(1) }}'
+#         group_function: last
+#         where: '"name" = ''foo'''
+#         measurement: '"°C"'
+#         field: value
+#         database: db1

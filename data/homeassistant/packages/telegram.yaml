@@ -1,7 +1,0 @@
-telegram_bot:
-  - platform: webhooks
-    api_key : !secret telegram_token
-    allowed_chat_ids:
-      - !secret telegram_chat_id_sander
-    # trusted_networks:
-    #   - 172.19.0.9
