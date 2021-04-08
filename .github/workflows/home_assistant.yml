@@ -1,0 +1,32 @@
+---
+name: Home Assistant CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  yamllint:
+    name: 🧹 YAML Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out configuration from GitHub
+        uses: actions/checkout@v2
+      - name: 🚀 Run yamllint
+        uses: frenck/action-yamllint@v1
+
+  #Remark Lint
+  # TODO: Not yet
+  # remarklint:
+  #   name: 🧹 Remark Lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: ⤵️ Check out configuration from GitHub
+  #       uses: actions/checkout@v2
+  #     - name: Running Remark lint
+  #       uses: "docker://pipelinecomponents/remark-lint:latest"
+  #       continue-on-error: true
+  #       with:
+  #         args: "remark --no-stdout --color --frail --use preset-lint-recommended ."
