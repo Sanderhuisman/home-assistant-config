@@ -40,6 +40,7 @@ action:
 
         sequence:
           - service: light.turn_on
+            alias: "Turn on the hallway lights"
             entity_id: light.hallway_lights_current_value
             data:
               brightness_pct: >
@@ -51,13 +52,24 @@ action:
 
       - conditions:
           - condition: state
+            alias: "Turn the hallway lights on when the outside door opens"
             state: 'on'
             entity_id:
               - binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off
               - binary_sensor.threshold_dark
 
+          # Prevents door detection from inside
+          - condition: state
+            alias: "Only when the outside door opens from the outside (no motion detected before door opening)"
+            state: 'off'
+            for:
+              minutes: 1
+            entity_id:
+              - binary_sensor.philips_sml001_0955f606_occupancy
+
         sequence:
           - service: light.turn_on
+            alias: "Turn lights on with maximum brightness"
             entity_id: light.hallway_lights_current_value
             data:
               brightness_pct: 100
@@ -77,4 +89,5 @@ action:
 
         sequence:
           - service: light.turn_off
+            alias: "Turn the hallway lights off"
             entity_id: light.hallway_lights_current_value

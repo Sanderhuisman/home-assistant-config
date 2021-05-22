@@ -1,0 +1,20 @@
+---
+# Home Assistant Database
+platform: sql
+db_url: !secret recorder_url
+scan_interval: 600
+queries:
+  - name: Home Assistant database size
+    query: "SELECT (pg_database_size('homeassistant')/1024/1024) as db_size;"
+    column: 'db_size'
+    unit_of_measurement: MB
+
+  - name: Home Assistant database events
+    query: "SELECT count(*) number_events, max(created) max_time, min(created) min_time FROM events;"
+    column: number_events
+    unit_of_measurement: rows
+
+  - name: Home Assistant database states
+    query: "SELECT count(*) number_states, max(created) max_time, min(created) min_time FROM states;"
+    column: number_states
+    unit_of_measurement: rows

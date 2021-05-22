@@ -1,0 +1,87 @@
+---
+rest_command:
+  ventilationsystem_low:
+    url: !secret ventilation_turn_on_low
+    username: !secret ventilation_user
+    password: !secret ventilation_pass
+  ventilationsystem_medium:
+    url: !secret ventilation_turn_on_medium
+    username: !secret ventilation_user
+    password: !secret ventilation_pass
+  ventilationsystem_high:
+    url: !secret ventilation_turn_on_high
+    username: !secret ventilation_user
+    password: !secret ventilation_pass
+  ventilationsystem_medium_30mins:
+    url: !secret ventilation_turn_on_high_30_mins
+    username: !secret ventilation_user
+    password: !secret ventilation_pass
+  ventilationsystem_max_30mins:
+    url: !secret ventilation_turn_on_max_30_mins
+    username: !secret ventilation_user
+    password: !secret ventilation_pass
+
+sensor:
+  - platform: rest
+    resource: !secret ventilation_status
+    username: !secret ventilation_user
+    password: !secret ventilation_pass
+    name: ventilation mode
+    value_template: "{{ value_json['devices']['1D']['speed'] }}"
+    json_attributes_path: "$.devices.1D"
+    json_attributes:
+      - "voltage"
+      - "percentage"
+      - "timer"
+
+  - platform: template
+    sensors:
+      ventilation_voltage:
+        value_template: "{{ state_attr('sensor.ventilation_mode', 'voltage') | float }}"
+        friendly_name: 'ventilation voltage'
+        unit_of_measurement: 'v'
+      ventilation_percentage:
+        value_template: "{{ state_attr('sensor.ventilation_mode', 'percentage') | int }}"
+        friendly_name: 'ventilation percentage'
+        unit_of_measurement: '%'
+      ventilation_timer:
+        value_template: "{{ state_attr('sensor.ventilation_mode', 'timer') }}"
+        friendly_name: 'ventilation timer'
+
+binary_sensor:
+  - platform: generic_hygrostat
+    name: Bathroom Hygrostat
+    sensor: sensor.lumi_lumi_weather_0c0b6004_humidity
+    delta_trigger: 10  # Optional humidity swing to detect. Default = 3
+    target_offset: 10  # Optional dehumidification target offset. Default = 3
+    max_on_time: 7200  # Optional safety max on time in seconds. Default = 7200 seconds
+    sample_interval: 300  # Optional time between taking humidity samples in seconds, default 300 seconds
+    min_humidity: 30  # Optional minimum humidity to enable dehumidification. Default = 0
+
+script:
+  ventilation_low:
+    alias: low
+    mode: single
+    sequence:
+      - service: rest_command.ventilationsystem_low
+  ventilation_medium:
+    alias: medium
+    mode: single
+    sequence:
+      - service: rest_command.ventilationsystem_medium
+  ventilation_high:
+    alias: high
+    mode: single
+    sequence:
+      - service: rest_command.ventilationsystem_high
+
+  ventilation_high_30_min:
+    alias: high 30 mins
+    mode: single
+    sequence:
+      - service: rest_command.ventilationsystem_medium_30mins
+  ventilation_max_30_min:
+    alias: max 30 mins
+    mode: single
+    sequence:
+      - service: rest_command.ventilationsystem_max_30mins

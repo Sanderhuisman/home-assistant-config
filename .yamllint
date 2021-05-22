@@ -4,6 +4,7 @@ ignore: |
   data/homeassistant/secrets.yaml
   data/homeassistant/known_devices.yaml
   data/homeassistant/google_calendars.yaml
+  data/homeassistant/automations.yaml
   data/homeassistant/custom_components/
   data/homeassistant/ip_bans.yaml
   data/homeassistant/themes/

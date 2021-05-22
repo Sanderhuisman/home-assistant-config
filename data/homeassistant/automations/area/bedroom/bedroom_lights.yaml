@@ -1,5 +1,5 @@
 ---
-alias: "[Bedroom] Automatic Lights"
+alias: "[Bedroom] Light switch"
 id: bedroom_lights_automatic
 mode: queued
 description: ''

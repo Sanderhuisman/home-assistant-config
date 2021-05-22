@@ -28,3 +28,26 @@ cards:
     hours_to_show: 1
     points_per_hour: 60
     update_interval: 30
+
+  - type: entities
+    title: Entities
+    entities:
+      - binary_sensor.bathroom_hygrostat
+      - sensor.ventilation_mode
+
+  - type: custom:mini-graph-card
+    entities:
+      - entity: binary_sensor.bathroom_hygrostat
+        name: Bathroom Hygrostat
+    name: Over Humidification
+    hours_to_show: 1
+    points_per_hour: 60
+    update_interval: 30
+    aggregate_func: max
+    line_width: 2
+    smoothing: false
+    state_map:
+      - value: "off"
+        label: "Off"
+      - value: "on"
+        label: "On"

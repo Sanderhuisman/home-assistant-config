@@ -180,6 +180,8 @@ cards:
               labels: false
               name: true
               state: true
+              extrema: true
+
           - type: custom:mini-graph-card
             color_thresholds_transition: smooth
             entities:
@@ -197,6 +199,7 @@ cards:
               labels: false
               name: true
               state: true
+              extrema: true
 
       - type: horizontal-stack
         cards:
@@ -217,6 +220,7 @@ cards:
               labels: false
               name: true
               state: true
+              extrema: true
 
           - type: custom:mini-graph-card
             color_thresholds_transition: smooth
@@ -235,11 +239,12 @@ cards:
               labels: false
               name: true
               state: true
+              extrema: true
 
       - type: custom:mini-graph-card
         color_thresholds_transition: smooth
         entities:
-          - entity: sensor.home_realfeel_temperature
+          - entity: sensor.accuweather_temperature
             name: Outside
         font_size: 100
         line_color: var(--primary-color)
@@ -253,6 +258,7 @@ cards:
           labels: false
           name: true
           state: true
+          extrema: true
 
       - type: horizontal-stack
         cards:
@@ -269,6 +275,7 @@ cards:
             show:
               fill: fade
               labels: false
+              extrema: true
               name: true
               state: true
             lower_bound: 0
@@ -300,3 +307,13 @@ cards:
       side_brush: false
       filter: false
       clean_area: false
+
+  - type: picture-entity
+    entity: vacuum.deebot_950
+    camera_image: camera.74ed9cde_ca39_4cb1_b47a_8bdd6faf345f_livemap
+
+  - type: calendar
+    initial_view: listWeek
+    entities:
+      - calendar.kottendijk_gmail_com
+      - calendar.sander_lys

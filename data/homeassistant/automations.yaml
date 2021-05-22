@@ -1,0 +1,28 @@
+- id: '1621452826151'
+  alias: Ventilation On Humidity
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.bathroom_hygrostat
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: script.turn_on
+    target:
+      entity_id: script.ventilation_high
+  mode: single
+- id: '1621452870739'
+  alias: Ventilation off
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.bathroom_hygrostat
+    from: 'on'
+    to: 'off'
+  condition: []
+  action:
+  - service: script.turn_on
+    target:
+      entity_id: script.ventilation_low
+  mode: single

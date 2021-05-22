@@ -49,7 +49,7 @@ cards:
         title: Pax lights
         show_header_toggle: false
         entities:
-          - entity: light.pax_lights
+          - entity: light.ikea_of_sweden_tradfri_driver_10w_f17f08fe_level_on_off
             name: Pax
             type: custom:slider-entity-row
 
@@ -87,10 +87,10 @@ cards:
           - name: Brightness Dimmed
             entity: input_number.bedroom_light_dimmed
 
-          - entity: sensor.lumi_lumi_remote_b186acn01_238d5503_power
-            name: Switch 1 Battery Power
           - entity: sensor.lumi_lumi_remote_b186acn01_318e5503_power
-            name: Switch 2 Battery Power
+            name: Switch Lys Battery Power
+          - entity: sensor.lumi_lumi_remote_b186acn01_power
+            name: Switch Sander Battery Power
 
           - entity: input_boolean.bedroom_nightlight_active
             name: Nightlight active

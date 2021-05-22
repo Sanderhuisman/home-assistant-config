@@ -1,0 +1,11 @@
+---
+alias: "[System] Database purge recorder"
+id: system_recorder_purge
+mode: single
+
+trigger:
+  - platform: time_pattern
+    minutes: 15
+
+action:
+  - service: recorder.purge

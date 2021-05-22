@@ -45,11 +45,35 @@ google_assistant:
     sensor.philips_sml001_0955f606_temperature:
       name: Hallway Temperature
 
-    light.christmas_tree_lights:
-      name: Christmas Tree Lights
+    light.livingroom_deco_lights:
+      name: Deco Lights
 
     light.christmas_vitrine_lights:
       name: Christmas Vitrine Lights
 
-    switch.ventilation_on_off:
+    switch.ventilation:
       name: Ventilation
+
+    light.living_room_lights:
+      name: Living Room Ceiling Light
+
+    light.hue_bulb:
+      name: Living Room TV Left Light
+
+    light.hue_light_4:
+      name: Living Room TV Right Light
+
+    light.hue_light_3:
+      name: Living Room Couch Light
+
+    light.bed:
+      name: Bedroom Nightstand Light
+
+    light.tv_l:
+      name: Bedroom Left Light
+
+    light.tv_r:
+      name: Bedroom Right Light
+
+    light.bedroom_ceiling:
+      name: Bedroom Ceiling Light

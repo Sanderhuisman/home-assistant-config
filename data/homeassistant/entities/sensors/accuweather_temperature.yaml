@@ -1,0 +1,7 @@
+---
+platform: template
+sensors:
+  accuweather_temperature:
+    friendly_name: "AccuWeather Temperature"
+    unit_of_measurement: '°C'
+    value_template: "{{ state_attr('weather.home_2', 'temperature') }}"

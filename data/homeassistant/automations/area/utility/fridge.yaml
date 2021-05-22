@@ -20,6 +20,7 @@ action:
   - choose:
       - conditions:
           - condition: state
+            alias: "When the door is opened for too long"
             entity_id: binary_sensor.utility_frige_door_status
             state: 'on'
 
@@ -41,6 +42,7 @@ action:
 
     default:
       - service: notify.mobile_app_sander_sony_xperia_1_ii
+        alias: Clear notification when door is closed"
         data:
           message: clear_notification
           data:

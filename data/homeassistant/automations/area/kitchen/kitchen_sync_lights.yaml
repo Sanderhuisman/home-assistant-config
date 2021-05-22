@@ -28,8 +28,9 @@ action:
 
         sequence:
           - service: light.turn_on
-            data:
+            target:
               entity_id: light.kitchen_ceiling_lights_current_value_5
+            data:
               brightness_pct: 100
 
       - conditions:
@@ -38,5 +39,5 @@ action:
 
         sequence:
           - service: light.turn_off
-            data:
+            target:
               entity_id: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off

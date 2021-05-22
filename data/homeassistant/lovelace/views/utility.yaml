@@ -10,7 +10,7 @@ cards:
     name: Ventilation
     entities:
       - name: Ventilation
-        entity: switch.ventilation_on_off
+        entity: switch.ventilation
 
   - type: entities
     title: Automation
@@ -54,3 +54,48 @@ cards:
         label: Closed
       - value: "on"
         label: Open
+
+  - type: custom:vertical-stack-in-card
+    title: Ventilation
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: script.ventilation_low
+            name: Low
+            tap_action:
+              action: call-service
+              service: script.turn_on
+              service_data:
+                entity_id: script.ventilation_low
+          - type: 'custom:button-card'
+            entity: script.ventilation_medium
+            name: Medium
+            tap_action:
+              action: call-service
+              service: script.turn_on
+              service_data:
+                entity_id: script.ventilation_medium
+          - type: 'custom:button-card'
+            entity: script.ventilation_high
+            name: High
+            tap_action:
+              action: call-service
+              service: script.turn_on
+              service_data:
+                entity_id: script.ventilation_high
+
+          - type: 'custom:button-card'
+            entity: script.ventilation_high_30_min
+            icon: mdi:clock-time-six
+            name: High 30 mins
+            tap_action:
+              action: call-service
+              service: script.turn_on
+              service_data:
+                entity_id: script.ventilation_high_30_min
+
+      - type: entities
+        entities:
+          - sensor.ventilation_mode
+          - sensor.ventilation_timer

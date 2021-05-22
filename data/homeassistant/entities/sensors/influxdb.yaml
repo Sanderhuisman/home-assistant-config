@@ -1,0 +1,16 @@
+---
+platform: influxdb
+host: !secret influxdb_host
+port: !secret influxdb_port
+username: !secret influxdb_username
+password: !secret influxdb_password
+scan_interval: 3600
+queries:
+  - name: InfluxDB Size
+    unit_of_measurement: MB
+    value_template: '{{ (value | float / (1024 ** 2)) | round(3) }}'
+    group_function: sum
+    measurement: '"monitor"."shard"'
+    database: '_internal'
+    where: 'time > now() - 10s'
+    field: 'diskBytes'

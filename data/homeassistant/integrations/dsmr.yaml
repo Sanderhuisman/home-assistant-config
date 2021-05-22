@@ -11,12 +11,17 @@ sensor:
         friendly_name: Total Energy Consumption
         unit_of_measurement: kWh
         value_template: >
-          {{ (states('sensor.energy_consumption_tarif_1') + states('sensor.energy_consumption_tarif_2') }}
+          {{ (states('sensor.energy_consumption_tarif_1') | float +
+              states('sensor.energy_consumption_tarif_2') | float) | round(3) }}
 
 utility_meter:
   energy_day:
     source: sensor.energy_consumption
     cycle: daily
+
+  energy_week:
+    source: sensor.energy_consumption
+    cycle: weekly
 
   energy_month:
     source: sensor.energy_consumption

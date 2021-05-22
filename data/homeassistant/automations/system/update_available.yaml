@@ -3,6 +3,9 @@ alias: "[System] Upgrade Available Notification"
 id: system_update_available_notification
 description: Send notification on Home Assistant update available
 
+variables:
+  ha_github_base_url: "https://github.com/home-assistant/core/releases/tag/"
+
 trigger:
   - platform: state
     entity_id: sensor.version_available
@@ -34,4 +37,4 @@ action:
         actions:
           - action: "URI"
             title: "Open Changelog"
-            uri: "https://github.com/home-assistant/core/releases/tag/{{states('sensor.version_available')}}"
+            uri: "{{ha_github_base_url}}{{states('sensor.version_available')}}"

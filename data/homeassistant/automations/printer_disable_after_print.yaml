@@ -1,0 +1,23 @@
+---
+id: '3d_printer_disable_when_inactive'
+alias: '[3D Printer] Disable printer when inactive'
+description: ''
+mode: single
+
+trigger:
+  - platform: state
+    entity_id: binary_sensor.octoprint_printing
+    from: 'on'
+    to: 'off'
+    for: 00:10:00
+
+condition: []
+
+action:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.printer_power
+
+  - service: notify.mobile_app_sander_sony_xperia_1_ii
+    data:
+      message: Printer inactive. Disable printer

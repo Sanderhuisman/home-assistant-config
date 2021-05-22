@@ -5,7 +5,7 @@ trigger:
   - platform: event
     event_type: zha_event
     event_data:
-      device_ieee: 84:2e:14:ff:fe:1b:cd:f6
+      device_ieee: 60:a4:23:ff:fe:ee:dc:8f
       command: 'off'
 
 condition: []

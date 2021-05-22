@@ -1,7 +1,7 @@
 ---
 path: hallway
 title: Hallway
-tab_icon: mdi:home-assistant
+
 cards:
   - type: vertical-stack
     cards:
@@ -133,6 +133,8 @@ cards:
         hours_to_show: 6
         points_per_hour: 60
         update_interval: 30
+        show:
+          extrema: true
 
       - type: custom:mini-graph-card
         entities:
@@ -142,3 +144,13 @@ cards:
         hours_to_show: 6
         points_per_hour: 60
         update_interval: 30
+        show:
+          extrema: true
+        style: |
+          ha-card .info.flex .info__item .info__item__type {
+            font-size: 12px;
+          }
+          ha-card .info.flex .info__item .info__item__time {
+            display: true;
+            font-size: 10px;
+          }

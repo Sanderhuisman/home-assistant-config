@@ -3,16 +3,46 @@ path: server
 title: Server
 cards:
   - type: entities
+    title: Database
+    entities:
+      - name: Database Size
+        entity: sensor.home_assistant_database_size
+        icon: mdi:database
+      - name: Database Events
+        entity: sensor.home_assistant_database_events
+        icon: mdi:database-alert
+      - name: Database States
+        entity: sensor.home_assistant_database_states
+        icon: mdi:database-cog
+
+  - type: entities
+    title: InfluxDB
+    entities:
+      - name: Database Size
+        entity: sensor.influxdb_size
+
+  - type: entities
     title: Adguard Home
     entities:
-      - sensor.adguard_average_processing_speed
-      - sensor.adguard_dns_queries
-      - sensor.adguard_dns_queries_blocked_ratio
-      - switch.adguard_filtering
-      - switch.adguard_parental_control
-      - sensor.adguard_parental_control_blocked
-      - switch.adguard_protection
-      - switch.adguard_safe_browsing
-      - sensor.adguard_safe_browsing_blocked
-      - switch.adguard_safe_search
-      - sensor.adguard_safe_searches_enforced
+      - name: Average Processing Speed
+        entity: sensor.adguard_average_processing_speed
+      - name: DNS Queries
+        entity: sensor.adguard_dns_queries
+      - name: DNS Queries blocked ratio
+        entity: sensor.adguard_dns_queries_blocked_ratio
+      - name: Filtering
+        entity: switch.adguard_filtering
+      - name: Parental Control
+        entity: switch.adguard_parental_control
+      - name: Parental Control blocked
+        entity: sensor.adguard_parental_control_blocked
+      - name: Protection
+        entity: switch.adguard_protection
+      - name: Safe Browsing
+        entity: switch.adguard_safe_browsing
+      - name: Safe browsing blocked
+        entity: sensor.adguard_safe_browsing_blocked
+      - name: Safe Search
+        entity: switch.adguard_safe_search
+      - name: Safe Searches Enforced
+        entity: sensor.adguard_safe_searches_enforced

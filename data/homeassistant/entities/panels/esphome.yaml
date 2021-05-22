@@ -1,0 +1,5 @@
+---
+esphome:
+  title: EspHome
+  icon: mdi:chip
+  url: !secret panel_esphome_url

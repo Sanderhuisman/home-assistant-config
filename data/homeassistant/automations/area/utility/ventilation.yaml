@@ -9,8 +9,6 @@ trigger:
   - platform: time
     at: 03:00
 
-condition: []
-
 action:
   - service: switch.turn_on
-    entity_id: switch.ventilation_on_off
+    entity_id: switch.ventilation

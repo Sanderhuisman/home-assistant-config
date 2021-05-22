@@ -1,0 +1,31 @@
+---
+id: 'away_turn_all_lights_off'
+alias: '[Away] Turn all lights off'
+description: ''
+mode: single
+
+trigger:
+  - platform: state
+    entity_id:
+      - device_tracker.iphone
+      - device_tracker.sander
+    from: home
+    to: away
+    for: 00:02:00
+
+condition:
+  - condition: state
+    entity_id:
+      - device_tracker.sander
+      - device_tracker.iphone
+    state: away
+    for: 00:02:00
+
+action:
+  - service: light.turn_off
+    target:
+      entity_id: all
+
+  - service: notify.mobile_app_sander_sony_xperia_1_ii
+    data:
+      message: All away, turn all lights off
