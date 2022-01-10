@@ -5,24 +5,27 @@ description: ''
 mode: single
 
 trigger:
+    # Fridge open
+  - platform: state
+    id: fridge_open
+    entity_id: binary_sensor.utility_frige_door_status
+    from: 'off'
+    to: 'on'
+    for:
+      minutes: 5
+
+    # Fridge close
   - platform: state
     entity_id: binary_sensor.utility_frige_door_status
     from: 'on'
     to: 'off'
 
-  - platform: state
-    entity_id: binary_sensor.utility_frige_door_status
-    from: 'off'
-    to: 'on'
-    for: 00:05:00
-
 action:
   - choose:
       - conditions:
-          - condition: state
+          - condition: trigger
+            id: fridge_open
             alias: "When the door is opened for too long"
-            entity_id: binary_sensor.utility_frige_door_status
-            state: 'on'
 
         sequence:
           - service: notify.mobile_app_sander_sony_xperia_1_ii
@@ -42,7 +45,7 @@ action:
 
     default:
       - service: notify.mobile_app_sander_sony_xperia_1_ii
-        alias: Clear notification when door is closed"
+        alias: "Clear notification when door is closed"
         data:
           message: clear_notification
           data:

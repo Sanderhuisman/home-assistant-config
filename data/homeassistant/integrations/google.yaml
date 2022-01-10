@@ -42,37 +42,37 @@ google_assistant:
     media_player.samsung_tv:
       name: Living Room TV
 
-    sensor.philips_sml001_0955f606_temperature:
+    sensor.hallway_motion_sensor_temperature:
       name: Hallway Temperature
 
     light.livingroom_deco_lights:
       name: Deco Lights
 
+    light.livingroom_advent_lights:
+      name: Advent Lights
+
     light.christmas_vitrine_lights:
       name: Christmas Vitrine Lights
-
-    switch.ventilation:
-      name: Ventilation
 
     light.living_room_lights:
       name: Living Room Ceiling Light
 
-    light.hue_bulb:
+    light.hue_tv_left:
       name: Living Room TV Left Light
 
-    light.hue_light_4:
+    light.hue_tv_right:
       name: Living Room TV Right Light
 
-    light.hue_light_3:
+    light.hue_couch:
       name: Living Room Couch Light
 
-    light.bed:
+    light.bed_end:
       name: Bedroom Nightstand Light
 
-    light.tv_l:
+    light.bed_left:
       name: Bedroom Left Light
 
-    light.tv_r:
+    light.bed_right:
       name: Bedroom Right Light
 
     light.bedroom_ceiling:

@@ -5,14 +5,34 @@ description: ''
 
 trigger:
   - platform: state
+    id: hallway_motion_detected
     from: 'off'
     to: 'on'
     entity_id:
-      - binary_sensor.philips_sml001_0955f606_occupancy
+      - binary_sensor.hallway_motion_sensor_occupancy
+      - binary_sensor.hallway_motion_sensor_2_occupancy
+
+  - platform: state
+    id: door_opened
+    from: 'off'
+    to: 'on'
+    entity_id:
       - binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off
 
   - platform: state
-    entity_id: binary_sensor.philips_sml001_0955f606_occupancy
+    id: door_closed
+    from: 'on'
+    to: 'off'
+    for:
+      minutes: 1
+    entity_id:
+      - binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off
+
+  - platform: state
+    entity_id:
+      - binary_sensor.hallway_motion_sensor_occupancy
+      - binary_sensor.hallway_motion_sensor_2_occupancy
+    id: no_motion
     from: 'on'
     to: 'off'
     for:
@@ -27,10 +47,12 @@ condition:
 action:
   - choose:
       - conditions:
+          - condition: trigger
+            id: hallway_motion_detected
+
           - condition: state
             state: 'on'
             entity_id:
-              - binary_sensor.philips_sml001_0955f606_occupancy
               - binary_sensor.threshold_dark
 
           - condition: state
@@ -51,11 +73,13 @@ action:
                 {% endif %}
 
       - conditions:
+          - condition: trigger
+            id: door_opened
+
           - condition: state
             alias: "Turn the hallway lights on when the outside door opens"
             state: 'on'
             entity_id:
-              - binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off
               - binary_sensor.threshold_dark
 
           # Prevents door detection from inside
@@ -65,7 +89,8 @@ action:
             for:
               minutes: 1
             entity_id:
-              - binary_sensor.philips_sml001_0955f606_occupancy
+              - binary_sensor.hallway_motion_sensor_occupancy
+              - binary_sensor.hallway_motion_sensor_2_occupancy
 
         sequence:
           - service: light.turn_on
@@ -75,6 +100,10 @@ action:
               brightness_pct: 100
 
       - conditions:
+          - condition: trigger
+            alias: "No motion within timeout"
+            id: no_motion
+
           - condition: state
             state: 'on'
             entity_id:
@@ -82,10 +111,42 @@ action:
 
           - condition: state
             state: 'off'
+            alias: "Only when no motion is detected"
             for:
               minutes: 1
             entity_id:
-              - binary_sensor.philips_sml001_0955f606_occupancy
+              - binary_sensor.hallway_motion_sensor_occupancy
+              - binary_sensor.hallway_motion_sensor_2_occupancy
+
+          - condition: state
+            state: 'off'
+            alias: "Door closed and no motion"
+            entity_id:
+              - binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off
+
+        sequence:
+          - service: light.turn_off
+            alias: "Turn the hallway lights off"
+            entity_id: light.hallway_lights_current_value
+
+      - conditions:
+          - condition: trigger
+            alias: "Door closed"
+            id: door_closed
+
+          - condition: state
+            state: 'on'
+            entity_id:
+              - light.hallway_lights_current_value
+
+          - condition: state
+            alias: "Only when no motion is detected"
+            state: 'off'
+            for:
+              minutes: 1
+            entity_id:
+              - binary_sensor.hallway_motion_sensor_occupancy
+              - binary_sensor.hallway_motion_sensor_2_occupancy
 
         sequence:
           - service: light.turn_off

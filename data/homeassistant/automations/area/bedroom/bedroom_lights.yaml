@@ -17,7 +17,7 @@ trigger:
 
 action:
   - choose:
-      # Single press and lights off -> turn on
+        # Single press and lights off -> turn on
       - conditions:
           - "{{ trigger.event.data.command == 'single' }}"
 
@@ -29,13 +29,12 @@ action:
                     state: 'off'
 
                 sequence:
-                  - service: input_select.select_option
+                  - service: input_select.select_first
                     data:
                       entity_id: input_select.bedroom_scene
-                      option: "{{ states.input_select.bedroom_scene.attributes.options | first }}"
 
                   - service: scene.turn_on
-                    data:
+                    target:
                       entity_id: scene.{{states.input_select.bedroom_scene.state}}
 
             # Single press and lights on -> turn off
@@ -45,16 +44,22 @@ action:
               - service: timer.cancel
                 entity_id: timer.bedroom_scene_switch
 
-      # Double press and lights on -> next scene
+        # Double press and lights on -> next scene
       - conditions:
           - "{{ trigger.event.data.command == 'double' }}"
 
-          # If off; directly go to second
-          # - condition: state
-          #   entity_id: light.bedroom_lights
-          #   state: 'on'
-
         sequence:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: light.bedroom_lights
+                    state: 'off'
+
+                sequence:
+                  - service: input_select.select_first
+                    target:
+                      entity_id: input_select.bedroom_scene
+
           - service: input_select.select_next
             data:
               entity_id: input_select.bedroom_scene

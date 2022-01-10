@@ -4,7 +4,7 @@ http:
   use_x_forwarded_for: true
   trusted_proxies:
     - 192.168.1.0/24
-    - 172.0.0.0/8
+    - 172.18.0.254/32
 
   # Enables additional IP filtering.
   ip_ban_enabled: false

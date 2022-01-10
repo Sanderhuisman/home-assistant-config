@@ -1,10 +1,4 @@
 ---
-octoprint:
-  host: !secret octoprint_host
-  api_key: !secret octoprint_api_key
-  bed: true
-  number_of_tools: 1
-
 camera:
   - platform: mjpeg
     name: OctoPrint
@@ -18,12 +12,6 @@ camera:
     scan_interval: 5
     content_type: image/png
 
-binary_sensor:
-  - platform: octoprint
-    monitored_conditions:
-      - Printing
-      - Printing Error
-
 sensor:
   - platform: rest
     name: OctoPrint Current Filename
@@ -36,7 +24,7 @@ sensor:
     sensors:
       octoprint_time_remaining_hr:
         value_template: >-
-          {% set time = (states('sensor.octoprint_time_remaining') | int) | int %}
+          {% set time = (states('sensor.octoprint_time_remaining') | int(0)) %}
           {% set minutes = ((time % 3600) / 60) | int %}
           {% set hours = ((time % 86400) / 3600) | int %}
           {% set days = (time / 86400) | int %}
@@ -90,7 +78,7 @@ sensor:
 
       octoprint_time_ready:
         value_template: >
-          {{ (now().strftime('%s') | int + states('sensor.octoprint_time_remaining') | int) |
+          {{ (now().strftime('%s') | int + states('sensor.octoprint_time_remaining') | int(0)) |
              timestamp_custom('%H:%M', false) }}
 
 light:

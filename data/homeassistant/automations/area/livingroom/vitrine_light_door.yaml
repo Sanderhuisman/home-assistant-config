@@ -1,50 +1,45 @@
 ---
-alias: Vitrine Lights Door
+id: livingroom_vitrine_light_door
+alias: '[Living Room] Vitrine Light Door'
+mode: single
 
 trigger:
   - platform: state
+    id: door_open
     entity_id:
       - binary_sensor.lumi_lumi_sensor_magnet_aq2_40ea7205_on_off
+    from: 'off'
+    to: 'on'
+
+  - platform: state
+    id: door_close
+    entity_id:
+      - binary_sensor.lumi_lumi_sensor_magnet_aq2_40ea7205_on_off
+    from: 'on'
+    to: 'off'
 
 action:
   - choose:
       - conditions:
-          - condition: state
-            state: 'on'
-            entity_id:
-              - binary_sensor.lumi_lumi_sensor_magnet_aq2_40ea7205_on_off
-
-          - condition: state
-            state: 'off'
-            entity_id:
-              - light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
+          - condition: trigger
+            id: door_open
 
         sequence:
-          - service: input_boolean.turn_on
-            entity_id: input_boolean.vitrine_on_door
+          - alias: "Create snapshot"
+            service: scene.create
+            data:
+              scene_id: livingroom_vitrine
+              snapshot_entities:
+                - light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
 
           - service: light.turn_on
             entity_id: light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
             data:
+              brightness_pct: 100
               transition: 0.5
 
-      - conditions:
-          - condition: state
-            state: 'off'
-            entity_id:
-              - binary_sensor.lumi_lumi_sensor_magnet_aq2_40ea7205_on_off
-
-          - condition: state
-            state: 'on'
-            entity_id:
-              - light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
-              - input_boolean.vitrine_on_door
-
-        sequence:
-          - service: input_boolean.turn_off
-            entity_id: input_boolean.vitrine_on_door
-
-          - service: light.turn_off
-            entity_id: light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
-            data:
-              transition: 0.5
+    default:
+      - alias: "Restore state"
+        service: scene.turn_on
+        target:
+          entity_id: scene.livingroom_vitrine

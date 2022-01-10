@@ -7,3 +7,5 @@ data/zwavejs
 
 # Ignore files created by IDE's
 .vscode
+
+*.bak

@@ -1,15 +1,19 @@
 ---
 name: "Living Bright"
 entities:
-  light.hue_bulb:
+  light.hue_tv_left:
     state: true
     brightness: 255
-  light.hue_light_3:
+    color_temp: 346
+  light.hue_tv_right:
     state: true
     brightness: 255
-  light.hue_light_4:
+    color_temp: 346
+  light.hue_couch:
     state: true
     brightness: 255
+    color_temp: 346
   light.living_room_ceiling_level_light_color_on_off:
     state: true
     brightness: 255
+    color_temp: 346

@@ -44,13 +44,17 @@ cards:
                   toggle: true
                   entity: light.living_room_lights
                 entities:
-                  - light.hue_bulb
-                  - light.hue_light_3
-                  - light.hue_light_4
+                  - light.hue_tv_left
+                  - light.hue_couch
+                  - light.hue_tv_right
                   - light.living_room_ceiling_level_light_color_on_off
                   - light.kitchen_iris_level_light_color_on_off
                   - name: Vitrine
                     entity: light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
+                  - light.christmas_vitrine_lights
+                  - light.livingroom_deco_lights
+                  # - light.livingroom_advent_lights
+                  # - light.christmas_tree_level_on_off
 
                   - name: Cozy lights
                     entity: scene.living_relax
@@ -77,6 +81,18 @@ cards:
                       action: call-service
                       service: scene.living_normal
 
+              - type: custom:slider-entity-row
+                name: Dining Table
+                color_picker: true
+                toggle: true
+                entity: light.dining_table_light
+
+              - type: custom:slider-entity-row
+                name: Christmas Balcony
+                color_picker: true
+                toggle: true
+                entity: light.balcony_christmas_lights_level_on_off
+
               - type: custom:fold-entity-row
                 head:
                   type: custom:slider-entity-row
@@ -89,6 +105,10 @@ cards:
                     name: Ceiling
                   - entity: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off
                     name: Workspace
+                  - name: Kitchen block LEDs
+                    entity: light.kitchen_floor_lights
+                  - name: Cupboard top
+                    entity: light.kitchen_iris_level_light_color_on_off
 
               - type: custom:fold-entity-row
                 head:
@@ -98,11 +118,11 @@ cards:
                   toggle: true
                   entity: light.bedroom_lights
                 entities:
-                  - entity: light.bed
+                  - entity: light.bed_end
                     name: Nightstand
-                  - entity: light.tv_l
+                  - entity: light.bed_left
                     name: Bed Left
-                  - entity: light.tv_r
+                  - entity: light.bed_right
                     name: Bed Right
                   - entity: light.bedroom_ceiling
                     name: Ceiling
@@ -136,6 +156,12 @@ cards:
                 toggle: true
                 entity: light.utility_room_lights_current_value_3
 
+      - type: calendar
+        initial_view: list
+        entities:
+          - calendar.kottendijk_gmail_com
+          - calendar.sander_lys
+
   - type: vertical-stack
     cards:
       - type: custom:weather-card
@@ -149,6 +175,30 @@ cards:
         step_layout: row
         icon: true
         control: false
+
+      # - type: custom:mini-graph-card
+      #   entities:
+      #     - entity: sensor.heating_power
+      #       name: Heating Power
+      #   name: Heating
+      #   update_interval: 30
+      #   # aggregate_func: max
+      #   # line_width: 2
+      #   smoothing: false
+      #   # state_map:
+      #   #   - value: "off"
+      #   #     label: Closed
+      #   #   - value: "on"
+      #   #     label: Open
+
+        font_size: 100
+        line_color: var(--primary-color)
+        group: false
+        hour24: true
+        line_width: 6
+        hours_to_show: 72
+        points_per_hour: 0.3
+
 
       - type: custom:mini-media-player
         entity: media_player.samsung_tv
@@ -206,8 +256,10 @@ cards:
           - type: custom:mini-graph-card
             color_thresholds_transition: smooth
             entities:
-              - entity: sensor.philips_sml001_e2abf706_temperature
-                name: Bedroom
+              # - entity: sensor.philips_sml001_e2abf706_temperature
+              #   name: Bedroom
+              - entity: sensor.office_temperature
+                name: Office
             font_size: 100
             line_color: var(--primary-color)
             group: false
@@ -225,8 +277,11 @@ cards:
           - type: custom:mini-graph-card
             color_thresholds_transition: smooth
             entities:
-              - entity: sensor.philips_sml001_0955f606_temperature
+              - entity: sensor.hallway_motion_sensor_temperature
                 name: Hallway
+              # - entity: sensor.accuweather_temperature
+              #   name: Outside
+              #   show_state: false
             font_size: 100
             line_color: var(--primary-color)
             group: false
@@ -240,6 +295,31 @@ cards:
               name: true
               state: true
               extrema: true
+
+      - type: custom:mini-graph-card
+        color_thresholds_transition: smooth
+        entities:
+          - entity: sensor.hallway_motion_sensor_temperature
+            name: Hallway
+          - entity: sensor.office_temperature
+            name: Office
+          - entity: sensor.heating_temperature
+            name: Living room
+          - entity: sensor.accuweather_temperature
+            name: Outside
+        font_size: 100
+        # line_color: var(--primary-color)
+        group: false
+        hour24: true
+        line_width: 6
+        hours_to_show: 72
+        points_per_hour: 0.3
+        # show:
+        #   fill: fade
+        #   labels: false
+        #   name: true
+        #   state: true
+        #   extrema: true
 
       - type: custom:mini-graph-card
         color_thresholds_transition: smooth
@@ -300,20 +380,48 @@ cards:
             lower_bound: 0
 
   # https://github.com/benct/lovelace-xiaomi-vacuum-card
-  - type: custom:xiaomi-vacuum-card
-    entity: vacuum.deebot_950
-    attributes:
-      main_brush: false
-      side_brush: false
-      filter: false
-      clean_area: false
+  # - type: custom:xiaomi-vacuum-card
+  #   entity: vacuum.deebot_950
+  #   attributes:
+  #     main_brush: false
+  #     side_brush: false
+  #     filter: false
+  #     clean_area: false
 
-  - type: picture-entity
-    entity: vacuum.deebot_950
-    camera_image: camera.74ed9cde_ca39_4cb1_b47a_8bdd6faf345f_livemap
+  # - type: picture-entity
+  #   entity: vacuum.deebot_950
+  #   camera_image: camera.74ed9cde_ca39_4cb1_b47a_8bdd6faf345f_livemap
 
-  - type: calendar
-    initial_view: listWeek
-    entities:
-      - calendar.kottendijk_gmail_com
-      - calendar.sander_lys
+  - type: "custom:vacuum-card"
+    entity: vacuum.deebot_ozmo_950
+    image: default
+    compact_view: false
+    show_name: true
+    show_toolbar: true
+    show_status: true
+    stats:
+      default:
+        - entity_id: sensor.deebot_ozmo_950_life_span_side_brush
+          unit: "%"
+          subtitle: Side Brush
+        - entity_id: sensor.deebot_ozmo_950_life_span_brush
+          unit: "%"
+          subtitle: Main Brush
+        - entity_id: sensor.deebot_ozmo_950_life_span_filter
+          unit: "%"
+          subtitle: Filter
+      cleaning:
+        - entity_id: sensor.deebot_ozmo_950_stats_area
+          unit: m2
+          subtitle: Area
+        - entity_id: sensor.deebot_ozmo_950_stats_time
+          unit: min
+          subtitle: Time
+    # shortcuts:
+    #   - service: script.CLEAN_LIVINGROOM
+    #     icon: "mdi:sofa"
+    #   - service: script.CLEAN_BEDROOM
+    #     icon: "mdi:bed-empty"
+    #   - service: script.CLEAN_ALL
+    #     icon: "mdi:robot-vacuum-variant"
+    map: camera.deebot_ozmo_950_live_map

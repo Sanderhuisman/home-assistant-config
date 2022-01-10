@@ -3,11 +3,11 @@ name: "Bedroom Off"
 entities:
   light.bedroom_ceiling:
     state: false
-  light.tv_l:
+  light.bed_left:
     state: false
-  light.tv_r:
+  light.bed_right:
     state: false
-  light.bed:
+  light.bed_end:
     state: false
 
   input_boolean.bedroom_nightlight_active:

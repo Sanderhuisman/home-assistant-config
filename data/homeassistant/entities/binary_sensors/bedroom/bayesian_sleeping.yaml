@@ -10,7 +10,7 @@ observations:
     to_state: 'on'
 
   # Living room light off
-  - entity_id: 'light.hue_light_3'
+  - entity_id: 'light.hue_couch'
     prob_given_true: 0.6
     platform: 'state'
     to_state: 'off'

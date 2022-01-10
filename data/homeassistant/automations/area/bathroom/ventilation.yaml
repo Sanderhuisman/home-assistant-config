@@ -1,0 +1,33 @@
+---
+id: 'bathroom_ventilation'
+alias: '[Bathroom] Ventilation'
+description: ''
+mode: single
+
+trigger:
+  - platform: state
+    entity_id: binary_sensor.bathroom_hygrostat
+
+condition: []
+
+action:
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: binary_sensor.bathroom_hygrostat
+            state: 'on'
+
+        sequence:
+          - service: notify.mobile_app_sander_sony_xperia_1_ii
+            data:
+              message: ventilation on
+
+      - conditions:
+          - condition: state
+            entity_id: binary_sensor.bathroom_hygrostat
+            state: 'off'
+
+        sequence:
+          - service: notify.mobile_app_sander_sony_xperia_1_ii
+            data:
+              message: ventilation off

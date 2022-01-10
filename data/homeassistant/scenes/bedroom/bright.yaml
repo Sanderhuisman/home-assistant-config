@@ -5,15 +5,15 @@ entities:
     state: true
     brightness: 255
     color_temp: 346
-  light.tv_l:
+  light.bed_left:
     state: true
     brightness: 255
     hs_color: [45.773, 38.039]
-  light.tv_r:
+  light.bed_right:
     state: true
     brightness: 255
     hs_color: [45.773, 38.039]
-  light.bed:
+  light.bed_end:
     state: true
     brightness: 255
     color_temp: 346

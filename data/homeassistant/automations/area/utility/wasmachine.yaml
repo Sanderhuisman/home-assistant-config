@@ -2,6 +2,9 @@
 alias: "[Utility] Wasmachine"
 id: utility_wasmachine
 
+variables:
+  message: "Washing machine is done 👚👕"
+
 trigger:
   - platform: state
     entity_id: binary_sensor.washing_machine
@@ -38,7 +41,7 @@ action:
       - service: notify.mobile_app_sander_sony_xperia_1_ii
         data:
           title: Wasmachine
-          message: "Washing machine is done 👚👕"
+          message: '{{message}}'
           data:
             tag: Wasmachine
             channel: Wasmachine
@@ -46,7 +49,7 @@ action:
       - service: notify.mobile_app_iphone
         data:
           title: Wasmachine
-          message: "Washing machine is done 👚👕"
+          message: '{{message}}'
           data:
             tag: Wasmachine
             channel: Wasmachine

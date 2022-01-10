@@ -1,0 +1,6 @@
+---
+options:
+  - 'livingroom_relax'
+  - 'livingroom_movie'
+  - 'livingroom_bright'
+initial: 'livingroom_relax'

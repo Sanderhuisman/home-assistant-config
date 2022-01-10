@@ -1,5 +1,5 @@
 ---
-- binary_sensor.philips_sml001_0955f606_occupancy
-- sensor.philips_sml001_0955f606_temperature
-- sensor.philips_sml001_0955f606_illuminance
-- sensor.philips_sml001_0955f606_power
+- binary_sensor.hallway_motion_sensor_occupancy
+- sensor.hallway_motion_sensor_temperature
+- sensor.hallway_motion_sensor_illuminance
+- sensor.hallway_motion_sensor_power

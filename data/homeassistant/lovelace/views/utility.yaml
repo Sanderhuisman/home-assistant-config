@@ -7,12 +7,6 @@ cards:
     entity: light.utility_room_lights_current_value_3
 
   - type: entities
-    name: Ventilation
-    entities:
-      - name: Ventilation
-        entity: switch.ventilation
-
-  - type: entities
     title: Automation
     show_header_toggle: false
     entities:
@@ -20,6 +14,8 @@ cards:
         head:
           name: Fridge Door Sensor
           entity: binary_sensor.utility_frige_door_status
+          state_color: true
+          icon: mdi:fridge
         entities:
           - entity: sensor.utility_frige_door_power
             name: Battery
@@ -28,15 +24,19 @@ cards:
         head:
           name: Door Sensor
           entity: binary_sensor.utility_door_status
+          state_color: true
+          icon: mdi:door
         entities:
           - entity: sensor.utility_door_power
             name: Battery
 
       - name: Automatic light
         entity: automation.utility_lights_motion
+        state_color: true
 
       - name: Wasmachine
         entity: binary_sensor.washing_machine
+        state_color: true
 
   - type: custom:mini-graph-card
     entities:
@@ -62,6 +62,7 @@ cards:
         cards:
           - type: 'custom:button-card'
             entity: script.ventilation_low
+            icon: mdi:hvac
             name: Low
             tap_action:
               action: call-service
@@ -70,6 +71,7 @@ cards:
                 entity_id: script.ventilation_low
           - type: 'custom:button-card'
             entity: script.ventilation_medium
+            icon: mdi:hvac
             name: Medium
             tap_action:
               action: call-service
@@ -78,6 +80,7 @@ cards:
                 entity_id: script.ventilation_medium
           - type: 'custom:button-card'
             entity: script.ventilation_high
+            icon: mdi:hvac
             name: High
             tap_action:
               action: call-service
@@ -97,5 +100,7 @@ cards:
 
       - type: entities
         entities:
-          - sensor.ventilation_mode
-          - sensor.ventilation_timer
+          - entity: sensor.ventilation_mode
+            icon: mdi:hvac
+          - entity: sensor.ventilation_timer
+            icon: mdi:timer

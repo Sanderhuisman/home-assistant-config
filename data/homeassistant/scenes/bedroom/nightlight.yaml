@@ -3,15 +3,15 @@ name: "Bedroom Nightlight"
 entities:
   light.bedroom_ceiling:
     state: false
-  light.tv_l:
+  light.bed_left:
     state: true
     brightness: 1
     hs_color: [36.568, 66.275]
-  light.tv_r:
+  light.bed_right:
     state: true
     brightness: 1
     hs_color: [36.568, 66.275]
-  light.bed:
+  light.bed_end:
     state: true
     brightness: 1
     color_temp: 443

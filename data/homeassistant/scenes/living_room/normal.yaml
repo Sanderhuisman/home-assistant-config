@@ -1,11 +1,11 @@
 ---
 name: "Living Normal"
 entities:
-  light.hue_bulb:
+  light.hue_tv_left:
     state: false
-  light.hue_light_3:
+  light.hue_tv_right:
     state: false
-  light.hue_light_4:
+  light.hue_couch:
     state: false
   light.living_room_ceiling_level_light_color_on_off:
     state: true

@@ -7,11 +7,11 @@ cards:
       - type: entities
         title: Lights
         entities:
-          - entity: light.bed
+          - entity: light.bed_end
             name: Nightstand
-          - entity: light.tv_l
+          - entity: light.bed_left
             name: Bed Left
-          - entity: light.tv_r
+          - entity: light.bed_right
             name: Bed Right
           - entity: light.bedroom_ceiling
             name: Ceiling
@@ -61,29 +61,17 @@ cards:
         entities:
           - name: Automation Enabled
             entity: input_boolean.bedroom_automatic_light
-            style: |
-              :host {
-                --paper-item-icon-color:
-                  {% if is_state('input_boolean.bedroom_automatic_light', 'on') %}
-                    var(--accent-color)
-                  {% endif %}
-                  ;
-              }
-          - type: custom:fold-entity-row
-            head:
-              name: Motion Sensor
-              entity: binary_sensor.philips_sml001_e2abf706_occupancy
-              style: |
-                :host {
-                  --paper-item-icon-color:
-                    {% if is_state('binary_sensor.philips_sml001_e2abf706_occupancy', 'on') %}
-                      var(--accent-color)
-                    {% endif %}
-                    ;
-                }
-            entities:
-              - entity: sensor.philips_sml001_e2abf706_power
-                name: Battery
+            state_color: true
+            icon: mdi:home-automation
+
+          # - type: custom:fold-entity-row
+          #   head:
+          #     name: Motion Sensor
+          #     entity: binary_sensor.philips_sml001_e2abf706_occupancy
+          #     state_color: true
+          #   entities:
+          #     - entity: sensor.philips_sml001_e2abf706_power
+          #       name: Battery
           - name: Brightness Dimmed
             entity: input_number.bedroom_light_dimmed
 
@@ -94,6 +82,8 @@ cards:
 
           - entity: input_boolean.bedroom_nightlight_active
             name: Nightlight active
+            icon: mdi:home-automation
+            state_color: true
 
   - type: vertical-stack
     cards:

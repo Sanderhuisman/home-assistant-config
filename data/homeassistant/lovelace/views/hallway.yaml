@@ -15,29 +15,26 @@ cards:
         entities:
           - name: Automation Enabled
             entity: input_boolean.hallway_automatic_light
-            style: |
-              :host {
-                --state-icon-color:
-                  {% if is_state('input_boolean.hallway_automatic_light', 'on') %}
-                    var(--accent-color)
-                  {% endif %}
-                  ;
-              }
+            icon: mdi:home-automation
+            state_color: true
 
           - type: custom:fold-entity-row
             head:
               name: Motion Sensor
-              entity: binary_sensor.philips_sml001_0955f606_occupancy
-              style: |
-                :host {
-                  --state-icon-color:
-                    {% if is_state('binary_sensor.philips_sml001_0955f606_occupancy', 'on') %}
-                      var(--accent-color)
-                    {% endif %}
-                    ;
-                }
+              entity: binary_sensor.hallway_motion_sensor_occupancy
+              state_color: true
+              icon: mdi:motion-sensor
             entities:
-              - entity: sensor.philips_sml001_0955f606_power
+              - entity: sensor.hallway_motion_sensor_power
+                name: Battery
+          - type: custom:fold-entity-row
+            head:
+              name: Motion Sensor 2
+              entity: binary_sensor.hallway_motion_sensor_2_occupancy
+              state_color: true
+              icon: mdi:motion-sensor
+            entities:
+              - entity: sensor.hallway_motion_sensor_2_power
                 name: Battery
 
           - type: custom:fold-entity-row
@@ -45,14 +42,7 @@ cards:
               name: Door Sensor
               entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off
               icon: mdi:door
-              style: |
-                :host {
-                  --state-icon-color:
-                    {% if is_state('binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off', 'on') %}
-                      var(--accent-color)
-                    {% endif %}
-                    ;
-                }
+              state_color: true
             entities:
               - entity: sensor.lumi_lumi_sensor_magnet_aq2_40132a04_power
                 name: Battery
@@ -62,6 +52,8 @@ cards:
             head:
               name: Server Door
               entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_769a3e05_on_off
+              icon: mdi:door
+              state_color: true
             entities:
               - entity: sensor.lumi_lumi_sensor_magnet_aq2_769a3e05_power
                 name: Battery
@@ -78,8 +70,12 @@ cards:
 
           - name: Dark
             entity: binary_sensor.threshold_dark
+            state_color: true
+            icon: mdi:weather-night
           - name: Sleep Time
             entity: binary_sensor.sleep_time
+            state_color: true
+            icon: mdi:sleep
 
           - name: Brightness Dimmed
             entity: input_number.hallway_light_dimmed
@@ -91,8 +87,10 @@ cards:
     cards:
       - type: custom:mini-graph-card
         entities:
-          - entity: binary_sensor.philips_sml001_0955f606_occupancy
+          - entity: binary_sensor.hallway_motion_sensor_occupancy
             name: Hallway Motion
+          - entity: binary_sensor.hallway_motion_sensor_2_occupancy
+            name: Hallway Motion 2
         name: Motion last hour
         hours_to_show: 1
         points_per_hour: 60
@@ -127,7 +125,7 @@ cards:
     cards:
       - type: custom:mini-graph-card
         entities:
-          - entity: sensor.philips_sml001_0955f606_temperature
+          - entity: sensor.hallway_motion_sensor_temperature
             name: Motion Sensor
         name: Temperature
         hours_to_show: 6

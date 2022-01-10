@@ -1,6 +1,0 @@
----
-synology_dsm:
-  host: !secret synology_ip
-  port: !secret synology_port
-  username: !secret synology_username
-  password: !secret synology_password

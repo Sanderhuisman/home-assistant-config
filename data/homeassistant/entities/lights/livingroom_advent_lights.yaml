@@ -1,0 +1,4 @@
+---
+platform: switch
+name: Livingroom Advent Lights
+entity_id: switch.advent_lights

@@ -1,18 +1,26 @@
 ---
-alias: "[Kitchen] Lights Sync"
 id: kitchen_lights_sync
+alias: "[Kitchen] Lights Sync"
 mode: single
 
 trigger:
   - platform: state
+    id: sink_lights_on
     entity_id: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off
     from: 'off'
     to: 'on'
 
   - platform: state
+    id: ceiling_off
     entity_id: light.kitchen_ceiling_lights_current_value_5
     from: 'on'
     to: 'off'
+
+  - platform: state
+    id: ceiling_on
+    entity_id: light.kitchen_ceiling_lights_current_value_5
+    from: 'off'
+    to: 'on'
 
 condition:
   - condition: state
@@ -22,9 +30,9 @@ condition:
 action:
   - choose:
       - conditions:
-          - condition: template
-            value_template: >
-              {{ trigger.entity_id == 'light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off' }}
+          - condition: trigger
+            id: sink_lights_on
+            alias: "Sink lights turned on"
 
         sequence:
           - service: light.turn_on
@@ -33,11 +41,36 @@ action:
             data:
               brightness_pct: 100
 
+          - service: light.turn_on
+            target:
+              entity_id: light.kitchen_floor_lights
+            data:
+              brightness_pct: 10
+              color_temp: 500
+
       - conditions:
-          - condition: template
-            value_template: "{{ trigger.entity_id == 'light.kitchen_ceiling_lights_current_value_5' }}"
+          - condition: trigger
+            id: ceiling_off
+            alias: "Ceiling light turned off"
 
         sequence:
           - service: light.turn_off
             target:
               entity_id: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off
+
+          - service: light.turn_off
+            target:
+              entity_id: light.kitchen_floor_lights
+
+      - conditions:
+          - condition: trigger
+            id: ceiling_on
+            alias: "Ceiling light turned on"
+
+        sequence:
+          - service: light.turn_on
+            target:
+              entity_id: light.kitchen_floor_lights
+            data:
+              brightness_pct: 10
+              color_temp: 500

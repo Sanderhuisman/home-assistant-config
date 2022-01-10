@@ -16,17 +16,17 @@ trigger:
     to: 'off'
     for: 00:02:00
 
-condition: []
-
 action:
   - choose:
       - conditions:
           - condition: state
             entity_id: binary_sensor.kitchen_motion_occupancy
             state: 'on'
+
           - condition: numeric_state
             entity_id: sensor.xiaomi_lumi_sen_ill_mgl01_illuminance
             below: '60'
+
         sequence:
           - service: light.turn_on
             target:
@@ -38,6 +38,7 @@ action:
           - condition: state
             entity_id: binary_sensor.kitchen_motion_occupancy
             state: 'off'
+
         sequence:
           - service: light.turn_off
             target:

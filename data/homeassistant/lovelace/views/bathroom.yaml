@@ -32,8 +32,12 @@ cards:
   - type: entities
     title: Entities
     entities:
-      - binary_sensor.bathroom_hygrostat
-      - sensor.ventilation_mode
+      - entity: binary_sensor.bathroom_hygrostat
+        name: Hygrostat
+        state_color: true
+      - entity: sensor.ventilation_mode
+        name: Ventilation Mode
+        icon: mdi:hvac
 
   - type: custom:mini-graph-card
     entities:

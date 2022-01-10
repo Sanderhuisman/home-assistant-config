@@ -1,0 +1,7 @@
+---
+platform: group
+name: Christmas Lights
+entities:
+  - light.livingroom_deco_lights
+  - light.christmas_vitrine_lights
+  - light.christmas_tree_level_on_off

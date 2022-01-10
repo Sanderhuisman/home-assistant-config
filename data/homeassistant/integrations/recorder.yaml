@@ -12,3 +12,4 @@ recorder:
       - device_tracker
       - person
       - vacuum
+      - climate

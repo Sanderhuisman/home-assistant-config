@@ -1,14 +1,17 @@
 ---
 name: "Living Relax"
 entities:
-  light.hue_bulb:
+  light.hue_tv_left:
     state: true
     brightness: 200
-  light.hue_light_3:
+    hs_color: [35.426, 73.725]
+  light.hue_couch:
     state: true
     brightness: 200
-  light.hue_light_4:
+    hs_color: [35.426, 73.725]
+  light.hue_tv_right:
     state: true
     brightness: 200
+    hs_color: [35.426, 73.725]
   light.living_room_ceiling_level_light_color_on_off:
     state: false

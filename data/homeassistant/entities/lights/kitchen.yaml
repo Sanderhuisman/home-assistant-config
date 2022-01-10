@@ -4,3 +4,5 @@ name: Kitchen Lights
 entities:
   - light.kitchen_ceiling_lights_current_value_5
   - light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off
+  - light.kitchen_floor_lights
+  - light.kitchen_iris_level_light_color_on_off
