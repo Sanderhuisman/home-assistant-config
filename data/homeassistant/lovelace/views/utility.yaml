@@ -13,21 +13,21 @@ cards:
       - type: custom:fold-entity-row
         head:
           name: Fridge Door Sensor
-          entity: binary_sensor.utility_frige_door_status
+          entity: binary_sensor.utility_fridge_door_contact
           state_color: true
           icon: mdi:fridge
         entities:
-          - entity: sensor.utility_frige_door_power
+          - entity: sensor.utility_fridge_door_battery
             name: Battery
 
       - type: custom:fold-entity-row
         head:
           name: Door Sensor
-          entity: binary_sensor.utility_door_status
+          entity: binary_sensor.utility_door_sensor_contact
           state_color: true
           icon: mdi:door
         entities:
-          - entity: sensor.utility_door_power
+          - entity: sensor.utility_door_sensor_battery
             name: Battery
 
       - name: Automatic light
@@ -40,7 +40,7 @@ cards:
 
   - type: custom:mini-graph-card
     entities:
-      - entity: binary_sensor.utility_door_status
+      - entity: binary_sensor.utility_door_sensor_contact
         name: Door Sensor
     name: Openings last hour
     hours_to_show: 1
@@ -54,53 +54,3 @@ cards:
         label: Closed
       - value: "on"
         label: Open
-
-  - type: custom:vertical-stack-in-card
-    title: Ventilation
-    cards:
-      - type: horizontal-stack
-        cards:
-          - type: 'custom:button-card'
-            entity: script.ventilation_low
-            icon: mdi:hvac
-            name: Low
-            tap_action:
-              action: call-service
-              service: script.turn_on
-              service_data:
-                entity_id: script.ventilation_low
-          - type: 'custom:button-card'
-            entity: script.ventilation_medium
-            icon: mdi:hvac
-            name: Medium
-            tap_action:
-              action: call-service
-              service: script.turn_on
-              service_data:
-                entity_id: script.ventilation_medium
-          - type: 'custom:button-card'
-            entity: script.ventilation_high
-            icon: mdi:hvac
-            name: High
-            tap_action:
-              action: call-service
-              service: script.turn_on
-              service_data:
-                entity_id: script.ventilation_high
-
-          - type: 'custom:button-card'
-            entity: script.ventilation_high_30_min
-            icon: mdi:clock-time-six
-            name: High 30 mins
-            tap_action:
-              action: call-service
-              service: script.turn_on
-              service_data:
-                entity_id: script.ventilation_high_30_min
-
-      - type: entities
-        entities:
-          - entity: sensor.ventilation_mode
-            icon: mdi:hvac
-          - entity: sensor.ventilation_timer
-            icon: mdi:timer

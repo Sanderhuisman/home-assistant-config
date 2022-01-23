@@ -5,31 +5,34 @@ description: ''
 mode: single
 
 trigger:
-  - platform: event
-    event_type: zha_event
-    id: zha_event_switch
-    event_data:
-      device_ieee: 84:2e:14:ff:fe:1b:cd:f6
+  - id: switch
+    entity_id: sensor.3d_printer_light_switch_action
+    platform: state
+    to:
+      - 'on'
+      - 'off'
+      - 'brightness_move_up'
+      - 'brightness_move_down'
 
 condition: []
 
 action:
   - variables:
-      command: '{{ trigger.event.data.command }}'
+      trigger_action: '{{ trigger.to_state.state }}'
 
   - choose:
       - conditions:
-          - "{{ command == 'on' }}"
+          - "{{ trigger_action == 'on' }}"
 
         sequence:
           - service: switch.turn_on
             target:
-              entity_id: switch.printer_light
+              entity_id: switch.3d_printer_lights
 
       - conditions:
-          - "{{ command == 'off' }}"
+          - "{{ trigger_action == 'off' }}"
 
         sequence:
           - service: switch.turn_off
             target:
-              entity_id: switch.printer_light
+              entity_id: switch.3d_printer_lights

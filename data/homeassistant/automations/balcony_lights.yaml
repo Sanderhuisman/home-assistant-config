@@ -14,11 +14,20 @@ trigger:
     at: '22:30:00'
     id: evening_off
 
-  - platform: event
-    event_type: zha_event
-    id: zha_event_switch
-    event_data:
-      device_ieee: 54:ef:44:10:00:1b:06:70
+  - id: switch
+    entity_id:
+      - sensor.balcony_switch_action
+    platform: state
+    to:
+      - 'button_1_hold'
+      - 'button_1_release'
+      - 'button_1_single'
+      - 'button_1_triple'
+      - 'button_2_hold'
+      - 'button_2_release'
+      - 'button_2_single'
+      - 'button_2_double'
+      - 'button_2_triple'
 
 condition: []
 
@@ -31,31 +40,40 @@ action:
         sequence:
           - service: light.turn_on
             target:
-              entity_id: light.balcony_christmas_lights_level_on_off
+              entity_id: light.balcony_lights
             data:
               brightness_pct: 100
               transition: 2
 
       - conditions:
           - condition: trigger
-            id: zha_event_switch
+            id: evening_off
+
+        sequence:
+          - service: light.turn_off
+            target:
+              entity_id: light.balcony_lights
+
+      - conditions:
+          - condition: trigger
+            id: switch
 
         sequence:
           - choose:
             - conditions:
-                - "{{ trigger.event.data.command == 'toggle' and trigger.event.data.endpoint_id == 1 }}"
+                - "{{  trigger.to_state.state == 'button_1_single' }}"
 
               sequence:
                 - choose:
                     - conditions:
                         - condition: state
-                          entity_id: light.balcony_christmas_lights_level_on_off
+                          entity_id: light.balcony_lights
                           state: "off"
 
                       sequence:
                         - service: light.turn_on
                           target:
-                            entity_id: light.balcony_christmas_lights_level_on_off
+                            entity_id: light.balcony_lights
                           data:
                             brightness_pct: 100
                             transition: 2
@@ -63,12 +81,4 @@ action:
                   default:
                     - service: light.turn_off
                       target:
-                        entity_id: light.balcony_christmas_lights_level_on_off
-
-
-    default:
-      - service: light.turn_off
-        target:
-          entity_id: light.balcony_christmas_lights_level_on_off
-        data:
-          transition: 2
+                        entity_id: light.balcony_lights

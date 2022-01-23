@@ -5,5 +5,4 @@ entities:
   - light.hue_tv_left
   - light.hue_couch  # Big lamp
   - light.hue_tv_right
-  - light.living_room_ceiling_level_light_color_on_off
-  # - light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
+  - light.livingroom_ceiling

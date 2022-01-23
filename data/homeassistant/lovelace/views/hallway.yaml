@@ -40,31 +40,31 @@ cards:
           - type: custom:fold-entity-row
             head:
               name: Door Sensor
-              entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off
+              entity: binary_sensor.hallway_frontdoor_sensor_contact
               icon: mdi:door
               state_color: true
             entities:
-              - entity: sensor.lumi_lumi_sensor_magnet_aq2_40132a04_power
+              - entity: sensor.hallway_frontdoor_sensor_battery
                 name: Battery
                 icon: mdi:battery
 
           - type: custom:fold-entity-row
             head:
               name: Server Door
-              entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_769a3e05_on_off
+              entity: binary_sensor.hallway_frontdoor_sensor_contact
               icon: mdi:door
               state_color: true
             entities:
-              - entity: sensor.lumi_lumi_sensor_magnet_aq2_769a3e05_power
+              - entity: sensor.hallway_frontdoor_sensor_battery
                 name: Battery
                 icon: mdi:battery
 
           - type: custom:fold-entity-row
             head:
               name: Light Sensor
-              entity: sensor.lumi_lumi_sen_ill_mgl01_ba6e783c_illuminance
+              entity: sensor.hallway_lux_sensor_illuminance_lux
             entities:
-              - entity: sensor.lumi_lumi_sen_ill_mgl01_ba6e783c_power
+              - entity: sensor.hallway_lux_sensor_battery
                 name: Battery
                 icon: mdi:battery
 
@@ -106,7 +106,7 @@ cards:
 
       - type: custom:mini-graph-card
         entities:
-          - entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off
+          - entity: binary_sensor.hallway_frontdoor_sensor_on_off
             name: Door Sensor
         name: Door Open
         hours_to_show: 1
@@ -136,7 +136,7 @@ cards:
 
       - type: custom:mini-graph-card
         entities:
-          - entity: sensor.lumi_lumi_sen_ill_mgl01_ba6e783c_illuminance
+          - entity: sensor.hallway_lux_sensor_illuminance_lux
             name: Light Sensor
         name: Light Intensity
         hours_to_show: 6

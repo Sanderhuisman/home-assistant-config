@@ -6,7 +6,7 @@ mode: single
 trigger:
   - platform: state
     id: sink_lights_on
-    entity_id: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off
+    entity_id: light.kitchen_sink_lights
     from: 'off'
     to: 'on'
 
@@ -48,6 +48,13 @@ action:
               brightness_pct: 10
               color_temp: 500
 
+          - service: light.turn_on
+            target:
+              entity_id: light.kitchen_iris
+            data:
+              brightness_pct: 10
+              color_temp: 500
+
       - conditions:
           - condition: trigger
             id: ceiling_off
@@ -56,11 +63,15 @@ action:
         sequence:
           - service: light.turn_off
             target:
-              entity_id: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off
+              entity_id: light.kitchen_sink_lights
 
           - service: light.turn_off
             target:
               entity_id: light.kitchen_floor_lights
+
+          - service: light.turn_off
+            target:
+              entity_id: light.kitchen_iris
 
       - conditions:
           - condition: trigger
@@ -73,4 +84,11 @@ action:
               entity_id: light.kitchen_floor_lights
             data:
               brightness_pct: 10
+              color_temp: 500
+
+          - service: light.turn_on
+            target:
+              entity_id: light.kitchen_iris
+            data:
+              brightness_pct: 100
               color_temp: 500

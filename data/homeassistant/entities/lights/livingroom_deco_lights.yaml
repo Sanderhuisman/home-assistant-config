@@ -1,4 +1,4 @@
 ---
 platform: switch
 name: Livingroom Deco Lights
-entity_id: switch.deco_lights_on_off
+entity_id: switch.livingroom_deco_lights

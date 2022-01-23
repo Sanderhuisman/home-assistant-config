@@ -10,5 +10,5 @@ entities:
   light.hue_couch:
     state: true
     brightness: 200
-  light.living_room_ceiling_level_light_color_on_off:
+  light.livingroom_ceiling:
     state: false

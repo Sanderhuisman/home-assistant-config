@@ -1,6 +1,6 @@
 ---
 platform: threshold
 name: threshold_dark
-entity_id: sensor.lumi_lumi_sen_ill_mgl01_ba6e783c_illuminance
+entity_id: sensor.hallway_lux_sensor_illuminance_lux
 lower: 60
 hysteresis: 20

@@ -5,21 +5,22 @@ mode: queued
 description: ''
 
 trigger:
-  - platform: event
-    event_type: zha_event
-    event_data:
-      device_ieee: 00:15:8d:00:03:55:8d:23
-
-  - platform: event
-    event_type: zha_event
-    event_data:
-      device_ieee: 00:15:8d:00:03:55:8e:31
+  - id: switch
+    entity_id:
+      - sensor.bedroom_light_switch_lys_action
+      - sensor.bedroom_light_switch_sander_action
+    platform: state
+    to:
+      - 'single'
+      - 'double'
 
 action:
+  - variables:
+      trigger_action: '{{ trigger.to_state.state }}'
   - choose:
         # Single press and lights off -> turn on
       - conditions:
-          - "{{ trigger.event.data.command == 'single' }}"
+          - "{{ trigger_action == 'single' }}"
 
         sequence:
           - choose:
@@ -46,7 +47,7 @@ action:
 
         # Double press and lights on -> next scene
       - conditions:
-          - "{{ trigger.event.data.command == 'double' }}"
+          - "{{ trigger_action == 'double' }}"
 
         sequence:
           - choose:

@@ -6,17 +6,18 @@ mode: single
 
 trigger:
     # Fridge open
-  - platform: state
-    id: fridge_open
-    entity_id: binary_sensor.utility_frige_door_status
+  - id: fridge_open
+    platform: state
+    entity_id: binary_sensor.utility_fridge_door_contact
     from: 'off'
     to: 'on'
     for:
       minutes: 5
 
     # Fridge close
-  - platform: state
-    entity_id: binary_sensor.utility_frige_door_status
+  - id: fridge_close
+    platform: state
+    entity_id: binary_sensor.utility_fridge_door_contact
     from: 'on'
     to: 'off'
 
@@ -43,10 +44,15 @@ action:
                 persistent: true  # Set to true to create a persistent notification
                 tag: persistent_fridge_alarm  # Tag is required for the persistent notification
 
-    default:
-      - service: notify.mobile_app_sander_sony_xperia_1_ii
-        alias: "Clear notification when door is closed"
-        data:
-          message: clear_notification
-          data:
-            tag: persistent_fridge_alarm
+      - conditions:
+          - condition: trigger
+            id: fridge_close
+            alias: "Fridge closed again"
+
+        sequence:
+          - service: notify.mobile_app_sander_sony_xperia_1_ii
+            alias: "Clear notification when door is closed"
+            data:
+              message: clear_notification
+              data:
+                tag: persistent_fridge_alarm

@@ -8,15 +8,12 @@ cards:
       - light.hue_tv_left
       - light.hue_tv_right
       - light.hue_couch
-      - light.living_room_ceiling_level_light_color_on_off
-      - light.kitchen_iris_level_light_color_on_off
+      - light.livingroom_ceiling
+      - light.kitchen_iris
       - name: Vitrine
-        entity: light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
-      - light.christmas_vitrine_lights
+        entity: light.livingroom_vitrine
+      - light.dining_table_deco_lights
       - light.livingroom_deco_lights
-      # - light.livingroom_advent_lights
-      # - name: Christmas Tree
-      #   entity: light.christmas_tree_level_on_off
 
   - type: glance
     title: Scenes
@@ -66,30 +63,30 @@ cards:
   - type: entities
     title: Sensors
     entities:
-      - entity: sensor.vitrine_light_switch_power
+      - entity: sensor.livingroom_vitrine_switch_battery
         name: Vitrine Switch Battery
-      - entity: sensor.lumi_lumi_sensor_magnet_aq2_40ea7205_power
+      - entity: sensor.livingroom_vitrine_door_battery
         name: Vitrine Door Sensor Battery
 
 
       - type: custom:fold-entity-row
         head:
           name: Window left
-          entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_332be302_on_off
+          entity: binary_sensor.livingroom_window_left_contact
           icon: mdi:window-closed
           state_color: true
         entities:
-          - entity: sensor.lumi_lumi_sensor_magnet_aq2_332be302_power
+          - entity: sensor.livingroom_window_left_battery
             name: Battery
             icon: mdi:battery
       - type: custom:fold-entity-row
         head:
           name: Window right
-          entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_3e8e5303_on_off
+          entity: binary_sensor.livingroom_window_right_contact
           icon: mdi:window-closed
           state_color: true
         entities:
-          - entity: sensor.lumi_lumi_sensor_magnet_aq2_3e8e5303_power
+          - entity: sensor.livingroom_window_right_battery
             name: Battery
             icon: mdi:battery
 
@@ -97,10 +94,10 @@ cards:
         head:
           name: Balcony door
           icon: mdi:door
-          entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_948e5303_on_off
+          entity: binary_sensor.livingroom_balcony_door_contact
           state_color: true
         entities:
-          - entity: sensor.lumi_lumi_sensor_magnet_aq2_948e5303_power
+          - entity: sensor.livingroom_balcony_door_battery
             name: Battery
             icon: mdi:battery
 

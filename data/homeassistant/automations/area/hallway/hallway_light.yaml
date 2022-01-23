@@ -17,7 +17,7 @@ trigger:
     from: 'off'
     to: 'on'
     entity_id:
-      - binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off
+      - binary_sensor.hallway_frontdoor_sensor_contact
 
   - platform: state
     id: door_closed
@@ -26,7 +26,7 @@ trigger:
     for:
       minutes: 1
     entity_id:
-      - binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off
+      - binary_sensor.hallway_frontdoor_sensor_contact
 
   - platform: state
     entity_id:
@@ -67,7 +67,7 @@ action:
             data:
               brightness_pct: >
                 {% if is_state('binary_sensor.sleep_time', 'on') %}
-                  {{ states('input_number.hallway_light_dimmed') | int }}
+                  {{ states('input_number.hallway_light_dimmed') | int(0) }}
                 {% else %}
                   100
                 {% endif %}
@@ -122,7 +122,7 @@ action:
             state: 'off'
             alias: "Door closed and no motion"
             entity_id:
-              - binary_sensor.lumi_lumi_sensor_magnet_aq2_40132a04_on_off
+              - binary_sensor.hallway_frontdoor_sensor_contact
 
         sequence:
           - service: light.turn_off

@@ -5,29 +5,69 @@ description: ''
 mode: single
 
 trigger:
-  - platform: state
+  - id: hygrostat_on
+    platform: state
     entity_id: binary_sensor.bathroom_hygrostat
-
+    from: 'off'
+    to: 'on'
+  - id: hygrostat_off
+    platform: state
+    entity_id: binary_sensor.bathroom_hygrostat
+    from: 'on'
+    to: 'off'
+ 
 condition: []
 
 action:
   - choose:
       - conditions:
-          - condition: state
-            entity_id: binary_sensor.bathroom_hygrostat
-            state: 'on'
+          - condition: trigger
+            id: hygrostat_on
 
         sequence:
-          - service: notify.mobile_app_sander_sony_xperia_1_ii
+          - alias: "Ask to turn the ventilation on"
+            service: notify.mobile_app_sander_sony_xperia_1_ii
             data:
               message: ventilation on
+              actions:
+                - action: "{{ action_on }}"
+                  title: "Turn Ventialtion On" # The button title
+                - action: "{{ action_nope }}"
+                  title: "Nope" # The button title
+
+          - alias: "Wait for a response"
+            wait_for_trigger:
+              - platform: event
+                event_type: mobile_app_notification_action
+                event_data:
+                  # waiting for the specific action avoids accidentally continuing
+                  # for another script/automation's notification action
+                  action: "{{ action_on }}"
+              - platform: event
+                event_type: mobile_app_notification_action
+                event_data:
+                  action: "{{ action_nope }}"
+          - alias: "Perform the action"
+            choose:
+              - conditions: "{{ wait.trigger.event.data.action == action_on }}"
+                sequence:
+                  - service: fan.set_percentage
+                    target:
+                      entity_id: fan.ventilation
+                    data:
+                      percentage: 100
 
       - conditions:
-          - condition: state
-            entity_id: binary_sensor.bathroom_hygrostat
-            state: 'off'
+          - condition: trigger
+            id: hygrostat_off
 
         sequence:
           - service: notify.mobile_app_sander_sony_xperia_1_ii
             data:
               message: ventilation off
+
+          - service: fan.set_percentage
+            target:
+              entity_id: fan.ventilation
+            data:
+              percentage: 25

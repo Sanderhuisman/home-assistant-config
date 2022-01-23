@@ -4,16 +4,25 @@ id: utility_lights_motion
 mode: single
 
 trigger:
-  - platform: state
+  - id: door_open
+    platform: state
     entity_id:
-      - binary_sensor.utility_door_status
+      - binary_sensor.utility_door_sensor_contact
+    from: 'off'
+    to: 'on'
+
+  - id: door_closed
+    platform: state
+    entity_id:
+      - binary_sensor.utility_door_sensor_contact
+    from: 'on'
+    to: 'off'
 
 action:
   - choose:
       - conditions:
-          - condition: state
-            entity_id: binary_sensor.utility_door_status
-            state: 'on'
+          - condition: trigger
+            id: door_open
 
         sequence:
           - service: light.turn_on
@@ -22,16 +31,16 @@ action:
             data:
               brightness_pct: 100
 
-      - conditions:
-          - condition: state
-            entity_id: binary_sensor.utility_door_status
-            state: 'on'
-            for: 00:59:00
+      # - conditions:
+      #     - condition: state
+      #       entity_id: binary_sensor.utility_door_sensor_contact
+      #       state: 'on'
+      #       for: 00:59:00
 
-        sequence:
-          - service: light.turn_off
-            entity_id:
-              - light.utility_room_lights_current_value_3
+      #   sequence:
+      #     - service: light.turn_off
+      #       entity_id:
+      #         - light.utility_room_lights_current_value_3
 
     default:
       - service: light.turn_off

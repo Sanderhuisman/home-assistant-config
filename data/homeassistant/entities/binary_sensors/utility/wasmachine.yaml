@@ -6,7 +6,7 @@ sensors:
     delay_off:
       minutes: 5
     value_template: >-
-      {{ states('sensor.tz3000_3ooaz3ng_ts0121_28c451fe_electrical_measurement') | float(0) > 5 }}
+      {{ states('sensor.wasmachine_energy') | float(0) > 5 }}
 
     icon_template: >
       {% if is_state("binary_sensor.washing_machine", "on") %}

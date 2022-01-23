@@ -13,7 +13,7 @@ entities:
     state: true
     brightness: 255
     color_temp: 346
-  light.living_room_ceiling_level_light_color_on_off:
+  light.livingroom_ceiling:
     state: true
     brightness: 255
     color_temp: 346

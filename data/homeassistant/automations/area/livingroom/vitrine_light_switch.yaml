@@ -4,52 +4,67 @@ alias: '[Living Room] Vitrine Light Switch'
 mode: single
 
 trigger:
-  - platform: event
-    event_type: zha_event
-    event_data:
-      device_ieee: 60:a4:23:ff:fe:ee:dc:8f
+  - id: switch
+    entity_id: sensor.livingroom_vitrine_switch_action
+    platform: state
+    to:
+      - 'on'
+      - 'off'
+      - 'brightness_move_up'
+      - 'brightness_move_down'
 
 action:
+  - variables:
+      trigger_action: '{{ trigger.to_state.state }}'
+
   - choose:
       - conditions:
-          - "{{ trigger.event.data.command == 'on' }}"
+          - condition: trigger
+            id: switch
+          - "{{ trigger_action == 'on' }}"
 
         sequence:
           - service: light.turn_on
             target:
-              entity_id: light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
+              entity_id: light.livingroom_vitrine
             data:
               transition: 0.5
               brightness_pct: 100
 
       - conditions:
-          - "{{ trigger.event.data.command == 'move' }}"
+          - condition: trigger
+            id: switch
+          - "{{ trigger_action == 'brightness_move_up' }}"
 
         sequence:
           - service: light.turn_on
             target:
-              entity_id: light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
+              entity_id: light.livingroom_vitrine
             data:
               transition: 0.5
               brightness_pct: 10
 
       - conditions:
-          - "{{ trigger.event.data.command == 'move_with_on_off' }}"
+          - condition: trigger
+            id: switch
+          - "{{ trigger_action == 'brightness_move_down' }}"
 
         sequence:
           - service: light.turn_on
             target:
-              entity_id: light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
+              entity_id: light.livingroom_vitrine
             data:
               transition: 0.5
               brightness_pct: 50
 
       - conditions:
-          - "{{ trigger.event.data.command == 'off' }}"
+          - condition: trigger
+            id: switch
+          - "{{ trigger_action == 'off' }}"
 
         sequence:
           - service: light.turn_off
             target:
-              entity_id: light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off
+              entity_id: light.livingroom_vitrine
             data:
               transition: 0.5

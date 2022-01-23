@@ -15,10 +15,10 @@ google_assistant:
     light.kitchen_ceiling_lights_current_value_5:
       name: Kitchen Ceiling Light
 
-    light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off:
+    light.kitchen_sink_lights:
       name: Kitchen Workspace Light
 
-    light.ikea_of_sweden_tradfri_driver_10w_a4d585fe_level_on_off:
+    light.livingroom_vitrine:
       name: Vitrine Light
 
     light.utility_room_lights_current_value_3:

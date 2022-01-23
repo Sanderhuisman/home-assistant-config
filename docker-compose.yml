@@ -122,6 +122,42 @@ services:
       - traefik.http.routers.esphome.middlewares=ipwhitelist@file
       - traefik.http.services.esphome.loadbalancer.server.port=6052
 
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt
+    restart: unless-stopped
+    volumes:
+      - ./data/zigbee2mqtt:/app/data
+      # - /run/udev:/run/udev:ro
+    environment:
+      - TZ=Europe/Amsterdam
+    devices:
+      # Make sure this matched your adapter location
+      - /dev/ttyUSB-SonoffZigbee:/dev/ttyACM0
+    networks:
+      - default
+      - web
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=web
+      - traefik.http.routers.zigbee2mqtt.rule=Host(`zigbee2mqtt.${DOMAIN}`)
+      - traefik.http.routers.zigbee2mqtt.entrypoints=http
+      - traefik.http.routers.zigbee2mqtt.middlewares=ipwhitelist@file
+      - traefik.http.services.zigbee2mqtt.loadbalancer.server.port=8080
+
+  mosquitto:
+    image: eclipse-mosquitto
+    restart: unless-stopped
+    volumes:
+      - ./data/mosquitto/config:/mosquitto/config:ro
+      - ./data/mosquitto/log:/mosquitto/log:rw
+      - ./data/mosquitto/data:/mosquitto/data:rw
+    networks:
+      - default
+      - web
+    ports:
+      - 1883:1883
+      - 9001:9001
+
 networks:
   web:
     external: true

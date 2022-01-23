@@ -4,52 +4,59 @@ alias: "[Kitchen] Light Remote"
 mode: single
 
 trigger:
-  - platform: event
-    event_type: zha_event
-    event_data:
-      device_ieee: 58:8e:81:ff:fe:35:6d:4d
+  - id: switch
+    entity_id: sensor.kitchen_sink_switch_action
+    platform: state
+    to:
+      - 'on'
+      - 'off'
+      - 'brightness_move_up'
+      - 'brightness_move_down'
 
 action:
+  - variables:
+      trigger_action: '{{ trigger.to_state.state }}'
+
   - choose:
       - conditions:
           # On
-          - "{{ trigger.event.data.command == 'on' }}"
+          - "{{ trigger_action == 'on' }}"
 
         sequence:
           - service: light.turn_on
             target:
-              entity_id: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off
+              entity_id: light.kitchen_sink_lights
             data:
               transition: 1
               brightness_pct: 100
 
       - conditions:
-          - "{{ trigger.event.data.command == 'move' }}"
+          - "{{ trigger_action == 'brightness_move_up' }}"
 
         sequence:
           - service: light.turn_on
             target:
-              entity_id: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off
+              entity_id: light.kitchen_sink_lights
             data:
               transition: 1
               brightness_pct: 10
 
       - conditions:
-          - "{{ trigger.event.data.command == 'move_with_on_off' }}"
+          - "{{ trigger_action == 'brightness_move_down' }}"
 
         sequence:
           - service: light.turn_on
             target:
-              entity_id: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off
+              entity_id: light.kitchen_sink_lights
             data:
               transition: 1
               brightness_pct: 50
 
         # Off
       - conditions:
-          - "{{ trigger.event.data.command == 'off' }}"
+          - "{{ trigger_action == 'off' }}"
 
         sequence:
           - service: light.turn_off
             target:
-              entity_id: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off
+              entity_id: light.kitchen_sink_lights

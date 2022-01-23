@@ -4,7 +4,7 @@ title: Bathroom
 cards:
   - type: custom:mini-graph-card
     entities:
-      - entity: sensor.lumi_lumi_weather_0c0b6004_humidity
+      - entity: sensor.bathroom_humidity
         name: Multi Sensor
     name: Humidity
     hours_to_show: 6
@@ -13,7 +13,7 @@ cards:
 
   - type: custom:mini-graph-card
     entities:
-      - entity: sensor.lumi_lumi_weather_0c0b6004_pressure
+      - entity: sensor.bathroom_pressure
         name: Multi Sensor
     name: Pressure
     hours_to_show: 1
@@ -22,7 +22,7 @@ cards:
 
   - type: custom:mini-graph-card
     entities:
-      - entity: sensor.lumi_lumi_weather_0c0b6004_temperature
+      - entity: sensor.bathroom_temperature
         name: Multi Sensor
     name: Temperature
     hours_to_show: 1
@@ -35,9 +35,9 @@ cards:
       - entity: binary_sensor.bathroom_hygrostat
         name: Hygrostat
         state_color: true
-      - entity: sensor.ventilation_mode
-        name: Ventilation Mode
-        icon: mdi:hvac
+
+      - entity: fan.ventilation
+        name: Ventilation
 
   - type: custom:mini-graph-card
     entities:

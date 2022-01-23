@@ -1,0 +1,4 @@
+config/mosquitto.passwd
+
+data/*
+log/*

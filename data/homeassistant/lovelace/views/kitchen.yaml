@@ -6,13 +6,13 @@ cards:
     title: Lights
     entities:
       - name: Workspace
-        entity: light.ikea_of_sweden_tradfri_driver_10w_b8e6affe_level_on_off
+        entity: light.kitchen_sink_lights
       - name: Ceiling
         entity: light.kitchen_ceiling_lights_current_value_5
       - name: Kitchen block LEDs
         entity: light.kitchen_floor_lights
       - name: Cupboard top
-        entity: light.kitchen_iris_level_light_color_on_off
+        entity: light.kitchen_iris
 
   - type: entities
     title: Automation
@@ -24,13 +24,13 @@ cards:
   - type: entities
     title: Sensors
     entities:
-      - entity: sensor.ikea_of_sweden_tradfri_on_off_switch_4d6d35fe_power
-        name: Cupboard Lights Switch Battery
+      - entity: sensor.kitchen_sink_switch_battery
+        name: Sink Lights Switch Battery
 
   - type: custom:mini-graph-card
     color_thresholds_transition: smooth
     entities:
-      - entity: sensor.lumi_lumi_weather_temperature
+      - entity: sensor.kitchen_fridge_temperature
         name: Fridge Temperature
     font_size: 100
     line_color: var(--primary-color)

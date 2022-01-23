@@ -16,7 +16,7 @@ condition: []
 action:
   - service: switch.turn_off
     target:
-      entity_id: switch.printer_power
+      entity_id: switch.3d_printer_power
 
   - service: notify.mobile_app_sander_sony_xperia_1_ii
     data:

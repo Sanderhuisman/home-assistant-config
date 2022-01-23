@@ -8,18 +8,18 @@ cards:
       - type: custom:fold-entity-row
         head:
           name: Window
-          entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_on_off
+          entity: binary_sensor.office_window_contact
           icon: mdi:window-closed-variant
           state_color: true
         entities:
-          - entity: sensor.lumi_lumi_sensor_magnet_aq2_power
+          - entity: sensor.office_window_battery
             name: Battery
             icon: mdi:battery
 
   - type: custom:mini-graph-card
     color_thresholds_transition: smooth
     entities:
-      - entity: sensor.office_temperature
+      - entity: sensor.office_sensor_temperature
         name: Temperature
     font_size: 100
     line_color: var(--primary-color)

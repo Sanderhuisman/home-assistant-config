@@ -1,5 +1,5 @@
 ---
 platform: switch
-name: Christmas Vitrine Lights
+name: Dining Table Deco Lights
 # icon: 'mdi:string-lights'
-entity_id: switch.christmas_vitrine_lights
+entity_id: switch.dining_table_deco_lights

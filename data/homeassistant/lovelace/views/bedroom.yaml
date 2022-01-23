@@ -49,7 +49,7 @@ cards:
         title: Pax lights
         show_header_toggle: false
         entities:
-          - entity: light.ikea_of_sweden_tradfri_driver_10w_f17f08fe_level_on_off
+          - entity: light.bedroom_pax
             name: Pax
             type: custom:slider-entity-row
 
@@ -64,60 +64,15 @@ cards:
             state_color: true
             icon: mdi:home-automation
 
-          # - type: custom:fold-entity-row
-          #   head:
-          #     name: Motion Sensor
-          #     entity: binary_sensor.philips_sml001_e2abf706_occupancy
-          #     state_color: true
-          #   entities:
-          #     - entity: sensor.philips_sml001_e2abf706_power
-          #       name: Battery
           - name: Brightness Dimmed
             entity: input_number.bedroom_light_dimmed
 
-          - entity: sensor.lumi_lumi_remote_b186acn01_318e5503_power
+          - entity: sensor.bedroom_light_switch_lys_battery
             name: Switch Lys Battery Power
-          - entity: sensor.lumi_lumi_remote_b186acn01_power
+          - entity: sensor.bedroom_light_switch_sander_battery
             name: Switch Sander Battery Power
 
           - entity: input_boolean.bedroom_nightlight_active
             name: Nightlight active
             icon: mdi:home-automation
             state_color: true
-
-  - type: vertical-stack
-    cards:
-      - type: custom:mini-graph-card
-        entities:
-          - entity: binary_sensor.philips_sml001_e2abf706_occupancy
-            name: Bedroom Motion
-        name: Motion last hour
-        hours_to_show: 1
-        points_per_hour: 60
-        update_interval: 30
-        aggregate_func: max
-        line_width: 2
-        smoothing: false
-        state_map:
-          - value: "off"
-            label: Clear
-          - value: "on"
-            label: Detected
-
-      - type: custom:mini-graph-card
-        entities:
-          - entity: sensor.philips_sml001_e2abf706_temperature
-            name: Motion Sensor
-        name: Temperature
-        hours_to_show: 6
-        points_per_hour: 60
-        update_interval: 30
-
-      - type: custom:mini-graph-card
-        entities:
-          - entity: sensor.sensor.philips_sml001_e2abf706_illuminance
-            name: Motion Sensor
-        name: Light Intensity
-        hours_to_show: 1
-        points_per_hour: 60
-        update_interval: 30
