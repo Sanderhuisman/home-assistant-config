@@ -11,3 +11,9 @@
 
 # All subfolders (generated folders for each device)
 **/
+
+# Un-ignore custom components
+!custom_components
+!custom_components/*
+!custom_components/*/**
+**/__pycache__
