@@ -95,8 +95,14 @@ services:
       - traefik.docker.network=web
       - traefik.http.routers.zwavejs.rule=Host(`zwavejs.${DOMAIN}`)
       - traefik.http.routers.zwavejs.entrypoints=http
-      - traefik.http.routers.zwavejs.middlewares=ipwhitelist@file
+      - traefik.http.routers.zwavejs.middlewares=redirect@file,ipwhitelist@file
       - traefik.http.services.zwavejs.loadbalancer.server.port=8091
+
+      - traefik.http.routers.zwavejs-secured.rule=Host(`zwavejs.${DOMAIN}`)
+      - traefik.http.routers.zwavejs-secured.entrypoints=https
+      - traefik.http.routers.zwavejs-secured.tls=true
+      - traefik.http.routers.zwavejs-secured.tls.certresolver=letsencrypt
+      - traefik.http.routers.zwavejs-secured.middlewares=hsts@file
 
   avahi:
     image: flungo/avahi:latest
@@ -119,15 +125,20 @@ services:
       - traefik.docker.network=web
       - traefik.http.routers.esphome.rule=Host(`esphome.${DOMAIN}`)
       - traefik.http.routers.esphome.entrypoints=http
-      - traefik.http.routers.esphome.middlewares=ipwhitelist@file
+      - traefik.http.routers.esphome.middlewares=redirect@file,ipwhitelist@file
       - traefik.http.services.esphome.loadbalancer.server.port=6052
 
+      - traefik.http.routers.esphome-secured.rule=Host(`esphome.${DOMAIN}`)
+      - traefik.http.routers.esphome-secured.entrypoints=https
+      - traefik.http.routers.esphome-secured.tls=true
+      - traefik.http.routers.esphome-secured.tls.certresolver=letsencrypt
+      - traefik.http.routers.esphome-secured.middlewares=hsts@file
+
   zigbee2mqtt:
-    image: koenkk/zigbee2mqtt
+    image: koenkk/zigbee2mqtt:${ZIGBEE2MQTT_TAG:-latest}
     restart: unless-stopped
     volumes:
       - ./data/zigbee2mqtt:/app/data
-      # - /run/udev:/run/udev:ro
     environment:
       - TZ=Europe/Amsterdam
     devices:
@@ -141,8 +152,14 @@ services:
       - traefik.docker.network=web
       - traefik.http.routers.zigbee2mqtt.rule=Host(`zigbee2mqtt.${DOMAIN}`)
       - traefik.http.routers.zigbee2mqtt.entrypoints=http
-      - traefik.http.routers.zigbee2mqtt.middlewares=ipwhitelist@file
+      - traefik.http.routers.zigbee2mqtt.middlewares=redirect@file,ipwhitelist@file
       - traefik.http.services.zigbee2mqtt.loadbalancer.server.port=8080
+
+      - traefik.http.routers.zigbee2mqtt-secured.rule=Host(`zigbee2mqtt.${DOMAIN}`)
+      - traefik.http.routers.zigbee2mqtt-secured.entrypoints=https
+      - traefik.http.routers.zigbee2mqtt-secured.tls=true
+      - traefik.http.routers.zigbee2mqtt-secured.tls.certresolver=letsencrypt
+      - traefik.http.routers.zigbee2mqtt-secured.middlewares=hsts@file
 
   mosquitto:
     image: eclipse-mosquitto
