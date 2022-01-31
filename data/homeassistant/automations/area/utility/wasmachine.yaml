@@ -3,19 +3,29 @@ alias: "[Utility] Wasmachine"
 id: utility_wasmachine
 
 variables:
-  message: "Washing machine is done 👚👕"
+  message_started: "Wasmachine just started 👚👕"
+  message_done: "Wasmachine is done 👚👕"
 
 trigger:
-  - platform: state
+  - id: started
+    platform: state
     entity_id: binary_sensor.washing_machine
+    from: "off"
+    to: "on"
+
+  - id: finished
+    platform: state
+    entity_id: binary_sensor.washing_machine
+    from: "on"
+    to: "off"
 
 action:
   - choose:
       # On
       - conditions:
-          - condition: state
-            entity_id: binary_sensor.washing_machine
-            state: 'on'
+          - alias: "Wasmachine started"
+            condition: trigger
+            id: started
 
         sequence:
           - service: input_datetime.set_datetime
@@ -26,30 +36,35 @@ action:
           - service: notify.mobile_app_sander_sony_xperia_1_ii
             data:
               title: Wasmachine
-              message: "The wasmachine just started"
+              message: "{{message_started}}"
               data:
                 tag: Wasmachine
                 channel: Wasmachine
 
-    # Off
-    default:
-      - service: input_datetime.set_datetime
-        entity_id: input_datetime.washing_machine_done
-        data:
-          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+      # Off
+      - conditions:
+          - alias: "Wasmachine finished"
+            condition: trigger
+            id: finished
 
-      - service: notify.mobile_app_sander_sony_xperia_1_ii
-        data:
-          title: Wasmachine
-          message: '{{message}}'
-          data:
-            tag: Wasmachine
-            channel: Wasmachine
+        sequence:
+          - service: input_datetime.set_datetime
+            entity_id: input_datetime.washing_machine_done
+            data:
+              datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
 
-      - service: notify.mobile_app_iphone
-        data:
-          title: Wasmachine
-          message: '{{message}}'
-          data:
-            tag: Wasmachine
-            channel: Wasmachine
+          - service: notify.mobile_app_sander_sony_xperia_1_ii
+            data:
+              title: Wasmachine
+              message: '{{message_done}}'
+              data:
+                tag: Wasmachine
+                channel: Wasmachine
+
+          - service: notify.mobile_app_iphone
+            data:
+              title: Wasmachine
+              message: '{{message_done}}'
+              data:
+                tag: Wasmachine
+                channel: Wasmachine
