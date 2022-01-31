@@ -102,7 +102,7 @@ services:
       - traefik.http.routers.zwavejs-secured.entrypoints=https
       - traefik.http.routers.zwavejs-secured.tls=true
       - traefik.http.routers.zwavejs-secured.tls.certresolver=letsencrypt
-      - traefik.http.routers.zwavejs-secured.middlewares=hsts@file
+      - traefik.http.routers.zwavejs-secured.middlewares=hsts@file,ipwhitelist@file,authelia@docker
 
   avahi:
     image: flungo/avahi:latest
@@ -132,7 +132,7 @@ services:
       - traefik.http.routers.esphome-secured.entrypoints=https
       - traefik.http.routers.esphome-secured.tls=true
       - traefik.http.routers.esphome-secured.tls.certresolver=letsencrypt
-      - traefik.http.routers.esphome-secured.middlewares=hsts@file
+      - traefik.http.routers.esphome-secured.middlewares=hsts@file,ipwhitelist@file,authelia@docker
 
   zigbee2mqtt:
     image: koenkk/zigbee2mqtt:${ZIGBEE2MQTT_TAG:-latest}
@@ -159,7 +159,7 @@ services:
       - traefik.http.routers.zigbee2mqtt-secured.entrypoints=https
       - traefik.http.routers.zigbee2mqtt-secured.tls=true
       - traefik.http.routers.zigbee2mqtt-secured.tls.certresolver=letsencrypt
-      - traefik.http.routers.zigbee2mqtt-secured.middlewares=hsts@file
+      - traefik.http.routers.zigbee2mqtt-secured.middlewares=hsts@file,ipwhitelist@file,authelia@docker
 
   mosquitto:
     image: eclipse-mosquitto
