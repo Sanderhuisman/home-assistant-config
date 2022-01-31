@@ -14,10 +14,33 @@ trigger:
 condition: []
 
 action:
-  - service: switch.turn_off
-    target:
-      entity_id: switch.3d_printer_power
+  - alias: "Setup vars"
+    variables:
+      action_off: "{{ 'OFF_' ~ context.id }}"
 
-  - service: notify.mobile_app_sander_sony_xperia_1_ii
+
+  - alias: "Ask to turn the ventilation on"
+    service: notify.mobile_app_sander_sony_xperia_1_ii
     data:
-      message: Printer inactive. Disable printer
+      message: Printer inactive, turning off?
+      data:
+        actions:
+          - action: "{{ action_off }}"
+            title: "Turn Off" # The button title
+
+  - alias: "Wait for a response"
+    wait_for_trigger:
+      - platform: event
+        event_type: mobile_app_notification_action
+        event_data:
+          # waiting for the specific action avoids accidentally continuing
+          # for another script/automation's notification action
+          action: "{{ action_off }}"
+
+  - alias: "Perform the action"
+    choose:
+      - conditions: "{{ wait.trigger.event.data.action == action_off }}"
+        sequence:
+          - service: switch.turn_off
+            target:
+              entity_id: switch.3d_printer_power
