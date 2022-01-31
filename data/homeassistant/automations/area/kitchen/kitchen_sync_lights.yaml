@@ -52,7 +52,7 @@ action:
             target:
               entity_id: light.kitchen_iris
             data:
-              brightness_pct: 10
+              brightness_pct: 100
               color_temp: 500
 
       - conditions:
