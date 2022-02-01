@@ -6,11 +6,6 @@ sensors:
     delay_off:
       minutes: 5
     value_template: >-
-      {{ states('sensor.wasmachine_power') | float(0) > 5 }}
-
+      {{ states('sensor.wasmachine_power') | float(0) > 5.0 }}
     icon_template: >
-      {% if is_state("binary_sensor.washing_machine", "on") %}
-        mdi:washing-machine
-      {% else %}
-        mdi:washing-machine-off
-      {% endif %}
+      {{ iif(is_state("binary_sensor.washing_machine", "on"), 'mdi:washing-machine', 'mdi:washing-machine-off') }}
