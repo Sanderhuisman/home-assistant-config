@@ -1,7 +1,5 @@
 ---
 sensor:
-  - platform: launch_library
-    name: spacelaunch
   - platform: template
     sensors:
       iss_next_rise:
