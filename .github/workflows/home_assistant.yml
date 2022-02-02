@@ -50,7 +50,7 @@ jobs:
           pip list
           esphome version
       - name: Copy secrets stub into configuration folder
-        run: cp ./data/esphome/secrets.fake.yaml ./esphome/secrets.yaml
+        run: cp ./data/esphome/secrets.fake.yaml ./data/esphome/secrets.yaml
       - name: Run esphome on all files
         # yamllint disable rule:line-length
         run: |
