@@ -33,6 +33,23 @@ jobs:
         with:
           args: "remark --no-stdout --color --frail --use preset-lint-recommended ."
 
+  home-assistant:
+    name: "Home Assistant Core ${{ matrix.version }} Configuration Check"
+    needs: [yamllint]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ["stable", "beta", "dev"]
+    steps:
+      - name: ⤵️ Check out configuration from GitHub
+        uses: actions/checkout@v2.4.0
+      - name: 🚀 Run Home Assistant Configuration Check
+        uses: frenck/action-home-assistant@v1.3
+        with:
+          path: ".data/homeassistant"
+          secrets: ./secrets.fake.yaml
+          version: "${{ matrix.version }}"
+
   esphome:
     runs-on: ubuntu-latest
     needs: [yamllint]
