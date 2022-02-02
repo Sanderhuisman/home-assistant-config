@@ -31,17 +31,6 @@ action:
             data:
               brightness_pct: 100
 
-      # - conditions:
-      #     - condition: state
-      #       entity_id: binary_sensor.utility_door_sensor_contact
-      #       state: 'on'
-      #       for: 00:59:00
-
-      #   sequence:
-      #     - service: light.turn_off
-      #       entity_id:
-      #         - light.utility_room_lights_current_value_3
-
     default:
       - service: light.turn_off
         entity_id:

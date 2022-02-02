@@ -1,2 +1,1 @@
-rules "~MD026", "~MD013"
-style "/config/extras/markdown/markdown.style.rb"
+rules "~MD026"

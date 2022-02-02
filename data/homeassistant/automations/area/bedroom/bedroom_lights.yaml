@@ -18,7 +18,7 @@ action:
   - variables:
       trigger_action: '{{ trigger.to_state.state }}'
   - choose:
-        # Single press and lights off -> turn on
+      # Single press and lights off -> turn on
       - conditions:
           - "{{ trigger_action == 'single' }}"
 
@@ -45,7 +45,7 @@ action:
               - service: timer.cancel
                 entity_id: timer.bedroom_scene_switch
 
-        # Double press and lights on -> next scene
+      # Double press and lights on -> next scene
       - conditions:
           - "{{ trigger_action == 'double' }}"
 

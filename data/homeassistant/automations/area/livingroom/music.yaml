@@ -2,12 +2,8 @@
 id: 'living_roommusic'
 alias: '[Living Room] Music Switch'
 description: ''
-# mode: restart
 mode: single
 max_exceeded: silent
-
-# variables:
-#   media_player_sander: media_player.spotify_sander
 
 trigger:
   - platform: event
@@ -28,14 +24,6 @@ condition:
           - Kitchen Group
 
 action:
-  # Debounce
-  # - delay:
-  #     milliseconds: 10
-
-  # - variables:
-  #   command: '{{ trigger.event.data.command }}'
-  #   args: '{{ trigger.event.data.args }}'
-
   - choose:
       - conditions:
           - "{{ trigger.event.data.command == 'toggle' }}"
@@ -52,27 +40,3 @@ action:
           - service: media_player.media_next_track
             target:
               entity_id: media_player.spotify_sander
-
-      # - conditions:
-      #     - "{{ trigger.event.data.command == 'move' and trigger.event.data.args == [1, 195] }}"
-
-      #   sequence:
-      #     - repeat:
-      #         count: 3
-      #         sequence:
-      #           - delay: 0.2
-      #           - service: media_player.volume_down
-      #             target:
-      #               entity_id: media_player.spotify_sander
-
-      # - conditions:
-      #     - "{{ trigger.event.data.command == 'move' and trigger.event.data.args == [0, 195] }}"
-
-      #   sequence:
-      #     - repeat:
-      #         count: 3
-      #         sequence:
-      #           - service: media_player.volume_up
-      #             target:
-      #               entity_id: media_player.spotify_sander
-      #           - delay: 1

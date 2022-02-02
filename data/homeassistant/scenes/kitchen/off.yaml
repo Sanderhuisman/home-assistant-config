@@ -1,0 +1,11 @@
+---
+name: "Kitchen Off"
+entities:
+  light.kitchen_ceiling_lights_current_value_5:
+    state: false
+
+  light.kitchen_floor_lights:
+    state: false
+
+  light.kitchen_iris:
+    state: false

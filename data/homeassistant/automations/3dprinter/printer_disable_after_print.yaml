@@ -18,7 +18,6 @@ action:
     variables:
       action_off: "{{ 'OFF_' ~ context.id }}"
 
-
   - alias: "Ask to turn the ventilation on"
     service: notify.mobile_app_sander_sony_xperia_1_ii
     data:
@@ -26,7 +25,7 @@ action:
       data:
         actions:
           - action: "{{ action_off }}"
-            title: "Turn Off" # The button title
+            title: "Turn Off"  # The button title
 
   - alias: "Wait for a response"
     wait_for_trigger:

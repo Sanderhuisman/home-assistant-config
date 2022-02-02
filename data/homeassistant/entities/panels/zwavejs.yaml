@@ -1,0 +1,5 @@
+---
+zwavejs:
+  title: Z-Wave JS
+  icon: mdi:chip
+  url: !secret panel_zwavejs_url

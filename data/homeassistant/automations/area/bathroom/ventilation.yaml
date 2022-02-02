@@ -37,9 +37,9 @@ action:
               data:
                 actions:
                   - action: "{{ action_on }}"
-                    title: "Turn Ventialtion On" # The button title
+                    title: "Turn Ventialtion On"  # The button title
                   - action: "{{ action_nope }}"
-                    title: "Nope" # The button title
+                    title: "Nope"  # The button title
 
           - alias: "Wait for a response"
             wait_for_trigger:

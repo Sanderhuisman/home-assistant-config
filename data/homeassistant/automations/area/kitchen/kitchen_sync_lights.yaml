@@ -31,29 +31,15 @@ action:
   - choose:
       - conditions:
           - condition: trigger
-            id: sink_lights_on
+            id:
+              - sink_lights_on
+              - ceiling_on
             alias: "Sink lights turned on"
 
         sequence:
-          - service: light.turn_on
+          - service: scene.turn_on
             target:
-              entity_id: light.kitchen_ceiling_lights_current_value_5
-            data:
-              brightness_pct: 100
-
-          - service: light.turn_on
-            target:
-              entity_id: light.kitchen_floor_lights
-            data:
-              brightness_pct: 10
-              color_temp: 500
-
-          - service: light.turn_on
-            target:
-              entity_id: light.kitchen_iris
-            data:
-              brightness_pct: 100
-              color_temp: 500
+              entity_id: scene.kitchen_on
 
       - conditions:
           - condition: trigger
@@ -61,34 +47,6 @@ action:
             alias: "Ceiling light turned off"
 
         sequence:
-          - service: light.turn_off
+          - service: scene.turn_on
             target:
-              entity_id: light.kitchen_sink_lights
-
-          - service: light.turn_off
-            target:
-              entity_id: light.kitchen_floor_lights
-
-          - service: light.turn_off
-            target:
-              entity_id: light.kitchen_iris
-
-      - conditions:
-          - condition: trigger
-            id: ceiling_on
-            alias: "Ceiling light turned on"
-
-        sequence:
-          - service: light.turn_on
-            target:
-              entity_id: light.kitchen_floor_lights
-            data:
-              brightness_pct: 10
-              color_temp: 500
-
-          - service: light.turn_on
-            target:
-              entity_id: light.kitchen_iris
-            data:
-              brightness_pct: 100
-              color_temp: 500
+              entity_id: scene.kitchen_off

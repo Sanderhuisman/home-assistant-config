@@ -52,7 +52,7 @@ action:
               transition: 1
               brightness_pct: 50
 
-        # Off
+      # Off
       - conditions:
           - "{{ trigger_action == 'off' }}"
 

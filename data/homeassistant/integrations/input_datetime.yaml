@@ -1,2 +1,2 @@
 ---
-input_datetime: !include ../includes/input_datetimes.yaml
+input_datetime: !include_dir_named ../entities/input_datetimes

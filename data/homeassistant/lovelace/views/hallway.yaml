@@ -50,17 +50,6 @@ cards:
 
           - type: custom:fold-entity-row
             head:
-              name: Server Door
-              entity: binary_sensor.hallway_frontdoor_sensor_contact
-              icon: mdi:door
-              state_color: true
-            entities:
-              - entity: sensor.hallway_frontdoor_sensor_battery
-                name: Battery
-                icon: mdi:battery
-
-          - type: custom:fold-entity-row
-            head:
               name: Light Sensor
               entity: sensor.hallway_lux_sensor_illuminance_lux
             entities:
@@ -106,7 +95,7 @@ cards:
 
       - type: custom:mini-graph-card
         entities:
-          - entity: binary_sensor.hallway_frontdoor_sensor_on_off
+          - entity: binary_sensor.hallway_frontdoor_sensor_contact
             name: Door Sensor
         name: Door Open
         hours_to_show: 1

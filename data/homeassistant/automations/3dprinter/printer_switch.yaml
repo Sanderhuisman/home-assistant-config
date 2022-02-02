@@ -6,7 +6,7 @@ mode: single
 
 trigger:
   - id: switch
-    entity_id: sensor.3d_printer_power_switch_action
+    entity_id: sensor.3d_printer_switch_action
     platform: state
     to:
       - 'on'
@@ -27,17 +27,30 @@ action:
         sequence:
           - service: switch.turn_on
             target:
+              entity_id: switch.3d_printer_lights
+
+          # If on than on again :)
+          - service: switch.turn_on
+            target:
               entity_id: switch.3d_printer_power
 
       - conditions:
-          - "{{ trigger_action == 'off' }}"
+          - "{{ trigger_action == 'brightness_move_down' }}"
 
-          - alias: Printer inactive"
-            condition: state
-            entity_id: binary_sensor.octoprint_printing
-            state: "off"
+          # - alias: Printer inactive"
+          #   condition: state
+          #   entity_id: binary_sensor.octoprint_printing
+          #   state: "off"
 
         sequence:
           - service: switch.turn_off
             target:
               entity_id: switch.3d_printer_power
+
+      - conditions:
+          - "{{ trigger_action == 'off' }}"
+
+        sequence:
+          - service: switch.turn_off
+            target:
+              entity_id: switch.3d_printer_lights

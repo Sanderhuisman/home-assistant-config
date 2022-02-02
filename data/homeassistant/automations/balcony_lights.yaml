@@ -60,25 +60,25 @@ action:
 
         sequence:
           - choose:
-            - conditions:
-                - "{{  trigger.to_state.state == 'button_1_single' }}"
+              - conditions:
+                  - "{{  trigger.to_state.state == 'button_1_single' }}"
 
-              sequence:
-                - choose:
-                    - conditions:
-                        - condition: state
-                          entity_id: light.balcony_lights
-                          state: "off"
-
-                      sequence:
-                        - service: light.turn_on
-                          target:
+                sequence:
+                  - choose:
+                      - conditions:
+                          - condition: state
                             entity_id: light.balcony_lights
-                          data:
-                            brightness_pct: 100
-                            transition: 2
+                            state: "off"
 
-                  default:
-                    - service: light.turn_off
-                      target:
-                        entity_id: light.balcony_lights
+                        sequence:
+                          - service: light.turn_on
+                            target:
+                              entity_id: light.balcony_lights
+                            data:
+                              brightness_pct: 100
+                              transition: 2
+
+                    default:
+                      - service: light.turn_off
+                        target:
+                          entity_id: light.balcony_lights

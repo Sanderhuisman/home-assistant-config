@@ -1,0 +1,5 @@
+---
+zigbee2mqtt:
+  title: Zigbee2MQTT
+  icon: mdi:chip
+  url: !secret panel_zigbee_url

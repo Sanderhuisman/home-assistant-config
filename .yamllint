@@ -10,6 +10,8 @@ ignore: |
   data/homeassistant/themes/
   data/homeassistant/blueprints/
   data/homeassistant/lovelace/resources
+  data/esphome/mosquitto
+  data/esphome/zigbee2mqtt
   data/esphome/**/*
 rules:
   braces:

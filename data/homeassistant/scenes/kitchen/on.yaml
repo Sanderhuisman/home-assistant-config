@@ -1,0 +1,16 @@
+---
+name: "Kitchen On"
+entities:
+  light.kitchen_ceiling_lights_current_value_5:
+    state: true
+    brightness_pct: 100
+
+  light.kitchen_floor_lights:
+    state: true
+    brightness_pct: 10
+    color_temp: 500
+
+  light.kitchen_iris:
+    state: true
+    brightness_pct: 100
+    color_temp: 500

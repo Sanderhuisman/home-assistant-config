@@ -1,0 +1,4 @@
+---
+name: Washing machine last done
+has_date: true
+has_time: true

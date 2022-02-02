@@ -68,7 +68,6 @@ cards:
       - entity: sensor.livingroom_vitrine_door_battery
         name: Vitrine Door Sensor Battery
 
-
       - type: custom:fold-entity-row
         head:
           name: Window left
@@ -100,5 +99,3 @@ cards:
           - entity: sensor.livingroom_balcony_door_battery
             name: Battery
             icon: mdi:battery
-
-

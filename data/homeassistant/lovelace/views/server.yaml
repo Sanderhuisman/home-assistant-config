@@ -15,11 +15,11 @@ cards:
         entity: sensor.home_assistant_database_states
         icon: mdi:database-cog
 
-  - type: entities
-    title: InfluxDB
-    entities:
-      - name: Database Size
-        entity: sensor.influxdb_size
+  # - type: entities
+  #   title: InfluxDB
+  #   entities:
+  #     - name: Database Size
+  #       entity: sensor.influxdb_size
 
   - type: entities
     title: Adguard Home

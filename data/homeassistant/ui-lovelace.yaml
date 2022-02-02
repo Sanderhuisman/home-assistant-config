@@ -44,22 +44,6 @@ sidebar:
       {% elif now().hour < 18 %} Good afternoon {{'\U0001F44B\U0001F3FB'}}
       {% else %} Good evening {{'\U0001F44B\U0001F3FB'}}{% endif %}
     </li>
-  # sidebarMenu:
-  #   - action: navigate
-  #     navigation_path: /lovelace-test/overzicht
-  #     name: Overzicht
-  #     active: true
-  #     icon: mdi:home
-  #   - action: navigate
-  #     navigation_path: /lovelace-test/verlichting
-  #     name: Verlichting
-  #     active: true
-  #     icon: mdi:ceiling-light-multiple
-    # - action: navigate
-    #   navigation_path: /lovelace-test/kalender
-    #   name: Kalender
-    #   active: true
-    #   icon: hass:calendar
   bottomCard:
     type: custom:stack-in-card
     cardOptions:
@@ -67,90 +51,13 @@ sidebar:
       cards:
         - type: custom:weather-card
           entity: weather.home_2
-          # number_of_forecasts: '5'
-          # current: true
-          # details: false
           forecast: false
-          # hourly_forecast: true
-          # card_mod:
-          #   style: |
-          #     ha-card {
-          #       font-size: 10px;
-          #       }
         - type: custom:simple-thermostat  # https://github.com/nervetattoo/simple-thermostat
           name: false
           entity: climate.heating
           step_layout: row
           icon: true
           control: false
-  #       - type: custom:mini-graph-card
-  #         name: Thermostaat
-  #         tap_action:
-  #           action: call-service
-  #           service: browser_mod.popup
-  #           service_data:
-  #             title: Thermostaat
-  #             card:
-  #               type: custom:simple-thermostat
-  #               entity: climate.woonkamer
-  #               decimals: '0'
-  #               layout:
-  #                 step: column
-  #                 mode:
-  #                   headings: false
-  #                   icons: true
-  #                   names: true
-  #               step_size: '0.5'
-  #               header: false
-  #               height: 1
-  #               hide:
-  #                 temperature: true
-  #                 state: true
-  #               color_thresholds:
-  #                 - value: 15
-  #                   color: '#277ad9'
-  #                 - value: 19
-  #                   color: '#22ba29'
-  #                 - value: 23
-  #                   color: '#c21f1f'
-  #         entities:
-  #           - entity: sensor.woonkamer_temperature
-  #             show_points: false
-  #         hours_to_show: 8
-  #         animate: true
-  #         smoothing: true
-  #         align_state: center
-  #         font_size: 100
-  #       - type: custom:paper-buttons-row
-  #         buttons:
-  #           - entity: input_boolean.dashboard_instellingen
-  #             tap_action:
-  #               action: none
-  #             hold_action:
-  #               action: navigate
-  #               navigation_path: /lovelace-test/instellingen
-  #             name: false
-  #           - entity: input_boolean.dashboard_systeemstatus
-  #             tap_action:
-  #               action: none
-  #             hold_action:
-  #               action: navigate
-  #               navigation_path: /lovelace-test/systeemstatus
-  #             name: false
-    # cardStyle: |
-    #   :host {
-    #     width: 100%;
-    #     position: absolute;
-    #     bottom: 0;
-    #     left: 0;
-    #   }
-    #   ha-card {
-    #     background: transparent !important;
-    #     color: #FFF;
-    #     overflow: hidden !important;
-    #     box-shadow: none !important;
-    #   }
-
 
 views:
   - !include lovelace/views/home.yaml

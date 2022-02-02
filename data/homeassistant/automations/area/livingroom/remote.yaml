@@ -16,6 +16,17 @@ condition: []
 action:
   - variables:
       command: '{{ trigger.event.data.command }}'
+      # Available commands:
+      # - 'on_double_press'
+      # - 'on_triple_press'
+      # - 'on_hold'
+      # - 'up_press'
+      # - 'up_hold'
+      # - 'down_press'
+      # - 'off_press'
+      # - 'off_double_press'
+      # - 'off_triple_press'
+      # - 'off_hold'
 
   - choose:
       - conditions:
@@ -26,24 +37,6 @@ action:
             target:
               entity_id: scene.living_normal
 
-      # - conditions:
-      #     - '{{ command == 'on_double_press' }}'
-
-      # - conditions:
-      #     - '{{ command == 'on_triple_press' }}'
-
-      # - conditions:
-      #     - '{{ command == 'on_hold' }}'
-
-      # - conditions:
-      #     - '{{ command == 'up_press' }}'
-
-      # - conditions:
-      #     - '{{ command == 'up_hold' }}'
-
-      # - conditions:
-      #     - '{{ command == 'down_press' }}'
-
       - conditions:
           - "{{ command == 'off_press' }}"
 
@@ -51,15 +44,3 @@ action:
           - service: scene.turn_on
             target:
               entity_id: scene.living_off
-
-      # - conditions:
-      #     - '{{ command == 'off_press' }}'
-
-      # - conditions:
-      #     - '{{ command == 'off_double_press' }}'
-
-      # - conditions:
-      #     - '{{ command == 'off_triple_press' }}'
-
-      # - conditions:
-      #     - '{{ command == 'off_hold' }}'
