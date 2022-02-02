@@ -1,3 +1,7 @@
+substitutions:
+  devicename: utility_bridge
+  upper_devicename: Utiliti Bridge
+
 esphome:
   name: utility-bridge
   comment: Fan controller
@@ -35,6 +39,31 @@ wifi:
 
 captive_portal:
 
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+    timezone: Europe/Amsterdam
+
+sensor:
+  - platform: wifi_signal
+    id: ${devicename}_esphome_wifi_signal
+    name: ${upper_devicename} wifi signaal
+    update_interval: 10s
+
+  - platform: uptime
+    id: ${devicename}_esphome_uptime
+    name: ${upper_devicename} uptime
+
+binary_sensor:
+  - platform: status
+    id: ${devicename}_esphome_status
+    name: ${upper_devicename} status
+
+button:
+  - platform: restart
+    id: ${devicename}_esphome_restart
+    name: ${upper_devicename} herstart
+
 # Load external components
 external_components:
   - source:
@@ -47,6 +76,7 @@ spi:
   mosi_pin: GPIO13
   miso_pin: GPIO12
 
+# nRF905 config
 nrf905:
   id: "nrf905_rf"
   cs_pin: GPIO23
@@ -57,6 +87,7 @@ nrf905:
   pwr_pin: GPIO26
   txen_pin: GPIO25
 
+# The FAN
 fan:
   - platform: zehnder
     name: "Ventilation"
