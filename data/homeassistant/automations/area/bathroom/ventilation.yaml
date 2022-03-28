@@ -21,7 +21,8 @@ condition: []
 action:
   - alias: "Setup vars"
     variables:
-      action_on: "{{ 'ON_' ~ context.id }}"
+      action_on_high_30mins: "{{ 'ON30H_' ~ context.id }}"
+      action_on_high_60mins: "{{ 'ON60H_' ~ context.id }}"
       action_nope: "{{ 'NOPE_' ~ context.id }}"
 
   - choose:
@@ -33,22 +34,28 @@ action:
           - alias: "Ask to turn the ventilation on"
             service: notify.mobile_app_sander_sony_xperia_1_ii
             data:
-              message: ventilation on
+              message: Ventilation on
               data:
                 actions:
-                  - action: "{{ action_on }}"
-                    title: "Turn Ventialtion On"  # The button title
+                  - action: "{{ action_on_high_30mins }}"
+                    title: "High 30 Mins"
+                  - action: "{{ action_on_high_60mins }}"
+                    title: "High 60 Mins"
                   - action: "{{ action_nope }}"
-                    title: "Nope"  # The button title
+                    title: "Nope"
 
+          # waiting for the specific action avoids accidentally continuing
+          # for another script/automation's notification action
           - alias: "Wait for a response"
             wait_for_trigger:
               - platform: event
                 event_type: mobile_app_notification_action
                 event_data:
-                  # waiting for the specific action avoids accidentally continuing
-                  # for another script/automation's notification action
-                  action: "{{ action_on }}"
+                  action: "{{ action_on_high_30mins }}"
+              - platform: event
+                event_type: mobile_app_notification_action
+                event_data:
+                  action: "{{ action_on_high_60mins }}"
               - platform: event
                 event_type: mobile_app_notification_action
                 event_data:
@@ -56,13 +63,18 @@ action:
 
           - alias: "Perform the action"
             choose:
-              - conditions: "{{ wait.trigger.event.data.action == action_on }}"
+              - conditions: "{{ wait.trigger.event.data.action == action_on_high_30mins }}"
                 sequence:
-                  - service: fan.set_percentage
-                    target:
-                      entity_id: fan.ventilation
+                  - service: esphome.utility_bridge_set_speed
                     data:
-                      percentage: 100
+                      run_speed: 3
+                      run_time: 30
+              - conditions: "{{ wait.trigger.event.data.action == action_on_high_60mins }}"
+                sequence:
+                  - service: esphome.utility_bridge_set_speed
+                    data:
+                      run_speed: 3
+                      run_time: 60
 
       - conditions:
           - condition: trigger
