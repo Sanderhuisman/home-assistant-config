@@ -1,0 +1,1 @@
+"""The Gitea component."""
