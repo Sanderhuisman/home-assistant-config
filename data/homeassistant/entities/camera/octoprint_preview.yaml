@@ -1,0 +1,8 @@
+---
+# Octoprint camera preview
+platform: generic
+name: OctoPrint Preview
+# yamllint disable-line rule:line-length
+still_image_url: "http://192.168.1.9/plugin/UltimakerFormatPackage/thumbnail/{{states('sensor.octoprint_current_filename') | regex_replace(find='gcode', replace='png', ignorecase=True)}}"
+scan_interval: 5
+content_type: image/png
