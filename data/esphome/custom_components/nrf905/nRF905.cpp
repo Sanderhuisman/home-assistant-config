@@ -18,10 +18,16 @@ void nRF905::setup() {
   ESP_LOGD(TAG, "Start nRF905 init");
 
   this->spi_setup();
-  this->_gpio_pin_am->setup();
-  this->_gpio_pin_cd->setup();
+  if (this->_gpio_pin_am != NULL) {
+    this->_gpio_pin_am->setup();
+  }
+  if (this->_gpio_pin_cd != NULL) {
+    this->_gpio_pin_cd->setup();
+  }
   this->_gpio_pin_ce->setup();
-  this->_gpio_pin_dr->setup();
+  if (this->_gpio_pin_dr != NULL) {
+    this->_gpio_pin_dr->setup();
+  }
   this->_gpio_pin_pwr->setup();
   this->_gpio_pin_txen->setup();
 
@@ -66,51 +72,25 @@ void nRF905::setup() {
 void nRF905::dump_config() {
   ESP_LOGCONFIG(TAG, "Config:");
 
-#ifdef USE_ARDUINO
-  ESP_LOGCONFIG(TAG, "  Backend: Arduino");
-#else
-  ESP_LOGCONFIG(TAG, "  Backend: ?");
-#endif
   LOG_PIN("  CS Pin:", this->cs_);
-  LOG_PIN("  AM Pin:", this->_gpio_pin_am);
-  LOG_PIN("  CD Pin:", this->_gpio_pin_cd);
+  if (this->_gpio_pin_am != NULL) {
+    LOG_PIN("  AM Pin:", this->_gpio_pin_am);
+  }
+  if (this->_gpio_pin_dr != NULL) {
+    LOG_PIN("  DR Pin:", this->_gpio_pin_dr);
+  }
+  if (this->_gpio_pin_cd != NULL) {
+    LOG_PIN("  CD Pin:", this->_gpio_pin_cd);
+  }
   LOG_PIN("  CE Pin:", this->_gpio_pin_ce);
-  LOG_PIN("  DR Pin:", this->_gpio_pin_dr);
   LOG_PIN("  PWR Pin:", this->_gpio_pin_pwr);
   LOG_PIN("  TXEN Pin:", this->_gpio_pin_txen);
 }
 
-// static bool _drPrev = false;
-
-static char *nRF905_HexArrayToStr(const uint8_t *const pData, const size_t dataLength) {
-  static char buf[256];
-  size_t bufIdx = 0;
-
-  for (size_t i = 0; i < dataLength; ++i) {
-    if (i > 0) {
-      bufIdx += snprintf(&buf[bufIdx], 256 - bufIdx, " ");
-    }
-    bufIdx += snprintf(&buf[bufIdx], 256 - bufIdx, "0x%02X", pData[i]);
-  }
-
-  return buf;
-}
-
 void nRF905::loop() {
-  static bool start = true;
   static uint8_t lastState = 0x00;
-
   static bool addrMatch;
   uint8_t buffer[NRF905_MAX_FRAMESIZE];
-
-  if ((start == true) && (millis() > 10000)) {
-    start = false;
-
-    // Test SPI
-    this->testSpi();
-  }
-
-  // bool _drNew = this->_gpio_pin_dr->digital_read();
 
   uint8_t state = this->readStatus() & ((1 << NRF905_STATUS_DR) | (1 << NRF905_STATUS_AM));
   if (lastState != state) {
@@ -120,7 +100,7 @@ void nRF905::loop() {
 
       // Read data
       this->readRxPayload(buffer, NRF905_MAX_FRAMESIZE);
-      ESP_LOGV(TAG, "RX Complete: %s", nRF905_HexArrayToStr(buffer, NRF905_MAX_FRAMESIZE));
+      ESP_LOGV(TAG, "RX Complete: %s", hexArrayToStr(buffer, NRF905_MAX_FRAMESIZE));
 
       if (this->onRxComplete != NULL) {
         this->onRxComplete(buffer, NRF905_MAX_FRAMESIZE);
@@ -181,6 +161,7 @@ void nRF905::setMode(const Mode mode) {
       break;
   }
 
+  // Enable TX
   switch (mode) {
     case Transmit:
       this->_gpio_pin_txen->digital_write(true);
@@ -242,7 +223,7 @@ void nRF905::writeConfigRegisters(uint8_t *const pStatus) {
   buffer.command = NRF905_COMMAND_W_CONFIG;
   this->encodeConfigRegisters(&this->_config, &buffer);
 
-  ESP_LOGV(TAG, "Write config data: %s", nRF905_HexArrayToStr(buffer.data, NRF905_REGISTER_COUNT));
+  ESP_LOGV(TAG, "Write config data: %s", hexArrayToStr(buffer.data, NRF905_REGISTER_COUNT));
 #if CHECK_REG_WRITE
   (void) memcpy(writeData, buffer.data, NRF905_REGISTER_COUNT);
 #endif
@@ -260,7 +241,6 @@ void nRF905::writeConfigRegisters(uint8_t *const pStatus) {
     this->spiTransfer((uint8_t *) &bufferRead, sizeof(ConfigBuffer));
     if (memcmp((void *) writeData, (void *) bufferRead.data, NRF905_REGISTER_COUNT) != 0) {
       ESP_LOGE(TAG, "Config write failed");
-      //     result = UtilCcFailure;
     } else {
       ESP_LOGV(TAG, "Write config OK");
     }
@@ -368,7 +348,7 @@ void nRF905::writeTxPayload(const uint8_t *const pData, const uint8_t dataLength
     return;
   }
 
-  ESP_LOGV(TAG, "Read config data: %s", nRF905_HexArrayToStr(pData, dataLength));
+  ESP_LOGV(TAG, "Read config data: %s", hexArrayToStr(pData, dataLength));
 
   // Clear buffer payload
   (void) memset(buffer.payload, 0, NRF905_MAX_FRAMESIZE);
@@ -543,11 +523,15 @@ void nRF905::printConfig(const Config *const pConfig) {
            pConfig->xtal_frequency, pConfig->crc_enable ? "On" : "Off", pConfig->crc_bits, pConfig->tx_power);
 }
 
-// static bool _drPrev = false;
+bool nRF905::airwayBusy(void) {
+  bool busy = false;
 
-bool nRF905::receiveBusy() { return addressMatched(); }
+  if (this->_gpio_pin_cd != NULL) {
+    busy = this->_gpio_pin_cd->digital_read() == true;
+  }
 
-bool nRF905::airwayBusy(void) { return this->_gpio_pin_cd->digital_read() == true; }
+  return busy;
+}
 
 void nRF905::startTx(const uint32_t retransmit, const Mode nextMode) {
   bool update = false;
@@ -586,12 +570,6 @@ uint8_t nRF905::readStatus(void) {
   return status;
 }
 
-bool nRF905::addressMatched(void) {
-  if (this->_gpio_pin_am == NULL)
-    return (this->readStatus() & (1 << NRF905_STATUS_AM));
-  return this->_gpio_pin_am->digital_read();
-}
-
 void nRF905::spiTransfer(uint8_t *const data, const size_t length) {
   this->enable();
 
@@ -600,34 +578,18 @@ void nRF905::spiTransfer(uint8_t *const data, const size_t length) {
   this->disable();
 }
 
-bool nRF905::testSpi(void) {
-  uint32_t tx_address;
-  uint32_t addrRead;
-  bool result = true;
+char *nRF905::hexArrayToStr(const uint8_t *const pData, const size_t dataLength) {
+  static char buf[256];
+  size_t bufIdx = 0;
 
-  ESP_LOGD(TAG, "SPI Test");
-
-  this->readTxAddress(&tx_address);  // Backup current contents of transmit address register
-
-  this->writeTxAddress(0x55555555);  // Check if we can write a magic marker to the transmit address register
-  this->readTxAddress(&addrRead);
-  if (addrRead != 0x55555555)
-    result = false;
-
-  this->writeTxAddress(0xAAAAAAAA);  // Check if we can write a magic marker to the transmit address register
-  this->readTxAddress(&addrRead);
-  if (addrRead != 0xAAAAAAAA)
-    result = false;
-
-  this->writeTxAddress(tx_address);  // Restore transmit address register
-
-  if (result == true) {
-    ESP_LOGD(TAG, "SPI OK");
-  } else {
-    ESP_LOGE(TAG, "SPI failed");
+  for (size_t i = 0; i < dataLength; ++i) {
+    if (i > 0) {
+      bufIdx += snprintf(&buf[bufIdx], 256 - bufIdx, " ");
+    }
+    bufIdx += snprintf(&buf[bufIdx], 256 - bufIdx, "0x%02X", pData[i]);
   }
 
-  return true;
+  return buf;
 }
 
 }  // namespace nrf905

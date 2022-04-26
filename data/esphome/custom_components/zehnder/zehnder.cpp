@@ -86,6 +86,8 @@ void ZehnderRF::control(const fan::FanCall &call) {
 }
 
 void ZehnderRF::setup() {
+  ESP_LOGCONFIG(TAG, "ZEHNDER '%s':", this->get_name().c_str());
+
   // Clear config
   memset(&this->config_, 0, sizeof(Config));
 
@@ -95,7 +97,37 @@ void ZehnderRF::setup() {
     ESP_LOGD(TAG, "Config load ok");
   }
 
-  ESP_LOGCONFIG(TAG, "ZEHNDER '%s':", this->get_name().c_str());
+  // Set nRF905 config
+  nrf905::Config rfConfig;
+  rfConfig = this->rf_->getConfig();
+
+  rfConfig.band = true;
+  rfConfig.channel = 118;
+
+  // // CRC 16
+  rfConfig.crc_enable = true;
+  rfConfig.crc_bits = 16;
+
+  // // TX power 10
+  rfConfig.tx_power = 10;
+
+  // // RX power normal
+  rfConfig.rx_power = nrf905::PowerNormal;
+
+  rfConfig.rx_address = 0x89816EA9;  // ZEHNDER_NETWORK_LINK_ID;
+  rfConfig.rx_address_width = 4;
+  rfConfig.rx_payload_width = 16;
+
+  rfConfig.tx_address_width = 4;
+  rfConfig.tx_payload_width = 16;
+
+  rfConfig.xtal_frequency = 16000000;  // defaults for now
+  rfConfig.clkOutFrequency = nrf905::ClkOut500000;
+  rfConfig.clkOutEnable = false;
+
+  // Write config back
+  this->rf_->updateConfig(&rfConfig);
+  this->rf_->writeTxAddress(0x89816EA9);
 
   this->speed_count_ = 4;
 
@@ -167,8 +199,12 @@ void ZehnderRF::loop(void) {
       break;
 
     case StateIdle:
-      if ((millis() - this->lastFanQuery_) > this->interval_) {
-        this->queryDevice();
+      if (newSetting == true) {
+        this->setSpeed(newSpeed, newTimer);
+      } else {
+        if ((millis() - this->lastFanQuery_) > this->interval_) {
+          this->queryDevice();
+        }
       }
       break;
 
@@ -260,7 +296,7 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
             pTxFrame->tx_type = this->config_.fan_my_device_type;
             pTxFrame->tx_id = this->config_.fan_my_device_id;
             pTxFrame->ttl = FAN_TTL;
-            pTxFrame->command = FAN_FRAME_0B;  // 0x0B acknowledgee link successful
+            pTxFrame->command = FAN_FRAME_0B;  // 0x0B acknowledge link successful
             pTxFrame->parameter_count = 0x00;  // No parameters
 
             // Send response frame
@@ -271,7 +307,7 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
 
             this->state_ = StateDiscoveryJoinComplete;
           } else {
-            ESP_LOGE(TAG, "Discovery: Received unknown link succes from ID 0x%02X on network 0x%08X", pResponse->tx_id,
+            ESP_LOGE(TAG, "Discovery: Received unknown link success from ID 0x%02X on network 0x%08X", pResponse->tx_id,
                      this->config_.fan_networkId);
           }
           break;
@@ -360,7 +396,7 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
             pTxFrame->tx_type = this->config_.fan_my_device_type;
             pTxFrame->tx_id = this->config_.fan_my_device_id;
             pTxFrame->ttl = FAN_TTL;
-            pTxFrame->command = FAN_FRAME_SETSPEED_REPLY;  // 0x0B acknowledgee link successful
+            pTxFrame->command = FAN_FRAME_SETSPEED_REPLY;  // 0x0B acknowledge link successful
             pTxFrame->parameter_count = 0x03;              // 3 parameters
             pTxFrame->payload.parameters[0] = 0x54;
             pTxFrame->payload.parameters[1] = 0x03;
@@ -444,37 +480,52 @@ void ZehnderRF::queryDevice(void) {
   this->state_ = StateWaitQueryResponse;
 }
 
-void ZehnderRF::setSpeed(const uint8_t speed, const uint8_t timer) {
+void ZehnderRF::setSpeed(const uint8_t paramSpeed, const uint8_t paramTimer) {
   RfFrame *const pFrame = (RfFrame *) this->_txFrame;  // frame helper
+  uint8_t speed = paramSpeed;
+  uint8_t timer = paramTimer;
 
-  ESP_LOGD(TAG, "Set speed: 0x%02X", speed);
-
-  (void) memset(this->_txFrame, 0, FAN_FRAMESIZE);  // Clear frame data
-
-  // Build frame
-  pFrame->rx_type = this->config_.fan_main_unit_type;
-  pFrame->rx_id = this->config_.fan_main_unit_id;
-  pFrame->tx_type = this->config_.fan_my_device_type;
-  pFrame->tx_id = this->config_.fan_my_device_id;
-  pFrame->ttl = FAN_TTL;
-
-  if (timer == 0) {
-    pFrame->command = FAN_FRAME_SETSPEED;
-    pFrame->parameter_count = sizeof(RfPayloadFanSetSpeed);
-    pFrame->payload.setSpeed.speed = speed;
-  } else {
-    pFrame->command = FAN_FRAME_SETTIMER;
-    pFrame->parameter_count = sizeof(RfPayloadFanSetTimer);
-    pFrame->payload.setTimer.speed = speed;
-    pFrame->payload.setTimer.timer = timer;
+  if (speed > this->speed_count_) {
+    ESP_LOGW(TAG, "Requested speed too high (%u)", speed);
+    speed = this->speed_count_;
   }
 
-  this->startTransmit(this->_txFrame, FAN_TX_RETRIES, [this]() {
-    ESP_LOGW(TAG, "Set speed timeout");
-    this->state_ = StateIdle;
-  });
+  ESP_LOGD(TAG, "Set speed: 0x%02X; Timer %u minutes", speed, timer);
 
-  this->state_ = StateWaitSetSpeedResponse;
+  if (this->state_ == StateIdle) {
+    (void) memset(this->_txFrame, 0, FAN_FRAMESIZE);  // Clear frame data
+
+    // Build frame
+    pFrame->rx_type = this->config_.fan_main_unit_type;
+    pFrame->rx_id = this->config_.fan_main_unit_id;
+    pFrame->tx_type = this->config_.fan_my_device_type;
+    pFrame->tx_id = this->config_.fan_my_device_id;
+    pFrame->ttl = FAN_TTL;
+
+    if (timer == 0) {
+      pFrame->command = FAN_FRAME_SETSPEED;
+      pFrame->parameter_count = sizeof(RfPayloadFanSetSpeed);
+      pFrame->payload.setSpeed.speed = speed;
+    } else {
+      pFrame->command = FAN_FRAME_SETTIMER;
+      pFrame->parameter_count = sizeof(RfPayloadFanSetTimer);
+      pFrame->payload.setTimer.speed = speed;
+      pFrame->payload.setTimer.timer = timer;
+    }
+
+    this->startTransmit(this->_txFrame, FAN_TX_RETRIES, [this]() {
+      ESP_LOGW(TAG, "Set speed timeout");
+      this->state_ = StateIdle;
+    });
+
+    newSetting = false;
+    this->state_ = StateWaitSetSpeedResponse;
+  } else {
+    ESP_LOGD(TAG, "Invalid state, I'm trying later again");
+    newSpeed = speed;
+    newTimer = timer;
+    newSetting = true;
+  }
 }
 
 void ZehnderRF::discoveryStart(const uint8_t deviceId) {
