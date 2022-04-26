@@ -1,0 +1,167 @@
+---
+path: bedroom
+title: Bedroom
+icon: mdi:bed-double
+badges:
+  # - type: custom:layout-card
+  #   layout_type: grid
+  #   layout_options:
+  #     grid-template-columns: 375px
+  #     grid-template-rows: 1fr
+  #     grid-gap: 0px 4px
+  #   cards:
+  - type: custom:mushroom-chips-card
+    alignment: center
+    chips:
+      - type: menu
+      - type: weather
+        entity: weather.home_2
+        show_temperature: true
+        show_conditions: true
+
+      - type: entity
+        name: Power Consumption
+        entity: sensor.power_consumption
+        # content_info: state
+
+      # - type: template
+      #   content: "Sander is {{is_state('person.sander', 'home') | iif('Home', 'Away')}}"
+      #   icon: mdi:account-circle
+      # - type: template
+      #   content: "Lys is {{is_state('person.lys', 'home') | iif('Home', 'Away')}}"
+      #   icon: mdi:account-circle
+
+      - type: entity
+        name: Sander
+        icon: mdi:account
+        entity: person.sander
+        content_info: name
+
+      - type: entity
+        name: Lys
+        icon: mdi:account
+        entity: person.lys
+        content_info: name
+
+cards:
+  - type: vertical-stack
+    cards:
+      - type: custom:decluttering-card
+        template: header_card
+        variables:
+          - title: Lights
+
+      - type: custom:layout-card
+        layout_type: grid
+        layout_options:
+          grid-template-columns: 1fr 1fr
+          grid-template-rows: 1fr 1fr
+          grid-gap: 0px 0px
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: light.bed_end
+            name: Nightstand
+            show_brightness_control: true
+            icon_color: orange
+            vertical: true
+            tap_action:
+              action: toggle
+
+          - type: custom:mushroom-entity-card
+            entity: light.bed_left
+            show_brightness_control: true
+            name: Bed Left
+            vertical: true
+            icon_color: orange
+            tap_action:
+              action: toggle
+
+          - type: custom:mushroom-entity-card
+            entity: light.bed_right
+            show_brightness_control: true
+            name: Bed Right
+            vertical: true
+            icon: mdi:ceiling-light
+            icon_color: orange
+            tap_action:
+              action: toggle
+
+          - type: custom:mushroom-entity-card
+            entity: light.bedroom_ceiling
+            show_brightness_control: true
+            name: Ceiling
+            vertical: true
+            icon: mdi:ceiling-light
+            icon_color: orange
+            tap_action:
+              action: toggle
+
+      - type: custom:layout-card
+        layout_type: grid
+        layout_options:
+          grid-template-columns: 1fr 1fr 1fr
+          grid-template-rows: 1fr
+          grid-gap: 0px 0px
+        cards:
+          - type: custom:mushroom-entity-card
+            vertical: true
+            entity: scene.bedroom_off
+            name: Off
+            icon: mdi:lamps
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data:
+                entity_id: scene.bedroom_off
+            icon_color: purple
+
+          - type: custom:mushroom-entity-card
+            vertical: true
+            entity: scene.bedroom_bright
+            name: Bright
+            icon: mdi:lamps
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data:
+                entity_id: scene.bedroom_bright
+            icon_color: purple
+
+          - type: custom:mushroom-entity-card
+            vertical: true
+            entity: scene.bedroom_reading
+            name: Relax
+            icon: mdi:floor-lamp
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data:
+                entity_id: scene.bedroom_reading
+            icon_color: purple
+
+  - type: vertical-stack
+    cards:
+      - type: custom:decluttering-card
+        template: header_card
+        variables:
+          - title: Devices
+
+      - type: custom:layout-card
+        layout_type: grid
+        layout_options:
+          grid-template-columns: 1fr 1fr 1fr
+          grid-template-rows: 1fr
+          grid-gap: 0px 0px
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.bedroom_light_switch_lys_battery
+            name: Light Switch Lys
+            vertical: true
+            icon: mdi:light-switch
+            icon_color: cyan
+          - type: custom:mushroom-entity-card
+            entity: sensor.bedroom_light_switch_sander_battery
+            name: Light Switch Sander
+            vertical: true
+            icon: mdi:light-switch
+            icon_color: cyan

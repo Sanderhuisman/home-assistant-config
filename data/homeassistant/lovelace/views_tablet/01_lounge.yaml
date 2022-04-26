@@ -1,0 +1,258 @@
+---
+path: lounge
+title: Lounge
+icon: mdi:sofa
+badges:
+  - type: custom:mushroom-chips-card
+    alignment: center
+    chips:
+      - type: menu
+      - type: weather
+        entity: weather.home_2
+        show_temperature: true
+        show_conditions: true
+
+      - type: entity
+        name: Power Consumption
+        entity: sensor.power_consumption
+
+      - type: entity
+        name: Sander
+        icon: mdi:account
+        entity: person.sander
+        content_info: name
+
+      - type: entity
+        name: Lys
+        icon: mdi:account
+        entity: person.lys
+        content_info: name
+
+cards:
+  - type: vertical-stack
+    cards:
+      - type: custom:decluttering-card
+        template: header_card
+        variables:
+          - title: Lights
+
+      - type: custom:layout-card
+        layout_type: grid
+        layout_options:
+          grid-template-columns: 1fr 1fr
+          grid-template-rows: 1fr 1fr
+        cards:
+          - type: custom:mushroom-light-card
+            entity: light.hue_tv_left
+            icon: mdi:floor-lamp
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            show_brightness_control: true
+
+          - type: custom:mushroom-light-card
+            entity: light.hue_tv_right
+            icon: mdi:floor-lamp
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            show_brightness_control: true
+
+          - type: custom:mushroom-light-card
+            entity: light.hue_couch
+            icon: mdi:floor-lamp
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            show_brightness_control: true
+
+          - type: custom:mushroom-light-card
+            entity: light.livingroom_ceiling
+            icon: mdi:ceiling-light
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            show_color_temp_control: true
+            show_brightness_control: true
+
+      - type: custom:layout-card
+        layout_type: grid
+        layout_options:
+          grid-template-columns: 1fr 1fr 1fr
+          grid-template-rows: 1fr
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: light.livingroom_vitrine
+            name: Vitrine
+            icon: mdi:ceiling-light
+            icon_color: orange
+            vertical: true
+            tap_action:
+              action: toggle
+
+          - type: custom:mushroom-entity-card
+            entity: light.livingroom_deco_lights
+            name: Deco
+            icon: mdi:ceiling-light
+            icon_color: orange
+            vertical: true
+            tap_action:
+              action: toggle
+
+          - type: custom:mushroom-entity-card
+            entity: light.dining_table_deco_lights
+            name: Deco
+            icon: mdi:ceiling-light
+            icon_color: orange
+            vertical: true
+            tap_action:
+              action: toggle
+
+      - type: custom:layout-card
+        layout_type: grid
+        layout_options:
+          grid-template-columns: 1fr 1fr 1fr 1fr
+          grid-template-rows: 1fr
+        cards:
+          - type: custom:mushroom-entity-card
+            vertical: true
+            entity: scene.living_off
+            name: "Off"
+            icon: mdi:lightbulb-multiple-off
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data:
+                entity_id: scene.living_off
+            icon_color: purple
+
+          - type: custom:mushroom-entity-card
+            vertical: true
+            entity: scene.living_movie
+            name: Movie
+            icon: mdi:movie-open-outline
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data:
+                entity_id: scene.living_movie
+            icon_color: purple
+
+          - type: custom:mushroom-entity-card
+            vertical: true
+            entity: scene.living_relax
+            name: Relax
+            icon: mdi:movie-open-outline
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data:
+                entity_id: scene.living_relax
+            icon_color: purple
+
+          - type: custom:mushroom-entity-card
+            vertical: true
+            entity: scene.living_bright
+            name: Bright
+            icon: mdi:lightbulb-group
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data:
+                entity_id: scene.living_bright
+            icon_color: purple
+
+  - type: vertical-stack
+    cards:
+      - type: custom:decluttering-card
+        template: header_card
+        variables:
+          - title: Devices
+
+      - type: custom:mushroom-media-player-card
+        entity: media_player.samsung_tv
+        use_media_info: true
+        use_media_artwork: true
+
+        volume_controls:
+          - volume_mute
+          - volume_set
+          - volume_buttons
+        tap_action:
+          action: call-service
+          service: media_player.volume_mute
+          service_data:
+            entity_id: media_player.samsung_tv
+        hold_action:
+          action: more-info
+
+  - type: vertical-stack
+    cards:
+      - type: custom:decluttering-card
+        template: header_card
+        variables:
+          - title: Windows
+
+      - type: custom:layout-card
+        layout_type: grid
+        layout_options:
+          grid-template-columns: 1fr 1fr 1fr
+          grid-template-rows: 1fr
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Window Left
+            secondary: |-
+              {{ is_state('binary_sensor.livingroom_window_left_contact', 'on') | iif('Open', 'Closed') }}  / {{ states('sensor.livingroom_window_left_battery') }}%
+            vertical: true
+            icon: |-
+              {{ is_state('binary_sensor.livingroom_window_left_contact', 'on') | iif('mdi:window-open', 'mdi:window-closed') }}
+            icon_color: cyan
+
+            # tap_action:
+            #   action: fire-dom-event
+            #   browser_mod:
+            #     command: popup
+            #     title: Window Left
+            #     card:
+            #       type: custom:mod-card
+            #       style: |
+            #         ha-card {
+            #           padding-right: 20px;
+            #           padding-left: 20px;
+            #           padding-bottom: 20px;
+            #         }
+            #       card:
+            #         type: vertical-stack
+            #         cards:
+            #           - type: horizontal-stack
+            #             cards:
+            #               - type: custom:mushroom-entity-card
+            #                 entity: binary_sensor.livingroom_window_left_contact
+            #                 name: State
+            #               - type: custom:mushroom-template-card
+            #                 primary: "Battery : {{ states('sensor.livingroom_window_left_battery') }}"
+            #                 # secondary: 'Distance walked: {{ states("sensor.paul_distance_walked") }} km'
+
+          - type: custom:mushroom-template-card
+            primary: Window Right
+            secondary: |-
+              {{ is_state('binary_sensor.livingroom_window_right_contact', 'on') | iif('Open', 'Closed') }}  / {{ states('sensor.livingroom_window_right_battery') }}%
+            vertical: true
+            icon: |-
+              {{ is_state('binary_sensor.livingroom_window_right_contact', 'on') | iif('mdi:window-open', 'mdi:window-closed') }}
+            icon_color: cyan
+
+          - type: custom:mushroom-template-card
+            primary: Balcony Door
+            secondary: |-
+              {{ is_state('binary_sensor.livingroom_balcony_door_contact', 'on') | iif('Open', 'Closed') }}  / {{ states('sensor.livingroom_balcony_door_battery') }}%
+            vertical: true
+            icon: |-
+              {{ is_state('binary_sensor.livingroom_balcony_door_contact', 'on') | iif('mdi:window-open', 'mdi:window-closed') }}
+            # icon: |-
+            #   {{ state_attr('binary_sensor.livingroom_balcony_door_contact', 'icon') }}
+            icon_color: cyan

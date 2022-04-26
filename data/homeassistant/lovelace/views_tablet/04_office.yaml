@@ -1,0 +1,50 @@
+---
+path: office
+title: Office
+icon: mdi:chair-rolling
+cards:
+  - type: custom:layout-card
+    layout_type: grid
+    layout_options:
+      grid-template-columns: 375px
+      grid-template-rows: 1fr
+      grid-gap: 0px 4px
+    cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: menu
+          - type: template
+            icon: mdi:home
+            tap_action:
+              action: navigate
+              navigation_path: home
+          - type: weather
+            entity: weather.home_2
+            show_temperature: true
+
+  - type: vertical-stack
+    cards:
+      - type: custom:decluttering-card
+        template: header_card
+        variables:
+          - title: Devices
+
+      - type: custom:layout-card
+        layout_type: grid
+        layout_options:
+          grid-template-columns: 1fr 1fr 1fr
+          grid-template-rows: 1fr
+          grid-gap: 0px 0px
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: binary_sensor.office_window_contact
+            name: Window
+            vertical: true
+            icon: mdi:window-open
+            icon_color: cyan
+          - type: custom:mushroom-entity-card
+            entity: sensor.office_window_battery
+            name: Window
+            vertical: true
+            icon: mdi:battery
+            icon_color: cyan

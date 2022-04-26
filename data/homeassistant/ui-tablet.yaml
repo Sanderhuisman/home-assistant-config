@@ -1,0 +1,201 @@
+---
+title: HomeNet
+
+decluttering_templates:
+  # air_purifier_control_button_template:
+  #   card:
+  #     color: rgba(255, 255, 255, 0)
+  #     color_type: card
+  #     icon: mdi:[[icon]]
+  #     state:
+  #       - operator: template
+  #         styles:
+  #           card:
+  #             - color: var(--primary-color)
+  #         value: |
+  #           [[[ return [[condition]] ]]]
+  #       - operator: default
+  #         styles:
+  #           card:
+  #             - color: rgba(150,150,150, 1.0)
+  #     styles:
+  #       card:
+  #         - height: 50px
+  #         - color: rgba(150, 150, 150, 1.0)
+  #         - box-shadow: none
+  #     tap_action:
+  #       action: call-service
+  #       service: '[[svc_name]]'
+  #       service_data: '[[svc_data]]'
+  #     type: custom:button-card
+  # air_purifier_status_button_template:
+  #   card:
+  #     color: rgba(255, 255, 255, 0)
+  #     color_type: card
+  #     entity: '[[entity]]'
+  #     show_icon: false
+  #     show_name: true
+  #     show_state: true
+  #     size: 30%
+  #     styles:
+  #       card:
+  #         - height: 70px
+  #         - box-shadow: none
+  #         - padding: 8% 0px 4% 0px
+  #       grid:
+  #         - grid-template-areas: '"s" "n"'
+  #       name:
+  #         - color: var(--primary-text-color)
+  #         - font-size: 15px
+  #         - align-self: start
+  #       state:
+  #         - color: var(--primary-text-color)
+  #         - padding-left: 10px
+  #         - font-size: 20px
+  #         - font-weight: bold
+  #         - align-self: end
+  #     tap_action:
+  #       action: '[[action]]'
+  #     type: custom:button-card
+  separator:
+    default:
+      - height: 5
+      - size: 1
+    card:
+      type: custom:gap-card
+      height: '[[height]]'
+      size: '[[size]]'
+  header_card:
+    default:
+      - title: ''
+      - label: ''
+      - hold_action:
+          action: none
+      - tap_action:
+          action: none
+    card:
+      type: custom:button-card
+      style: |
+        ha-card {
+          background: none;
+          box-shadow: none;
+        }
+      color_type: label-card
+      color: transparent
+      entity: sensor.bedroom_motion_sensor_temperature
+      label: '[[label]]'
+      name: '[[title]]'
+      show_label: true
+      tap_action: '[[tap_action]]'
+      hold_action: '[[hold_action]]'
+      styles:
+        card:
+          - border-radius: 0%
+          - width: 370px
+          - height: 0px
+          - box-shadow: 0px 0px 0px 0px
+          - padding-bottom: 23px
+          - filter: brightness(98%)
+          - '--mdc-ripple-color': silver
+          - '--mdc-ripple-press-opacity': 0
+          - box-shadow: 0px 0px 6px 1px rgba(0,0,0,0.0)
+        grid:
+          - grid-template-areas: '"n" "n" "l"'
+          - grid-template-columns: 1fr
+          - grid-template-rows: min-content min-content min-content
+        name:
+          - font-weight: null
+          - padding: 0px
+          - justify-self: start
+          - padding-left: 10px
+          - font-size: 20px
+          - color: '#4f4f4f'
+        label:
+          - font-weight: null
+          - padding: 0px
+          - justify-self: end
+          - font-size: 14px
+          - color: '#4f4f4f'
+          - position: relative
+          - bottom: 100%
+
+# https://github.com/DBuit/sidebar-card
+sidebar:
+  width:
+    mobile: 0
+    tablet: 20
+    desktop: 25
+  style: |
+    :host {
+      --sidebar-text-color: #B4B7B7;
+    }
+    .sidebarMenu li.active {
+      background-color: rgba(56, 72, 89, 0.6)!important;
+      icon-size: 350px;
+      color: #fff;
+    }
+    .template li {
+      color: #B4B7B7 !important;
+      text-align: center !important;
+    }
+    h1.digitalClock {
+      color: #B4B7B7;
+      font-weight: 350;
+      font-size: 90px!important;
+      padding-left: 30px;
+      padding-top: 30px;
+      text-align: center
+    }
+    .date {
+      color: #B4B7B7;
+      text-align: center !important;
+    }
+  hideTopMenu: true
+  clock: false
+  digitalClock: true
+  date: true
+  dateFormat: dddd D MMMM
+  debug: false
+  sidebarMenu:
+    - action: navigate
+      navigation_path: "/lovelace-tablet/home"
+      name: "Home"
+    - action: navigate
+      navigation_path: "/lovelace-tablet/lounge"
+      name: "Lounge"
+    - action: navigate
+      navigation_path: "/lovelace-tablet/kitchen"
+      name: "Kitchen"
+    - action: navigate
+      navigation_path: "/lovelace-tablet/bedroom"
+      name: "Bedroom"
+    - action: navigate
+      navigation_path: "/lovelace-tablet/office"
+      name: "Office"
+  bottomCard:
+    type: vertical-stack
+    cardOptions:
+      cards:
+        - type: custom:weather-card
+          entity: weather.home_2
+          current: true
+          details: true
+          # forecast: true
+          forecast: false
+          hourly_forecast: false
+          number_of_forecasts: 5
+
+        - type: custom:simple-thermostat  # https://github.com/nervetattoo/simple-thermostat
+          name: false
+          entity: climate.heating
+          step_layout: row
+          icon: true
+          control: false
+
+    cardStyle: |
+      :host {
+        width: 100%;
+      }
+
+views: !include_dir_list lovelace/views_tablet
+

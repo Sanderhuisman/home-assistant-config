@@ -1,0 +1,483 @@
+---
+path: home
+title: Home
+icon: mdi:home
+badges:
+  # - type: custom:layout-card
+  #   layout_type: grid
+  #   layout_options:
+  #     grid-template-columns: 375px
+  #     grid-template-rows: 1fr
+  #     grid-gap: 0px 4px
+  #   cards:
+  - type: custom:mushroom-chips-card
+    alignment: center
+    chips:
+      - type: menu
+      - type: weather
+        entity: weather.home_2
+        show_temperature: true
+        show_conditions: true
+
+      - type: template
+        name: Power
+        content: "{{states('sensor.power_consumption')}} kW / {{states('sensor.daily_energy')}} kWh"
+        icon: mdi:flash
+
+      - type: template
+        content: "Sander is {{is_state('person.sander', 'home') | iif('Home', 'Away')}}"
+        icon: mdi:account
+        # icon_color: "{{ is_state('person.sander', 'home') | iif('Purple', '') }}"
+        icon_color: amber
+
+      - type: template
+        content: "Lys is {{is_state('person.lys', 'home') | iif('Home', 'Away')}}"
+        icon: mdi:account
+        # icon_color: "{{ is_state('person.lys', 'home') | iif('Purple', '') }}"
+        icon_color: amber
+
+      # - type: entity
+      #   name: Sander
+      #   icon: mdi:account
+      #   entity: person.sander
+      #   content_info: name
+
+      # - type: entity
+      #   name: Lys
+      #   icon: mdi:account
+      #   entity: person.lys
+      #   content_info: name
+cards:
+
+          # - type: conditional
+          #   conditions:
+          #     - entity: sensor.number_of_persons_home
+          #       state: '1'
+          #   chip:
+          #     type: template
+          #     content: '{{states(''sensor.only_person_home'')}}'
+          #     icon: mdi:account-circle
+          #     icon_color: blue
+          #     tap_action:
+          #       action: navigate
+          #       navigation_path: map
+          #     hold_action:
+          #       action: call-service
+          #       service: input_boolean.toggle
+          #       service_data: {}
+          #       target:
+          #         entity_id: input_boolean.home_away
+          # - type: conditional
+          #   conditions:
+          #     - entity: sensor.number_of_persons_home
+          #       state_not: '0'
+          #     - entity: sensor.number_of_persons_home
+          #       state_not: '1'
+          #     - entity: input_boolean.home_away
+          #       state: 'on'
+          #   chip:
+          #     type: template
+          #     content: '{{states(''sensor.number_of_persons_home'')}} Home'
+          #     icon: mdi:account-circle
+          #     icon_color: blue
+          #     hold_action:
+          #       action: call-service
+          #       service: input_boolean.toggle
+          #       service_data: {}
+          #       target:
+          #         entity_id: input_boolean.home_away
+          #     tap_action:
+          #       action: navigate
+          #       navigation_path: map
+          # - type: conditional
+          #   conditions:
+          #     - entity: input_boolean.holiday_routine
+          #       state: 'off'
+          #     - entity: input_boolean.home_away
+          #       state: 'off'
+          #   chip:
+          #     type: template
+          #     icon: mdi:home-export-outline
+          #     content: Away
+          #     icon_color: red
+          #     tap_action:
+          #       action: navigate
+          #       navigation_path: map
+          #     hold_action:
+          #       action: call-service
+          #       service: input_boolean.toggle
+          #       service_data: {}
+          #       target:
+          #         entity_id: input_boolean.home_away
+          # - type: conditional
+          #   conditions:
+          #     - entity: input_boolean.holiday_routine
+          #       state: 'on'
+          #   chip:
+          #     type: entity
+          #     entity: input_boolean.holiday_routine
+          #     name: Holiday Mode
+          #     icon_color: orange
+          #     tap_action:
+          #       action: toggle
+          #     content_info: name
+          # - type: conditional
+          #   conditions:
+          #     - entity: sensor.speakers_playing
+          #       state: playing
+          #     - entity: vacuum.betty
+          #       state_not: cleaning
+          #   chip:
+          #     type: entity
+          #     entity: sensor.speakers_playing
+          #     content_info: state
+          #     name: Playing
+          #     icon: mdi:volume-high
+          #     icon_color: blue-grey
+          #     tap_action:
+          #       action: navigate
+          #       navigation_path: speakers
+          # - type: conditional
+          #   conditions:
+          #     - entity: input_boolean.home_away
+          #       state: 'on'
+          #     - entity: vacuum.betty
+          #       state: docked
+          #   chip:
+          #     type: entity
+          #     entity: sensor.number_of_lights_on
+          #     icon_color: amber
+          #     tap_action:
+          #       action: navigate
+          #       navigation_path: lights
+          #     content_info: none
+          # - type: conditional
+          #   conditions:
+          #     - entity: input_boolean.home_away
+          #       state: 'off'
+          #   chip:
+          #     type: entity
+          #     entity: vacuum.betty
+          #     name: Betty
+          #     content_info: state
+          #     icon_color: teal
+          #     icon: mdi:robot-vacuum
+          #     tap_action:
+          #       action: navigate
+          #       navigation_path: vacuum
+          # - type: conditional
+          #   conditions:
+          #     - entity: sensor.speakers_playing
+          #       state: idle
+          #     - entity: vacuum.betty
+          #       state_not: cleaning
+          #     - entity: input_boolean.home_away
+          #       state: 'on'
+          #   chip:
+          #     type: entity
+          #     entity: sensor.speakers_playing
+          #     content_info: none
+          #     name: Playing
+          #     icon: mdi:volume-high
+          #     tap_action:
+          #       action: navigate
+          #       navigation_path: speakers
+          #     icon_color: blue-grey
+          # - type: conditional
+          #   conditions:
+          #     - entity: input_boolean.home_away
+          #       state: 'off'
+          #   chip:
+          #     type: entity
+          #     entity: camera.entryway_camera_profile000_mainstream
+          #     content_info: none
+          #     icon: mdi:webcam
+          #     icon_color: blue-grey
+          #     tap_action:
+          #       action: navigate
+          #       navigation_path: camera
+          # - type: conditional
+          #   conditions:
+          #     - entity: sensor.speakers_playing
+          #       state: idle
+          #     - entity: vacuum.betty
+          #       state_not: cleaning
+          #     - entity: input_boolean.home_away
+          #       state: 'on'
+          #   chip:
+          #     type: entity
+          #     entity: sensor.spotify_playing
+          #     content_info: none
+          #     name: Spotify
+          #     icon: mdi:spotify
+          #     tap_action:
+          #       action: navigate
+          #       navigation_path: spotify
+          #     icon_color: green
+
+  - type: vertical-stack
+    cards:
+      - type: custom:decluttering-card
+        template: header_card
+        variables:
+          - title: Lights
+
+      - type: custom:layout-card
+        layout_type: grid
+        layout_options:
+          grid-template-columns: 1fr 1fr 1fr
+          grid-template-rows: 1fr 1fr
+        cards:
+          - type: custom:mushroom-light-card
+            entity: light.kitchen_lights
+            vertical: true
+            name: Kitchen
+            icon: mdi:silverware-fork-knife
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data:
+                entity_id: scene.kitchen_on
+            hold_action:
+              action: navigate
+              navigation_path: "/lovelace-tablet/kitchen"
+
+          - type: custom:mushroom-light-card
+            entity: light.living_room_lights
+            vertical: true
+            name: Lounge
+            icon: mdi:sofa
+            hold_action:
+              action: navigate
+              navigation_path: "/lovelace-tablet/lounge"
+            tap_action:
+              action: navigate
+              navigation_path: "/lovelace-tablet/lounge"
+
+          - type: custom:mushroom-entity-card
+            name: Bedroom
+            icon: mdi:bed
+            icon_color: orange
+            vertical: true
+            entity: light.bedroom
+            hold_action:
+              action: navigate
+              navigation_path: "/lovelace-tablet/bedroom"
+            tap_action:
+              action: navigate
+              navigation_path: "/lovelace-tablet/bedroom"
+
+          - type: custom:mushroom-entity-card
+            vertical: true
+            icon: mdi:ceiling-light
+            icon_color: orange
+            name: Hallway
+            entity: light.hallway_lights_current_value
+            hold_action:
+              action: fire-dom-event
+              browser_mod:
+                command: popup
+                title: Hallway Lights
+                card:
+                  type: custom:mod-card
+                  style: |
+                    ha-card {
+                      padding-right: 20px;
+                      padding-left: 20px;
+                      padding-bottom: 20px;
+                    }
+                  card:
+                    type: vertical-stack
+                    cards:
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:mushroom-entity-card
+                            name: Motion Sensor
+                            entity: binary_sensor.hallway_motion_sensor_occupancy
+
+                            # primary_info: name
+                            # secondary_info: state
+                          - type: custom:mushroom-entity-card
+                            name: Power
+                            entity: sensor.hallway_motion_sensor_battery
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:mushroom-entity-card
+                            name: Motion Sensor Front door
+                            entity: binary_sensor.hallway_motion_sensor_2_occupancy
+                          - type: custom:mushroom-entity-card
+                            name: Power
+                            entity: sensor.hallway_motion_sensor_2_battery
+
+          - type: custom:mushroom-entity-card
+            vertical: true
+            icon: mdi:ceiling-light
+            icon_color: orange
+            name: Utility
+            entity: light.utility_room_lights_current_value_3
+            tap_action:
+              action: toggle
+
+          - type: custom:mushroom-entity-card
+            vertical: true
+            icon: mdi:outdoor-lamp
+            icon_color: orange
+            name: Balcony
+            entity: light.balcony_lights
+            tap_action:
+              action: toggle
+
+  - type: vertical-stack
+    cards:
+      - type: custom:decluttering-card
+        template: header_card
+        variables:
+          - title: Climate
+
+      - type: custom:layout-card
+        layout_type: grid
+        layout_options:
+          grid-template-columns: 1fr 1fr
+          grid-template-rows: 1fr
+        cards:
+          - type: custom:mini-graph-card
+            color_thresholds_transition: smooth
+            entities:
+              - entity: sensor.heating_temperature
+                name: Temperature
+                font_size: 100
+                line_color: var(--primary-color)
+                group: false
+                hour24: true
+                line_width: 6
+                hours_to_show: 72
+                points_per_hour: 0.3
+                show:
+                  fill: fade
+                  labels: false
+                  name: true
+                  state: true
+                  extrema: true
+
+          - type: custom:mini-graph-card
+            color_thresholds_transition: smooth
+            entities:
+              - entity: sensor.heating_humidity
+                name: Humidity
+                font_size: 100
+                line_color: var(--primary-color)
+                group: false
+                hour24: true
+                line_width: 6
+                hours_to_show: 72
+                points_per_hour: 0.3
+                show:
+                  fill: fade
+                  labels: false
+                  name: true
+                  state: true
+                  extrema: true
+
+  - type: vertical-stack
+    cards:
+      - type: custom:decluttering-card
+        template: header_card
+        variables:
+          - title: Energy
+
+      - type: custom:layout-card
+        layout_type: grid
+        layout_options:
+          grid-template-columns: 1fr 1fr
+          grid-template-rows: 1fr
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.power_consumption
+                name: Power Consumption
+                font_size: 100
+                line_width: 6
+                line_color: var(--primary-color)
+                hours_to_show: 72
+                points_per_hour: 1
+            group: false
+            hour24: true
+            show:
+              fill: fade
+              labels: false
+              extrema: true
+              name: true
+              state: true
+            lower_bound: 0
+
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.daily_energy
+                name: Energy consumption
+                font_size: 100
+                line_color: var(--primary-color)
+            hours_to_show: 168
+            aggregate_func: max
+            group_by: date
+            hour24: true
+            show:
+              graph: bar
+              extrema: true
+              fill: fade
+              labels: false
+              name: true
+              state: true
+            lower_bound: 0
+
+  - type: vertical-stack
+    cards:
+      - type: custom:decluttering-card
+        template: header_card
+        variables:
+          - title: Devices
+
+      - type: custom:mushroom-media-player-card
+        entity: media_player.samsung_tv
+        use_media_info: true
+        use_media_artwork: true
+
+        volume_controls:
+          - volume_mute
+          - volume_set
+          - volume_buttons
+        tap_action:
+          action: call-service
+          service: media_player.volume_mute
+          service_data:
+            entity_id: media_player.samsung_tv
+        hold_action:
+          action: more-info
+
+      - type: custom:mushroom-media-player-card
+        entity: media_player.spotify_sander
+        use_media_info: true
+        use_media_artwork: true
+        media_controls:
+          - on_off
+          # - shuffle
+          - previous
+          - play_pause_stop
+          - next
+          # - repeat
+
+        volume_controls:
+          - volume_mute
+          - volume_set
+          - volume_buttons
+
+        tap_action:
+          action: call-service
+          service: media_player.media_pause
+          service_data:
+            entity_id: media_player.spotify_sander
+        hold_action:
+          action: more-info
+
+      - type: custom:mushroom-fan-card
+        entity: fan.ventilation
+        show_percentage_control: true
