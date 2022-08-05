@@ -40,7 +40,19 @@ action:
                 priority: high
 
                 persistent: true  # Set to true to create a persistent notification
-                tag: persistent_fridge_alarm  # Tag is required for the persistent notification
+                tag: persistent_fridge_alarm  # Tag is required for the persistent
+
+          - service: notify.mobile_app_iphone_8
+            data:
+              title: Fridge Alarm
+              message: Fridge gets 🥵
+              data:
+                tag: persistent_fridge_alarm
+                push:
+                  sound:
+                    name: "default"
+                    critical: 1
+                    volume: 1.0
 
       - conditions:
           - condition: trigger
@@ -52,5 +64,11 @@ action:
             alias: "Clear notification when door is closed"
             data:
               message: clear_notification
+              data:
+                tag: persistent_fridge_alarm
+
+          - service: notify.mobile_app_iphone_8
+            data:
+              message: "clear_notification"
               data:
                 tag: persistent_fridge_alarm

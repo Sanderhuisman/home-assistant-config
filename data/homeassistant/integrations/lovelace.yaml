@@ -3,9 +3,10 @@ lovelace:
   mode: yaml
   resources: !include_dir_list ../lovelace/resources
   dashboards:
-    lovelace-sidebar:
+    lovelace-tablet:
       mode: yaml
-      title: Test
-      icon: mdi:script
+      title: Tablet
       show_in_sidebar: true
-      filename: lovelace-sidebar.yaml
+      filename: ui-tablet.yaml
+
+browser_mod:

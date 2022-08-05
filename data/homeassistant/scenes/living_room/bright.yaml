@@ -13,6 +13,10 @@ entities:
     state: true
     brightness: 255
     color_temp: 346
+  light.living_room_window_board:
+    state: true
+    brightness: 255
+    color_temp: 346
   light.livingroom_ceiling:
     state: true
     brightness: 255

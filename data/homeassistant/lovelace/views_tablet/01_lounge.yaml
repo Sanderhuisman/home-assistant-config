@@ -12,21 +12,29 @@ badges:
         show_temperature: true
         show_conditions: true
 
-      - type: entity
-        name: Power Consumption
-        entity: sensor.power_consumption
+      - type: template
+        name: Power
+        content: "{{states('sensor.power_consumption')}} kW / {{states('sensor.daily_energy')}} kWh"
+        icon: mdi:flash
+        tap_action:
+          action: navigate
+          navigation_path: /energy
 
-      - type: entity
-        name: Sander
+      - type: template
+        content: "Sander is {{is_state('person.sander', 'home') | iif('Home', 'Away')}}"
         icon: mdi:account
-        entity: person.sander
-        content_info: name
+        icon_color: |-
+          {% if(is_state('person.sander', 'home')) %}
+            amber
+          {% endif %}
 
-      - type: entity
-        name: Lys
+      - type: template
+        content: "Lys is {{is_state('person.lys', 'home') | iif('Home', 'Away')}}"
         icon: mdi:account
-        entity: person.lys
-        content_info: name
+        icon_color: |-
+          {% if(is_state('person.lys', 'home')) %}
+            amber
+          {% endif %}
 
 cards:
   - type: vertical-stack
@@ -40,10 +48,11 @@ cards:
         layout_type: grid
         layout_options:
           grid-template-columns: 1fr 1fr
-          grid-template-rows: 1fr 1fr
+          grid-template-rows: 1fr 1fr 1fr
         cards:
           - type: custom:mushroom-light-card
             entity: light.hue_tv_left
+            name: TV Left
             icon: mdi:floor-lamp
             tap_action:
               action: toggle
@@ -54,6 +63,7 @@ cards:
           - type: custom:mushroom-light-card
             entity: light.hue_tv_right
             icon: mdi:floor-lamp
+            name: TV Right
             tap_action:
               action: toggle
             hold_action:
@@ -62,6 +72,17 @@ cards:
 
           - type: custom:mushroom-light-card
             entity: light.hue_couch
+            name: Couch
+            icon: mdi:floor-lamp
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            show_brightness_control: true
+
+          - type: custom:mushroom-light-card
+            entity: light.living_room_window_board
+            name: Window Board
             icon: mdi:floor-lamp
             tap_action:
               action: toggle
@@ -72,6 +93,7 @@ cards:
           - type: custom:mushroom-light-card
             entity: light.livingroom_ceiling
             icon: mdi:ceiling-light
+            name: Ceiling
             tap_action:
               action: toggle
             hold_action:
@@ -129,6 +151,7 @@ cards:
               service_data:
                 entity_id: scene.living_off
             icon_color: purple
+            secondary_info: none
 
           - type: custom:mushroom-entity-card
             vertical: true
@@ -141,6 +164,7 @@ cards:
               service_data:
                 entity_id: scene.living_movie
             icon_color: purple
+            secondary_info: none
 
           - type: custom:mushroom-entity-card
             vertical: true
@@ -153,6 +177,7 @@ cards:
               service_data:
                 entity_id: scene.living_relax
             icon_color: purple
+            secondary_info: none
 
           - type: custom:mushroom-entity-card
             vertical: true
@@ -165,6 +190,7 @@ cards:
               service_data:
                 entity_id: scene.living_bright
             icon_color: purple
+            secondary_info: none
 
   - type: vertical-stack
     cards:
@@ -210,32 +236,10 @@ cards:
             vertical: true
             icon: |-
               {{ is_state('binary_sensor.livingroom_window_left_contact', 'on') | iif('mdi:window-open', 'mdi:window-closed') }}
-            icon_color: cyan
-
-            # tap_action:
-            #   action: fire-dom-event
-            #   browser_mod:
-            #     command: popup
-            #     title: Window Left
-            #     card:
-            #       type: custom:mod-card
-            #       style: |
-            #         ha-card {
-            #           padding-right: 20px;
-            #           padding-left: 20px;
-            #           padding-bottom: 20px;
-            #         }
-            #       card:
-            #         type: vertical-stack
-            #         cards:
-            #           - type: horizontal-stack
-            #             cards:
-            #               - type: custom:mushroom-entity-card
-            #                 entity: binary_sensor.livingroom_window_left_contact
-            #                 name: State
-            #               - type: custom:mushroom-template-card
-            #                 primary: "Battery : {{ states('sensor.livingroom_window_left_battery') }}"
-            #                 # secondary: 'Distance walked: {{ states("sensor.paul_distance_walked") }} km'
+            icon_color: |-
+              {% if(is_state('binary_sensor.livingroom_window_left_contact', 'on')) %}
+                cyan
+              {% endif %}
 
           - type: custom:mushroom-template-card
             primary: Window Right
@@ -244,7 +248,10 @@ cards:
             vertical: true
             icon: |-
               {{ is_state('binary_sensor.livingroom_window_right_contact', 'on') | iif('mdi:window-open', 'mdi:window-closed') }}
-            icon_color: cyan
+            icon_color: |-
+              {% if(is_state('binary_sensor.livingroom_window_right_contact', 'on')) %}
+                cyan
+              {% endif %}
 
           - type: custom:mushroom-template-card
             primary: Balcony Door
@@ -253,6 +260,7 @@ cards:
             vertical: true
             icon: |-
               {{ is_state('binary_sensor.livingroom_balcony_door_contact', 'on') | iif('mdi:window-open', 'mdi:window-closed') }}
-            # icon: |-
-            #   {{ state_attr('binary_sensor.livingroom_balcony_door_contact', 'icon') }}
-            icon_color: cyan
+            icon_color: |-
+              {% if(is_state('binary_sensor.livingroom_balcony_door_contact', 'on')) %}
+                cyan
+              {% endif %}

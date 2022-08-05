@@ -8,6 +8,7 @@ cards:
       - light.hue_tv_left
       - light.hue_tv_right
       - light.hue_couch
+      - light.living_room_window_board
       - light.livingroom_ceiling
       - light.kitchen_iris
       - name: Vitrine

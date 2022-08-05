@@ -4,11 +4,18 @@ entities:
   light.hue_tv_left:
     state: true
     brightness: 200
+    hs_color: [35.426, 73.725]
   light.hue_tv_right:
     state: true
     brightness: 200
+    hs_color: [35.426, 73.725]
   light.hue_couch:
     state: true
-    brightness: 200
+    brightness: 70
+    hs_color: [35.426, 73.725]
+  light.living_room_window_board:
+    state: true
+    brightness: 70
+    hs_color: [35.426, 73.725]
   light.livingroom_ceiling:
     state: false

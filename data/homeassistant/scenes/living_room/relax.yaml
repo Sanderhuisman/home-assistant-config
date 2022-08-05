@@ -13,5 +13,9 @@ entities:
     state: true
     brightness: 200
     hs_color: [35.426, 73.725]
+  light.living_room_window_board:
+    state: true
+    brightness: 200
+    hs_color: [35.426, 73.725]
   light.livingroom_ceiling:
     state: false

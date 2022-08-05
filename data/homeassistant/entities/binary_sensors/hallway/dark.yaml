@@ -2,5 +2,5 @@
 platform: threshold
 name: threshold_dark
 entity_id: sensor.hallway_lux_sensor_illuminance_lux
-lower: 60
-hysteresis: 20
+lower: 50
+hysteresis: 15

@@ -1,0 +1,4 @@
+---
+name: 3D Printer Automatic Shutdown
+icon: mdi:robot
+initial: true

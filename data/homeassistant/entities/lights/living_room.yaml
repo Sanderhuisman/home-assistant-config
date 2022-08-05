@@ -3,6 +3,7 @@ platform: group
 name: Living Room Lights
 entities:
   - light.hue_tv_left
-  - light.hue_couch  # Big lamp
   - light.hue_tv_right
+  - light.hue_couch  # Big lamp
+  - light.living_room_window_board
   - light.livingroom_ceiling

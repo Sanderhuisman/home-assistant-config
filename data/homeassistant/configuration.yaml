@@ -1,19 +1,22 @@
 ---
-# Welcome to my Home Assistant configuration!
+# Sets up Home Assistant.
 #
-# Don't be scared by the size of my configuration file...
-# It is probably the smallest you've ever seen.
-#
-# My system is very modular and very differently structured
-# compared to other configurations you'll find online.
-#
-# Basically, each file in the repository does 1 (one, uno, eins)
-# thing only! Click through it, you'll get it pretty fast.
-#
-# The configuration.yaml is only used to bootstrap the system.
+# Basically, everything that doesn't have to be in the
+# main configuration.yaml.
 #
 homeassistant:
-  # Load packages
+  # Lets me customize individual entities
+  name: HomeNet
+  latitude: !secret homeassistant_latitude
+  longitude: !secret homeassistant_longitude
+  elevation: !secret homeassistant_elevation
+  unit_system: metric
+  time_zone: !secret homeassistant_timezone
+  # customize: !include customize.yaml
+  external_url: !secret homeassistant_url
+  customize: !include_dir_named ../customizations/entities
   packages: !include_dir_named integrations
 
 pyscript:
+
+system_health:

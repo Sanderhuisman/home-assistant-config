@@ -23,18 +23,25 @@ badges:
         name: Power
         content: "{{states('sensor.power_consumption')}} kW / {{states('sensor.daily_energy')}} kWh"
         icon: mdi:flash
+        tap_action:
+          action: navigate
+          navigation_path: /energy
 
       - type: template
         content: "Sander is {{is_state('person.sander', 'home') | iif('Home', 'Away')}}"
         icon: mdi:account
-        # icon_color: "{{ is_state('person.sander', 'home') | iif('Purple', '') }}"
-        icon_color: amber
+        icon_color: |-
+          {% if(is_state('person.sander', 'home')) %}
+            amber
+          {% endif %}
 
       - type: template
         content: "Lys is {{is_state('person.lys', 'home') | iif('Home', 'Away')}}"
         icon: mdi:account
-        # icon_color: "{{ is_state('person.lys', 'home') | iif('Purple', '') }}"
-        icon_color: amber
+        icon_color: |-
+          {% if(is_state('person.lys', 'home')) %}
+            amber
+          {% endif %}
 
       # - type: entity
       #   name: Sander
@@ -235,9 +242,8 @@ cards:
             icon: mdi:silverware-fork-knife
             tap_action:
               action: call-service
-              service: scene.turn_on
-              service_data:
-                entity_id: scene.kitchen_on
+              service: script.kitchen_lights_toggle
+              service_data: {}
             hold_action:
               action: navigate
               navigation_path: "/lovelace-tablet/kitchen"
@@ -247,10 +253,11 @@ cards:
             vertical: true
             name: Lounge
             icon: mdi:sofa
-            hold_action:
-              action: navigate
-              navigation_path: "/lovelace-tablet/lounge"
             tap_action:
+              action: call-service
+              service: script.lounge_lights_toggle
+              service_data: {}
+            hold_action:
               action: navigate
               navigation_path: "/lovelace-tablet/lounge"
 
@@ -260,10 +267,11 @@ cards:
             icon_color: orange
             vertical: true
             entity: light.bedroom
-            hold_action:
-              action: navigate
-              navigation_path: "/lovelace-tablet/bedroom"
             tap_action:
+              action: call-service
+              service: script.bedroom_lights_toggle
+              service_data: {}
+            hold_action:
               action: navigate
               navigation_path: "/lovelace-tablet/bedroom"
 
@@ -320,7 +328,7 @@ cards:
 
           - type: custom:mushroom-entity-card
             vertical: true
-            icon: mdi:outdoor-lamp
+            icon: mdi:string-lights
             icon_color: orange
             name: Balcony
             entity: light.balcony_lights
@@ -345,38 +353,38 @@ cards:
             entities:
               - entity: sensor.heating_temperature
                 name: Temperature
-                font_size: 100
                 line_color: var(--primary-color)
-                group: false
-                hour24: true
-                line_width: 6
-                hours_to_show: 72
-                points_per_hour: 0.3
-                show:
-                  fill: fade
-                  labels: false
-                  name: true
-                  state: true
-                  extrema: true
+            font_size: 100
+            group: false
+            hour24: true
+            line_width: 6
+            hours_to_show: 72
+            points_per_hour: 0.3
+            show:
+              fill: fade
+              labels: false
+              name: true
+              state: true
+              extrema: true
 
           - type: custom:mini-graph-card
             color_thresholds_transition: smooth
             entities:
               - entity: sensor.heating_humidity
                 name: Humidity
-                font_size: 100
                 line_color: var(--primary-color)
-                group: false
-                hour24: true
-                line_width: 6
-                hours_to_show: 72
-                points_per_hour: 0.3
-                show:
-                  fill: fade
-                  labels: false
-                  name: true
-                  state: true
-                  extrema: true
+            font_size: 100
+            group: false
+            hour24: true
+            line_width: 6
+            hours_to_show: 72
+            points_per_hour: 0.3
+            show:
+              fill: fade
+              labels: false
+              name: true
+              state: true
+              extrema: true
 
   - type: vertical-stack
     cards:
@@ -481,3 +489,485 @@ cards:
       - type: custom:mushroom-fan-card
         entity: fan.ventilation
         show_percentage_control: true
+
+  - type: vertical-stack
+    cards:
+      - type: custom:decluttering-card
+        template: header_card
+        variables:
+          - title: Plants
+
+      - type: custom:mushroom-template-card
+        icon: mdi:tree
+        icon_color: cyan
+        vertical: false
+        primary: "Bonsai"
+        secondary: "{{ states('sensor.bonsai_moisture') }} % / {{ states('sensor.bonsai_temperature') }} °C / {{ states('sensor.bonsai_illuminance') }} lx"
+
+        tap_action:
+          action: fire-dom-event
+          browser_mod:
+            command: popup
+            title: Bonsai
+            card:
+              type: custom:mod-card
+              style: |
+                ha-card {
+                  padding-right: 20px;
+                  padding-left: 20px;
+                  padding-bottom: 20px;
+                }
+              card:
+                type: vertical-stack
+                cards:
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.bonsai_moisture
+                        name: Moisture
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.bonsai_temperature
+                        name: Temperature
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.bonsai_illuminance
+                        name: Illuminance
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+      - type: custom:mushroom-template-card
+        icon: mdi:tree
+        icon_color: cyan
+        vertical: false
+        primary: "Spathiphyllum"
+        secondary: "{{ states('sensor.spathiphyllum_moisture') }} % / {{ states('sensor.spathiphyllum_temperature') }} °C / {{ states('sensor.spathiphyllum_illuminance') }} lx"
+        tap_action:
+          action: fire-dom-event
+          browser_mod:
+            command: popup
+            title: Spathiphyllum
+            card:
+              type: custom:mod-card
+              style: |
+                ha-card {
+                  padding-right: 20px;
+                  padding-left: 20px;
+                  padding-bottom: 20px;
+                }
+              card:
+                type: vertical-stack
+                cards:
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.spathiphyllum_moisture
+                        name: Moisture
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.spathiphyllum_temperature
+                        name: Temperature
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.spathiphyllum_illuminance
+                        name: Illuminance
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+      - type: custom:mushroom-template-card
+        icon: mdi:tree
+        icon_color: cyan
+        vertical: false
+        primary: "Orchidaceae"
+        secondary: "{{ states('sensor.orchidaceae_moisture') }} % / {{ states('sensor.orchidaceae_temperature') }} °C / {{ states('sensor.orchidaceae_illuminance') }} lx"
+        tap_action:
+          action: fire-dom-event
+          browser_mod:
+            command: popup
+            title: Orchidaceae
+            card:
+              type: custom:mod-card
+              style: |
+                ha-card {
+                  padding-right: 20px;
+                  padding-left: 20px;
+                  padding-bottom: 20px;
+                }
+              card:
+                type: vertical-stack
+                cards:
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.orchidaceae_moisture
+                        name: Moisture
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.orchidaceae_temperature
+                        name: Temperature
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.orchidaceae_illuminance
+                        name: Illuminance
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+      - type: custom:mushroom-template-card
+        icon: mdi:tree
+        icon_color: cyan
+        vertical: false
+        primary: "Carrots"
+        secondary: "{{ states('sensor.carrots_moisture') }} % / {{ states('sensor.carrots_temperature') }} °C / {{ states('sensor.carrots_illuminance') }} lx"
+        tap_action:
+          action: fire-dom-event
+          browser_mod:
+            command: popup
+            title: Carrots
+            card:
+              type: custom:mod-card
+              style: |
+                ha-card {
+                  padding-right: 20px;
+                  padding-left: 20px;
+                  padding-bottom: 20px;
+                }
+              card:
+                type: vertical-stack
+                cards:
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.carrots_moisture
+                        name: Moisture
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.carrots_temperature
+                        name: Temperature
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.carrots_illuminance
+                        name: Illuminance
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+      - type: custom:mushroom-template-card
+        icon: mdi:tree
+        icon_color: cyan
+        vertical: false
+        primary: "Lemon Tree"
+        secondary: "{{ states('sensor.lemon_tree_moisture') }} % / {{ states('sensor.lemon_tree_temperature') }} °C / {{ states('sensor.lemon_tree_illuminance') }} lx"
+        tap_action:
+          action: fire-dom-event
+          browser_mod:
+            command: popup
+            title: Carrots
+            card:
+              type: custom:mod-card
+              style: |
+                ha-card {
+                  padding-right: 20px;
+                  padding-left: 20px;
+                  padding-bottom: 20px;
+                }
+              card:
+                type: vertical-stack
+                cards:
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.lemon_tree_moisture
+                        name: Moisture
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.lemon_tree_temperature
+                        name: Temperature
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.lemon_tree_illuminance
+                        name: Illuminance
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+      - type: custom:mushroom-template-card
+        icon: mdi:tree
+        icon_color: cyan
+        vertical: false
+        primary: "Spices"
+        secondary: "{{ states('sensor.spices_tree_moisture') }} % / {{ states('sensor.spices_tree_temperature') }} °C / {{ states('sensor.spices_tree_illuminance') }} lx"
+        tap_action:
+          action: fire-dom-event
+          browser_mod:
+            command: popup
+            title: Carrots
+            card:
+              type: custom:mod-card
+              style: |
+                ha-card {
+                  padding-right: 20px;
+                  padding-left: 20px;
+                  padding-bottom: 20px;
+                }
+              card:
+                type: vertical-stack
+                cards:
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.spices_tree_moisture
+                        name: Moisture
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.spices_tree_temperature
+                        name: Temperature
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true
+
+                  - type: custom:mini-graph-card
+                    color_thresholds_transition: smooth
+                    entities:
+                      - entity: sensor.spices_tree_illuminance
+                        name: Illuminance
+                        line_color: var(--primary-color)
+                    font_size: 100
+                    group: false
+                    hour24: true
+                    line_width: 6
+                    hours_to_show: 72
+                    points_per_hour: 0.3
+                    show:
+                      fill: fade
+                      labels: false
+                      name: true
+                      state: true
+                      extrema: true

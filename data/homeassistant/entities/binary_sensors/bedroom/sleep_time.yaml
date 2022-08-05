@@ -1,5 +1,5 @@
 ---
 platform: tod
 name: 'sleep_time'
-after: '23:00'
+after: '23:30'
 before: '07:00'

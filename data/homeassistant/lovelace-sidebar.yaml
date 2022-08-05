@@ -4,7 +4,6 @@ views:
   - panel: true
     path: default_view
     cards:
-
       - action: none
         type: image
         hold_action:

@@ -1,14 +1,19 @@
----
 influxdb:
+  api_version: 2
+  ssl: false
   host: !secret influxdb_host
   port: !secret influxdb_port
-  username: !secret influxdb_username
-  password: !secret influxdb_password
-  database: !secret influxdb_database
+  token: !secret influxdb_token
+  organization: !secret influxdb_organization
+  bucket: "homeassistant"
+  tags:
+    source: HA
+  tags_attributes:
+    - friendly_name
+  default_measurement: units
 
   include:
     entities: !include_dir_merge_list ../influxdb
-
   exclude:
     entities:
       - sensor.influxdb_size

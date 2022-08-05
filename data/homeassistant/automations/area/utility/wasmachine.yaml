@@ -61,7 +61,7 @@ action:
                 tag: Wasmachine
                 channel: Wasmachine
 
-          - service: notify.mobile_app_iphone
+          - service: notify.mobile_app_iphone_8
             data:
               title: Wasmachine
               message: '{{message_done}}'

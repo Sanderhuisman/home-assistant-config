@@ -1,0 +1,26 @@
+alias: "[Kitchen] Lights Toggle"
+mode: single
+icon: mdi:flash
+
+sequence:
+  - choose:
+    - conditions:
+        - condition: state
+          entity_id: light.kitchen_lights
+          state: 'off'
+          for:
+            hours: 0
+            minutes: 1
+            seconds: 0
+
+      sequence:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.kitchen_on
+          metadata: {}
+
+    default:
+      - service: scene.turn_on
+        target:
+          entity_id: scene.kitchen_off
+        metadata: {}

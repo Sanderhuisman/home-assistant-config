@@ -1,0 +1,104 @@
+---
+path: utility
+title: Utility
+badges:
+  - type: custom:mushroom-chips-card
+    alignment: center
+    chips:
+      - type: menu
+      - type: weather
+        entity: weather.home_2
+        show_temperature: true
+        show_conditions: true
+
+      - type: template
+        name: Power
+        content: "{{states('sensor.power_consumption')}} kW / {{states('sensor.daily_energy')}} kWh"
+        icon: mdi:flash
+        tap_action:
+          action: navigate
+          navigation_path: /energy
+
+      - type: template
+        content: "Sander is {{is_state('person.sander', 'home') | iif('Home', 'Away')}}"
+        icon: mdi:account
+        icon_color: |-
+          {% if(is_state('person.sander', 'home')) %}
+            amber
+          {% endif %}
+
+      - type: template
+        content: "Lys is {{is_state('person.lys', 'home') | iif('Home', 'Away')}}"
+        icon: mdi:account
+        icon_color: |-
+          {% if(is_state('person.lys', 'home')) %}
+            amber
+          {% endif %}
+cards:
+  - type: vertical-stack
+    cards:
+      - type: custom:decluttering-card
+        template: header_card
+        variables:
+          - title: Lights
+
+      - type: custom:layout-card
+        layout_type: grid
+        layout_options:
+          grid-template-columns: 1fr 1fr
+          grid-template-rows: 1fr
+        cards:
+          - type: custom:mushroom-light-card
+            entity: light.utility_room_lights_current_value_3
+            name: Ceiling
+            icon: mdi:ceiling-light
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            show_brightness_control: true
+
+  # - type: custom:layout-card
+  #   layout_type: grid
+  #   layout_options:
+  #     grid-template-columns: 375px
+  #     grid-template-rows: 1fr
+  #     grid-gap: 0px 4px
+  #   cards:
+  #     - type: custom:mushroom-chips-card
+  #       chips:
+  #         - type: menu
+  #         - type: template
+  #           icon: mdi:home
+  #           tap_action:
+  #             action: navigate
+  #             navigation_path: home
+  #         - type: weather
+  #           entity: weather.home_2
+  #           show_temperature: true
+
+  # - type: vertical-stack
+  #   cards:
+  #     - type: custom:decluttering-card
+  #       template: header_card
+  #       variables:
+  #         - title: Devices
+
+  #     - type: custom:layout-card
+  #       layout_type: grid
+  #       layout_options:
+  #         grid-template-columns: 1fr 1fr 1fr
+  #         grid-template-rows: 1fr
+  #         grid-gap: 0px 0px
+  #       cards:
+  #         - type: custom:mushroom-template-card
+  #           primary: Window
+  #           secondary: |-
+  #             {{ is_state('binary_sensor.office_window_contact', 'on') | iif('Open', 'Closed') }}  / {{ states('sensor.office_window_battery') }}%
+  #           vertical: true
+  #           icon: |-
+  #             {{ is_state('binary_sensor.office_window_contact', 'on') | iif('mdi:window-open', 'mdi:window-closed') }}
+  #           icon_color: |-
+  #             {% if(is_state('binary_sensor.office_window_contact', 'on')) %}
+  #               cyan
+  #             {% endif %}

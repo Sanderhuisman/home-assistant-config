@@ -3,13 +3,6 @@ path: kitchen
 title: Kitchen
 icon: mdi:silverware-fork-knife
 badges:
-  # - type: custom:layout-card
-  #   layout_type: grid
-  #   layout_options:
-  #     grid-template-columns: 375px
-  #     grid-template-rows: 1fr
-  #     grid-gap: 0px 4px
-  #   cards:
   - type: custom:mushroom-chips-card
     alignment: center
     chips:
@@ -19,29 +12,29 @@ badges:
         show_temperature: true
         show_conditions: true
 
-      - type: entity
-        name: Power Consumption
-        entity: sensor.power_consumption
-        # content_info: state
+      - type: template
+        name: Power
+        content: "{{states('sensor.power_consumption')}} kW / {{states('sensor.daily_energy')}} kWh"
+        icon: mdi:flash
+        tap_action:
+          action: navigate
+          navigation_path: /energy
 
-      # - type: template
-      #   content: "Sander is {{is_state('person.sander', 'home') | iif('Home', 'Away')}}"
-      #   icon: mdi:account-circle
-      # - type: template
-      #   content: "Lys is {{is_state('person.lys', 'home') | iif('Home', 'Away')}}"
-      #   icon: mdi:account-circle
-
-      - type: entity
-        name: Sander
+      - type: template
+        content: "Sander is {{is_state('person.sander', 'home') | iif('Home', 'Away')}}"
         icon: mdi:account
-        entity: person.sander
-        content_info: name
+        icon_color: |-
+          {% if(is_state('person.sander', 'home')) %}
+            amber
+          {% endif %}
 
-      - type: entity
-        name: Lys
+      - type: template
+        content: "Lys is {{is_state('person.lys', 'home') | iif('Home', 'Away')}}"
         icon: mdi:account
-        entity: person.lys
-        content_info: name
+        icon_color: |-
+          {% if(is_state('person.lys', 'home')) %}
+            amber
+          {% endif %}
 
 cards:
   - type: vertical-stack
@@ -110,6 +103,7 @@ cards:
               service_data:
                 entity_id: scene.kitchen_off
             icon_color: purple
+            secondary_info: none
 
           - type: custom:mushroom-entity-card
             vertical: true
@@ -122,6 +116,7 @@ cards:
               service_data:
                 entity_id: scene.kitchen_on
             icon_color: purple
+            secondary_info: none
 
   - type: vertical-stack
     cards:

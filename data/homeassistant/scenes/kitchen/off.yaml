@@ -9,3 +9,6 @@ entities:
 
   light.kitchen_iris:
     state: false
+
+  light.kitchen_sink_lights:
+    state: false

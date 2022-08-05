@@ -7,6 +7,8 @@ entities:
     state: false
   light.hue_couch:
     state: false
+  light.living_room_window_board:
+    state: false
   light.livingroom_ceiling:
     state: true
     brightness: 255

@@ -22,27 +22,53 @@ cards:
   #       entity: sensor.influxdb_size
 
   - type: entities
-    title: Adguard Home
+    title: Debian VM
     entities:
-      - name: Average Processing Speed
-        entity: sensor.adguard_average_processing_speed
-      - name: DNS Queries
-        entity: sensor.adguard_dns_queries
-      - name: DNS Queries blocked ratio
-        entity: sensor.adguard_dns_queries_blocked_ratio
-      - name: Filtering
-        entity: switch.adguard_filtering
-      - name: Parental Control
-        entity: switch.adguard_parental_control
-      - name: Parental Control blocked
-        entity: sensor.adguard_parental_control_blocked
-      - name: Protection
-        entity: switch.adguard_protection
-      - name: Safe Browsing
-        entity: switch.adguard_safe_browsing
-      - name: Safe browsing blocked
-        entity: sensor.adguard_safe_browsing_blocked
-      - name: Safe Search
-        entity: switch.adguard_safe_search
-      - name: Safe Searches Enforced
-        entity: sensor.adguard_safe_searches_enforced
+      - name: CPU Usage
+        entity: sensor.debian_vm_cpu_percentage
+      - name: Memory Usage
+        entity: sensor.debian_vm_mem_percentage
+
+  - type: entities
+    title: OPNsense
+    entities:
+      - name: CPU Usage
+        entity: sensor.opnsense_cpu_percentage
+      - name: Memory Usage
+        entity: sensor.opnsense_mem_percentage
+
+  - type: entities
+    title: UPS
+    entities:
+      - name: Battery
+        entity: sensor.apc_ups_battery_percentage
+      - name: Battery Voltage
+        entity: sensor.apc_ups_battery_voltage
+      - name: Load
+        entity: sensor.apc_ups_load_percent
+
+  # - type: entities
+  #   title: Adguard Home
+  #   entities:
+  #     - name: Average Processing Speed
+  #       entity: sensor.adguard_average_processing_speed
+  #     - name: DNS Queries
+  #       entity: sensor.adguard_dns_queries
+  #     - name: DNS Queries blocked ratio
+  #       entity: sensor.adguard_dns_queries_blocked_ratio
+  #     - name: Filtering
+  #       entity: switch.adguard_filtering
+  #     - name: Parental Control
+  #       entity: switch.adguard_parental_control
+  #     - name: Parental Control blocked
+  #       entity: sensor.adguard_parental_control_blocked
+  #     - name: Protection
+  #       entity: switch.adguard_protection
+  #     - name: Safe Browsing
+  #       entity: switch.adguard_safe_browsing
+  #     - name: Safe browsing blocked
+  #       entity: sensor.adguard_safe_browsing_blocked
+  #     - name: Safe Search
+  #       entity: switch.adguard_safe_search
+  #     - name: Safe Searches Enforced
+  #       entity: sensor.adguard_safe_searches_enforced

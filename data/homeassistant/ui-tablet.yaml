@@ -159,19 +159,23 @@ sidebar:
   sidebarMenu:
     - action: navigate
       navigation_path: "/lovelace-tablet/home"
-      name: "Home"
+      name: Home
     - action: navigate
       navigation_path: "/lovelace-tablet/lounge"
-      name: "Lounge"
+      name: Lounge
     - action: navigate
       navigation_path: "/lovelace-tablet/kitchen"
-      name: "Kitchen"
+      name: Kitchen
     - action: navigate
       navigation_path: "/lovelace-tablet/bedroom"
-      name: "Bedroom"
+      name: Bedroom
     - action: navigate
       navigation_path: "/lovelace-tablet/office"
-      name: "Office"
+      name: Office
+    - action: navigate
+      navigation_path: "/lovelace-tablet/utility"
+      name: Utility
+
   bottomCard:
     type: vertical-stack
     cardOptions:
@@ -198,4 +202,3 @@ sidebar:
       }
 
 views: !include_dir_list lovelace/views_tablet
-

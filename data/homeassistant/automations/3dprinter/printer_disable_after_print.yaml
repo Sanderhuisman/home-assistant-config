@@ -18,28 +18,43 @@ action:
     variables:
       action_off: "{{ 'OFF_' ~ context.id }}"
 
-  - alias: "Ask to turn the ventilation on"
-    service: notify.mobile_app_sander_sony_xperia_1_ii
-    data:
-      message: Printer inactive, turning off?
-      data:
-        actions:
-          - action: "{{ action_off }}"
-            title: "Turn Off"  # The button title
-
-  - alias: "Wait for a response"
-    wait_for_trigger:
-      - platform: event
-        event_type: mobile_app_notification_action
-        event_data:
-          # waiting for the specific action avoids accidentally continuing
-          # for another script/automation's notification action
-          action: "{{ action_off }}"
-
-  - alias: "Perform the action"
+  - alias: "Auto shutdown"
     choose:
-      - conditions: "{{ wait.trigger.event.data.action == action_off }}"
+      - conditions:
+          - alias: "Auto Shutdown Enable"
+            condition: state
+            entity_id: input_boolean.3dprinter_auto_shutdown
+            state: "on"
+
         sequence:
           - service: switch.turn_off
             target:
               entity_id: switch.3d_printer_power
+
+    default:
+      # Lets ask the user to shutdown
+      - alias: "Ask to turn the ventilation on"
+        service: notify.mobile_app_sander_sony_xperia_1_ii
+        data:
+          message: Printer inactive, turning off?
+          data:
+            actions:
+              - action: "{{ action_off }}"
+                title: "Turn Off"  # The button title
+
+      - alias: "Wait for a response"
+        wait_for_trigger:
+          - platform: event
+            event_type: mobile_app_notification_action
+            event_data:
+              # waiting for the specific action avoids accidentally continuing
+              # for another script/automation's notification action
+              action: "{{ action_off }}"
+
+      - alias: "Perform the action"
+        choose:
+          - conditions: "{{ wait.trigger.event.data.action == action_off }}"
+            sequence:
+              - service: switch.turn_off
+                target:
+                  entity_id: switch.3d_printer_power

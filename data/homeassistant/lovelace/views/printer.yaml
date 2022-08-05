@@ -8,6 +8,8 @@ cards:
 
   - type: 'custom:hui-entities-card'
     entities:
+      - entity: input_boolean.3dprinter_auto_shutdown
+
       - type: custom:restriction-card
         row: true
         restrictions:
@@ -52,19 +54,17 @@ cards:
             unit: '°C'
             name: 'Actual'
 
-      # - entity: sensor.octoprint_time_ready
-      #   name: Time
-      #   icon: 'mdi:clock-outline'
-      #   state_header: 'Ready'
-      #   secondary_info: last-changed
-      #   type: custom:multiple-entity-row
-      #   entities:
-      #     - name: 'Remaining'
-      #       entity: sensor.octoprint_time_remaining_hr
-      #     - name: 'Elapsed'
-      #       entity: sensor.octoprint_time_elapsed_hr
+      - entity: sensor.octoprint_estimated_finish_time
+        name: Time Ready
+        icon: 'mdi:clock-outline'
+        state_header: 'Ready'
+        secondary_info: last-changed
+        type: custom:multiple-entity-row
+        entities:
+          - name: 'Started'
+            entity: sensor.octoprint_start_time
 
-      - name: Printer Light Switch Battery
+      - name: Printer Switch Battery
         entity: sensor.3d_printer_switch_battery
 
   - type: horizontal-stack

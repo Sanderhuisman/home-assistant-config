@@ -1,16 +1,114 @@
----
 platform: influxdb
+api_version: 2
+ssl: false
 host: !secret influxdb_host
 port: !secret influxdb_port
-username: !secret influxdb_username
-password: !secret influxdb_password
-scan_interval: 3600
-queries:
-  - name: InfluxDB Size
-    unit_of_measurement: MB
-    value_template: '{{ (value | float / (1024 ** 2)) | round(3) }}'
-    group_function: sum
-    measurement: '"monitor"."shard"'
-    database: '_internal'
-    where: 'time > now() - 10s'
-    field: 'diskBytes'
+token: !secret influxdb_token
+organization: !secret influxdb_organization
+queries_flux:
+  - name: "Debian VM CPU Percentage"
+    unique_id: influxdb_sensor_debian_vm_cpu_percentage
+    bucket: "server"
+    range_start: "-5m"
+    unit_of_measurement: "%"
+    query: >
+      filter(fn: (r) => r["host"] == "DebianVM")
+      |> filter(fn: (r) => r["_measurement"] == "cpu")
+      |> filter(fn: (r) => r["_field"] == "usage_idle")
+      |> filter(fn: (r) => r["cpu"] == "cpu-total")
+      |> map(fn: (r) => ({ r with _value: 100.0 - r._value }))
+    group_function: mean
+    value_template: '{{ value | round(2) }}'
+  - name: "Debian VM Mem Percentage"
+    bucket: "server"
+    range_start: "-5m"
+    unit_of_measurement: "%"
+    query: >
+      filter(fn: (r) => r["host"] == "DebianVM")
+      |> filter(fn: (r) => r["_measurement"] == "mem")
+      |> filter(fn: (r) => r["_field"] == "used_percent")
+    group_function: mean
+    value_template: '{{ value | round(2) }}'
+
+
+  - name: "OPNsense CPU Percentage"
+    bucket: "server"
+    range_start: "-5m"
+    unit_of_measurement: "%"
+    query: >
+      filter(fn: (r) => r["host"] == "opnsense")
+      |> filter(fn: (r) => r["_measurement"] == "cpu")
+      |> filter(fn: (r) => r["_field"] == "usage_idle")
+      |> filter(fn: (r) => r["cpu"] == "cpu-total")
+      |> map(fn: (r) => ({ r with _value: 100.0 - r._value }))
+    group_function: mean
+    value_template: '{{ value | round(2) }}'
+  - name: "OPNsense Mem Percentage"
+    bucket: "server"
+    range_start: "-5m"
+    unit_of_measurement: "%"
+    query: >
+      filter(fn: (r) => r["host"] == "opnsense")
+      |> filter(fn: (r) => r["_measurement"] == "mem")
+      |> filter(fn: (r) => r["_field"] == "used_percent")
+    group_function: mean
+    value_template: '{{ value | round(2) }}'
+
+  - name: "Proxmox CPU Percentage"
+    bucket: "server"
+    range_start: "-5m"
+    unit_of_measurement: "%"
+    query: >
+      filter(fn: (r) => r["host"] == "proxmox")
+      |> filter(fn: (r) => r["_measurement"] == "cpu")
+      |> filter(fn: (r) => r["_field"] == "usage_idle")
+      |> filter(fn: (r) => r["cpu"] == "cpu-total")
+      |> map(fn: (r) => ({ r with _value: 100.0 - r._value }))
+    group_function: mean
+    value_template: '{{ value | round(2) }}'
+  - name: "Proxmox Mem Percentage"
+    bucket: "server"
+    range_start: "-5m"
+    unit_of_measurement: "%"
+    query: >
+      filter(fn: (r) => r["host"] == "proxmox")
+      |> filter(fn: (r) => r["_measurement"] == "mem")
+      |> filter(fn: (r) => r["_field"] == "used_percent")
+    group_function: mean
+    value_template: '{{ value | round(2) }}'
+
+  ###########################
+  # UPS
+  ###########################
+  - name: "APC UPS Battery Percentage"
+    bucket: "server"
+    range_start: "-5m"
+    unit_of_measurement: "%"
+    query: >
+      filter(fn: (r) => r["host"] == "proxmox")
+      |> filter(fn: (r) => r["_measurement"] == "apcupsd")
+      |> filter(fn: (r) => r["_field"] == "battery_charge_percent")
+    group_function: mean
+    value_template: '{{ value | round(2) }}'
+
+  - name: "APC UPS Battery Voltage"
+    bucket: "server"
+    range_start: "-5m"
+    unit_of_measurement: "V"
+    query: >
+      filter(fn: (r) => r["host"] == "proxmox")
+      |> filter(fn: (r) => r["_measurement"] == "apcupsd")
+      |> filter(fn: (r) => r["_field"] == "battery_voltage")
+    group_function: mean
+    value_template: '{{ value | round(2) }}'
+
+  - name: "APC UPS Load Percent"
+    bucket: "server"
+    range_start: "-5m"
+    unit_of_measurement: "%"
+    query: >
+      filter(fn: (r) => r["host"] == "proxmox")
+      |> filter(fn: (r) => r["_measurement"] == "apcupsd")
+      |> filter(fn: (r) => r["_field"] == "load_percent")
+    group_function: mean
+    value_template: '{{ value | round(2) }}'

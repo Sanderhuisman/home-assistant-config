@@ -1,0 +1,4 @@
+---
+platform: switch
+name: 3D Printer Lights
+entity_id: switch.printer_light

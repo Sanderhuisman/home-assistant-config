@@ -61,16 +61,24 @@ action:
               - light.hallway_lights_current_value
 
         sequence:
-          - service: light.turn_on
-            alias: "Turn on the hallway lights"
-            entity_id: light.hallway_lights_current_value
-            data:
-              brightness_pct: >
-                {% if is_state('binary_sensor.sleep_time', 'on') %}
-                  {{ states('input_number.hallway_light_dimmed') | int(0) }}
-                {% else %}
-                  100
-                {% endif %}
+          - if:
+              - "{{ is_state('binary_sensor.sleep_time', 'on') }}"
+
+            then:
+              - service: light.turn_on
+                alias: "Turn on the hallway lights"
+                entity_id: light.hallway_floor
+                data:
+                  brightness_pct: >
+                    {{ states('input_number.hallway_light_dimmed') | int(0) }}
+
+            # The `else` is fully optional and can be omitted
+            else:
+              - service: light.turn_on
+                alias: "Turn on the hallway lights"
+                entity_id: light.hallway_lights_current_value
+                data:
+                  brightness_pct: 100
 
       - conditions:
           - condition: trigger
@@ -104,10 +112,10 @@ action:
             alias: "No motion within timeout"
             id: no_motion
 
-          - condition: state
-            state: 'on'
-            entity_id:
-              - light.hallway_lights_current_value
+ #         - condition: state
+ #           state: 'on'
+ #           entity_id:
+ #             - light.hallway_lights_current_value
 
           - condition: state
             state: 'off'
@@ -127,17 +135,19 @@ action:
         sequence:
           - service: light.turn_off
             alias: "Turn the hallway lights off"
-            entity_id: light.hallway_lights_current_value
+            entity_id:
+              - light.hallway_lights_current_value
+              - light.hallway_floor
 
       - conditions:
           - condition: trigger
             alias: "Door closed"
             id: door_closed
 
-          - condition: state
-            state: 'on'
-            entity_id:
-              - light.hallway_lights_current_value
+ #         - condition: state
+ #           state: 'on'
+ #           entity_id:
+ #             - light.hallway_lights_current_value
 
           - condition: state
             alias: "Only when no motion is detected"
@@ -151,4 +161,6 @@ action:
         sequence:
           - service: light.turn_off
             alias: "Turn the hallway lights off"
-            entity_id: light.hallway_lights_current_value
+            entity_id:
+              - light.hallway_lights_current_value
+              - light.hallway_floor

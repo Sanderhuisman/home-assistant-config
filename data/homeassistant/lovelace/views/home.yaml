@@ -45,8 +45,9 @@ cards:
                   entity: light.living_room_lights
                 entities:
                   - light.hue_tv_left
-                  - light.hue_couch
                   - light.hue_tv_right
+                  - light.hue_couch
+                  - light.living_room_window_board
                   - light.livingroom_ceiling
                   - light.kitchen_iris
                   - name: Vitrine
@@ -233,9 +234,6 @@ cards:
         cards:
           - type: custom:mini-graph-card
             color_thresholds_transition: smooth
-            entities:
-              - entity: sensor.office_sensor_temperature
-                name: Office
             font_size: 100
             line_color: var(--primary-color)
             group: false
@@ -249,6 +247,9 @@ cards:
               name: true
               state: true
               extrema: true
+            entities:
+              - entity: sensor.office_sensor_temperature
+                name: Office
 
           - type: custom:mini-graph-card
             color_thresholds_transition: smooth
@@ -329,7 +330,7 @@ cards:
           - type: custom:mini-graph-card
             name: Energy consumption
             entities:
-              - entity: sensor.energy_day
+              - entity: sensor.daily_energy
             hours_to_show: 168
             font_size: 100
             aggregate_func: max

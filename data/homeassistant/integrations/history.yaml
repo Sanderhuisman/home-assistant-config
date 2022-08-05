@@ -10,3 +10,5 @@ history:
       - device_tracker
       - people
       - vacuum
+      - fan
+

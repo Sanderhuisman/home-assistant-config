@@ -1,0 +1,22 @@
+id: 'office_window_open'
+alias: '[Office ]Window open'
+description: ''
+mode: single
+
+trigger:
+  - platform: time
+    at: '20:00:00'
+
+condition:
+  - condition: state
+    entity_id: binary_sensor.office_window_contact
+    state: 'on'
+
+  - condition: numeric_state
+    entity_id: sensor.accuweather_temperature
+    below: '15.0'
+
+action:
+  - service: notify.mobile_app_sander_sony_xperia_1_ii
+    data:
+      title: Office window still open

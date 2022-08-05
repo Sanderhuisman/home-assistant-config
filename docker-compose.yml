@@ -19,14 +19,13 @@ services:
       - ./data/homeassistant:/config
     depends_on:
       - database
+      - mosquitto
     logging:
       driver: "json-file"
       options:
         max-size: "1k"
         max-file: "10"
     devices:
-      # Conbee
-      - /dev/ttyUSB-ConbeeII:/dev/tty-conbee
       # P1
       - /dev/ttyUSB-DSRM:/dev/ttyUSB-P1
     networks:
@@ -85,6 +84,8 @@ services:
       - /dev/ttyUSB-ZStick-5G:/dev/ttyAeotec
     volumes:
       - ./data/zwavejs:/usr/src/app/store
+    environment:
+      - TZ=Europe/Amsterdam
     networks:
       - default
       - web
@@ -95,7 +96,7 @@ services:
       - traefik.docker.network=web
       - traefik.http.routers.zwavejs.rule=Host(`zwavejs.${DOMAIN}`)
       - traefik.http.routers.zwavejs.entrypoints=http
-      - traefik.http.routers.zwavejs.middlewares=redirect@file,ipwhitelist@file
+      - traefik.http.routers.zwavejs.middlewares=redirect@file
       - traefik.http.services.zwavejs.loadbalancer.server.port=8091
 
       - traefik.http.routers.zwavejs-secured.rule=Host(`zwavejs.${DOMAIN}`)
@@ -115,9 +116,9 @@ services:
     image: esphome/esphome:${ESPHOME_TAG:-latest}
     restart: unless-stopped
     volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
       - ./data/esphome:/config
+    environment:
+      - TZ=Europe/Amsterdam
     networks:
       - web
     labels:
@@ -137,6 +138,8 @@ services:
   zigbee2mqtt:
     image: koenkk/zigbee2mqtt:${ZIGBEE2MQTT_TAG:-latest}
     restart: unless-stopped
+    depends_on:
+      - mosquitto
     volumes:
       - ./data/zigbee2mqtt:/app/data
     environment:
@@ -162,7 +165,7 @@ services:
       - traefik.http.routers.zigbee2mqtt-secured.middlewares=hsts@file,ipwhitelist@file,authelia@docker
 
   mosquitto:
-    image: eclipse-mosquitto
+    image: eclipse-mosquitto:${MOSQUITTO_TAG:-latest}
     restart: unless-stopped
     volumes:
       - ./data/mosquitto/config:/mosquitto/config:ro
@@ -183,5 +186,7 @@ networks:
 
 # https://www.domoticz.com/wiki/PersistentUSBDevices
 # sudo nano /etc/udev/rules.d/99-usb-serial.rules
-# SUBSYSTEM=="tty", ATTRS{idVendor}=="0658", ATTRS{idProduct}=="0200", SYMLINK+="ttyUSB-ZStick-5G"
 # SUBSYSTEM=="tty", ATTRS{idVendor}=="1c1f", ATTRS{idProduct}=="0030", SYMLINK+="ttyUSB-ConbeeII"
+# SUBSYSTEM=="tty", ATTRS{idVendor}=="0658", ATTRS{idProduct}=="0200", SYMLINK+="ttyUSB-ZStick-5G"
+# SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", SYMLINK+="ttyUSB-DSRM"
+# SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", SYMLINK+="ttyUSB-SonoffZigbee"

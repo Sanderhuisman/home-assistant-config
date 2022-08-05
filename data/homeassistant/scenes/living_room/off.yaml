@@ -4,4 +4,5 @@ entities:
   light.hue_tv_left: false
   light.hue_tv_right: false
   light.hue_couch: false  # Big lamp
+  llight.living_room_window_board: false
   light.livingroom_ceiling: false
